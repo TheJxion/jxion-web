@@ -1,0 +1,125 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: tokens.$z-index-sticky;
+  background: tokens.$color-background-primary;
+  border-bottom: 1px solid tokens.$color-border-primary;
+  backdrop-filter: blur(10px);
+  padding: tokens.$spacing-md 0;
+}
+
+.header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 tokens.$spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    padding: 0 tokens.$spacing-lg;
+  }
+}
+
+.header__logo {
+  font-family: tokens.$font-family-logo;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-extrabold;
+  color: tokens.$color-primary-green;
+  text-decoration: none;
+  letter-spacing: tokens.$letter-spacing-tight;
+  
+  &:hover {
+    color: tokens.$color-primary-green-dark;
+  }
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-lg;
+  
+  @media (max-width: tokens.$breakpoint-md) {
+    display: none;
+  }
+}
+
+.header__nav__item {
+  @include typography.text-nav;
+  color: tokens.$color-text-primary;
+  text-decoration: none;
+  transition: tokens.$transition-colors;
+  
+  &:hover {
+    color: tokens.$color-primary-green;
+  }
+  
+  &--active {
+    color: tokens.$color-primary-green;
+    font-weight: tokens.$font-weight-semibold;
+  }
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-md;
+}
+
+.header__mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: tokens.$spacing-sm;
+  
+  @media (max-width: tokens.$breakpoint-md) {
+    display: block;
+  }
+}
+
+.header__mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: tokens.$color-background-primary;
+  border-bottom: 1px solid tokens.$color-border-primary;
+  padding: tokens.$spacing-lg;
+  display: none;
+  
+  &--open {
+    display: block;
+  }
+  
+  @media (min-width: tokens.$breakpoint-md) {
+    display: none;
+  }
+}
+
+.header__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-md;
+}
+
+.header__mobile-nav__item {
+  @include typography.text-nav;
+  color: tokens.$color-text-primary;
+  text-decoration: none;
+  padding: tokens.$spacing-sm 0;
+  border-bottom: 1px solid tokens.$color-border-secondary;
+  
+  &:hover {
+    color: tokens.$color-primary-green;
+  }
+  
+  &--active {
+    color: tokens.$color-primary-green;
+    font-weight: tokens.$font-weight-semibold;
+  }
+}

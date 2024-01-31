@@ -1,0 +1,25 @@
+{
+  "name": "@jxion/svelte",
+  "version": "0.1.0",
+  "description": "Jxion Svelte Components",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@jxion/core": "file:../jxion-core",
+    "@jxion/design": "file:../jxion-design",
+    "@jxion/shared": "file:../jxion-shared",
+    "svelte": "^4.2.18",
+    "svelte-preprocess": "^5.1.4"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "3.1.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.21"
+  }
+}

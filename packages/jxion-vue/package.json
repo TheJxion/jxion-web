@@ -1,0 +1,24 @@
+{
+  "name": "@jxion/vue",
+  "version": "0.1.0",
+  "description": "Jxion Vue Components",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@jxion/shared": "file:../jxion-shared",
+    "@jxion/design": "file:../jxion-design",
+    "@jxion/core": "file:../jxion-core",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vue-tsc": "^2.1.6"
+  }
+}

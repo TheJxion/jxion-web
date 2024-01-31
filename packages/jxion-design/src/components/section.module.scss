@@ -1,0 +1,95 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.section {
+  padding: tokens.$spacing-section-padding;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    padding: tokens.$spacing-section-padding-lg;
+  }
+}
+
+.section--small {
+  padding: tokens.$spacing-lg tokens.$spacing-md;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    padding: tokens.$spacing-xl tokens.$spacing-lg;
+  }
+}
+
+.section--large {
+  padding: tokens.$spacing-2xl tokens.$spacing-md;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    padding: tokens.$spacing-3xl tokens.$spacing-lg;
+  }
+}
+
+.section--no-padding {
+  padding: 0;
+}
+
+.section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: tokens.$spacing-2xl;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    margin-bottom: tokens.$spacing-3xl;
+  }
+}
+
+.section__title {
+  @include typography.heading-1;
+  color: tokens.$color-text-primary;
+  margin: 0 0 tokens.$spacing-md 0;
+}
+
+.section__subtitle {
+  @include typography.heading-3;
+  color: tokens.$color-text-secondary;
+  margin: 0 0 tokens.$spacing-lg 0;
+}
+
+.section__description {
+  @include typography.paragraph-description;
+  color: tokens.$color-text-secondary;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section__content {
+  margin-bottom: tokens.$spacing-xl;
+}
+
+.section__footer {
+  text-align: center;
+  margin-top: tokens.$spacing-xl;
+}
+
+.section--dark {
+  background: tokens.$color-background-dark;
+  color: tokens.$color-text-inverse;
+  
+  .section__title,
+  .section__subtitle {
+    color: tokens.$color-text-inverse;
+  }
+  
+  .section__description {
+    color: tokens.$color-text-light;
+  }
+}
+
+.section--accent {
+  background: tokens.$color-background-accent;
+}
+
+.section--secondary {
+  background: tokens.$color-background-secondary;
+}

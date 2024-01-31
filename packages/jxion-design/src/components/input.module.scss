@@ -1,0 +1,81 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.input {
+  width: 100%;
+  padding: tokens.$spacing-md;
+  border: 1px solid tokens.$color-border-primary;
+  border-radius: tokens.$border-radius-md;
+  font-size: tokens.$font-size-base;
+  font-family: tokens.$font-family-base;
+  color: tokens.$color-text-primary;
+  background: tokens.$color-background-primary;
+  transition: tokens.$transition-colors;
+
+  &:focus {
+    outline: none;
+    border-color: tokens.$color-primary-green;
+    box-shadow: 0 0 0 3px rgba(41, 92, 0, 0.1);
+  }
+
+  &:disabled {
+    background: tokens.$color-disabled;
+    color: tokens.$color-text-disabled;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: tokens.$color-text-muted;
+  }
+
+  @media (max-width: tokens.$breakpoint-sm) {
+    padding: tokens.$spacing-sm;
+    font-size: tokens.$font-size-sm;
+  }
+}
+
+.input--error {
+  border-color: tokens.$color-error;
+
+  &:focus {
+    border-color: tokens.$color-error;
+    box-shadow: 0 0 0 3px tokens.$color-error-light;
+  }
+}
+
+.input--success {
+  border-color: tokens.$color-success;
+
+  &:focus {
+    border-color: tokens.$color-success;
+    box-shadow: 0 0 0 3px tokens.$color-success-light;
+  }
+}
+
+.input--large {
+  padding: tokens.$spacing-lg;
+  font-size: tokens.$font-size-lg;
+}
+
+.input--small {
+  padding: tokens.$spacing-sm;
+  font-size: tokens.$font-size-sm;
+}
+
+.textarea {
+  @extend .input;
+  min-height: 120px;
+  resize: vertical;
+  font-family: tokens.$font-family-base;
+  line-height: tokens.$line-height-normal;
+}
+
+.select {
+  @extend .input;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right tokens.$spacing-sm center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: tokens.$spacing-2xl;
+}

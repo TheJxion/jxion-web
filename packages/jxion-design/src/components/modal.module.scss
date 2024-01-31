@@ -1,0 +1,117 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: tokens.$z-index-modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: tokens.$spacing-md;
+}
+
+.modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal__content {
+  position: relative;
+  background: tokens.$color-background-primary;
+  border-radius: tokens.$border-radius-xl;
+  box-shadow: tokens.$shadow-elevation-5;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+  
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  @media (max-width: tokens.$breakpoint-sm) {
+    margin: tokens.$spacing-md;
+    max-width: none;
+  }
+}
+
+.modal__header {
+  padding: tokens.$spacing-xl tokens.$spacing-xl tokens.$spacing-md;
+  border-bottom: 1px solid tokens.$color-border-primary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal__title {
+  @include typography.heading-1;
+  color: tokens.$color-text-primary;
+  margin: 0;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: tokens.$spacing-sm;
+  color: tokens.$color-text-secondary;
+  transition: tokens.$transition-colors;
+  
+  &:hover {
+    color: tokens.$color-text-primary;
+  }
+}
+
+.modal__body {
+  padding: tokens.$spacing-xl;
+}
+
+.modal__footer {
+  padding: tokens.$spacing-md tokens.$spacing-xl tokens.$spacing-xl;
+  border-top: 1px solid tokens.$color-border-primary;
+  display: flex;
+  gap: tokens.$spacing-md;
+  justify-content: flex-end;
+  
+  @media (max-width: tokens.$breakpoint-sm) {
+    flex-direction: column;
+  }
+}
+
+.modal--large {
+  .modal__content {
+    max-width: 800px;
+  }
+}
+
+.modal--small {
+  .modal__content {
+    max-width: 400px;
+  }
+}
+
+.modal--fullscreen {
+  .modal__content {
+    max-width: none;
+    max-height: none;
+    height: 100vh;
+    border-radius: 0;
+  }
+}

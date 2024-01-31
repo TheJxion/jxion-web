@@ -1,0 +1,88 @@
+# Docker Compose for Jxion Framework Development
+version: "3.8"
+
+services:
+  # Jxion Frontend (Vue)
+  jxion-frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3001
+    volumes:
+      - ./packages/jxion-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - jxion-backend
+
+  # Jxion Backend (tRPC)
+  jxion-backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://user:password@postgres:5432/jxion
+    volumes:
+      - ./packages/jxion-backend:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+
+  # Next.js Example
+  jxion-nextjs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nextjs
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    volumes:
+      - ./packages/jxion-nextjs-example:/app
+      - /app/node_modules
+    depends_on:
+      - jxion-backend
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=jxion
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Nginx Load Balancer
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/ssl:/etc/nginx/ssl
+    depends_on:
+      - jxion-frontend
+      - jxion-nextjs
+
+volumes:
+  postgres_data:
+  redis_data:

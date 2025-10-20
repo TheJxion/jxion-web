@@ -1,0 +1,77 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.card {
+  background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
+  border-radius: tokens.$border-radius-xl;
+  padding: tokens.$spacing-xl tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-elevation-2;
+  width: 100%;
+  position: relative;
+  border: 1px solid tokens.$color-border-primary;
+  backdrop-filter: blur(10px);
+  transition: tokens.$transition-all;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: tokens.$shadow-elevation-3;
+  }
+
+  @media (max-width: tokens.$breakpoint-sm) {
+    padding: tokens.$spacing-lg;
+    border-radius: tokens.$border-radius-lg;
+  }
+}
+
+.card__header {
+  margin-bottom: tokens.$spacing-sm;
+}
+
+.card__title {
+  @include typography.heading-1;
+  color: tokens.$color-text-primary;
+  margin: 0 0 tokens.$spacing-sm 0;
+}
+
+.card__subtitle {
+  @include typography.paragraph;
+  color: tokens.$color-text-secondary;
+  margin: 0;
+}
+
+.card__content {
+  margin-bottom: tokens.$spacing-md;
+}
+
+.card__footer {
+  margin-top: tokens.$spacing-md;
+  padding-top: tokens.$spacing-md;
+  border-top: 1px solid tokens.$color-border-secondary;
+}
+
+.card__stats {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.card__stats__value {
+  font-family: tokens.$font-family-base;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  background: linear-gradient(
+    135deg,
+    tokens.$color-primary-green 0%,
+    #8bc34a 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.card__stats__label {
+  @include typography.paragraph;
+  color: tokens.$color-text-secondary;
+}

@@ -1,46 +1,107 @@
-import * as trpc from "@trpc/server";
-import { z } from "zod";
-import { v4 as uuidv4 } from "uuid";
+import { initTRPC } from '@trpc/server';
+import { z } from 'zod';
 
-export interface ChatMessage {
-  id: string;
-  user: string;
-  message: string;
-}
+// Initialize tRPC
+const t = initTRPC.create();
 
-const messages: ChatMessage[] = [
-  { id: uuidv4(), user: "User1", message: "This is my the first message!" },
-  { id: uuidv4(), user: "User2", message: "Hello there 🎉" },
+// Export router and procedure helpers
+export const router = t.router;
+export const publicProcedure = t.procedure;
+
+// Message schema
+const MessageSchema = z.object({
+  id: z.string(),
+  user: z.string(),
+  message: z.string(),
+  createdAt: z.date(),
+});
+
+// Greeting schema
+const GreetingSchema = z.object({
+  message: z.string(),
+});
+
+// In-memory storage for demo purposes
+let messages: z.infer<typeof MessageSchema>[] = [
+  {
+    id: '1',
+    user: 'System',
+    message: 'Welcome to Jxion Framework!',
+    createdAt: new Date(),
+  },
+  {
+    id: '2',
+    user: 'Admin',
+    message: 'This is a demo message from the backend.',
+    createdAt: new Date(),
+  },
 ];
 
-export const appRouter = trpc
-  .router()
-  .query("greetings", {
-    resolve() {
+// App router
+export const appRouter = router({
+  // Get greetings
+  greetings: publicProcedure
+    .output(GreetingSchema)
+    .query(() => {
       return {
-        message: "Greetings from /trpc/greetings :)",
+        message: 'Hello from Jxion Framework Backend! 🚀',
       };
-    },
-  })
-  .query("getMessages", {
-    input: z.number().default(10),
-    resolve({ input }) {
-      return messages.slice(-input);
-    },
-  })
-  .mutation("addMessage", {
-    input: z.object({
-      user: z.string(),
-      message: z.string(),
     }),
-    resolve({ input }) {
-      const newMessage: ChatMessage = {
-        id: uuidv4(),
-        ...input,
+
+  // Get messages
+  getMessages: publicProcedure
+    .input(z.number().min(1).max(100).default(10))
+    .output(z.array(MessageSchema))
+    .query(({ input }) => {
+      return messages.slice(0, input);
+    }),
+
+  // Add message
+  addMessage: publicProcedure
+    .input(z.object({
+      user: z.string().min(1),
+      message: z.string().min(1),
+    }))
+    .output(MessageSchema)
+    .mutation(({ input }) => {
+      const newMessage: z.infer<typeof MessageSchema> = {
+        id: (messages.length + 1).toString(),
+        user: input.user,
+        message: input.message,
+        createdAt: new Date(),
       };
-      messages.push(newMessage);
-      return input;
-    },
-  });
+      
+      messages.unshift(newMessage);
+      return newMessage;
+    }),
+
+  // Get message by ID
+  getMessage: publicProcedure
+    .input(z.string())
+    .output(MessageSchema.nullable())
+    .query(({ input }) => {
+      return messages.find(msg => msg.id === input) || null;
+    }),
+
+  // Delete message
+  deleteMessage: publicProcedure
+    .input(z.string())
+    .output(z.boolean())
+    .mutation(({ input }) => {
+      const index = messages.findIndex(msg => msg.id === input);
+      if (index !== -1) {
+        messages.splice(index, 1);
+        return true;
+      }
+      return false;
+    }),
+
+  // Get message count
+  getMessageCount: publicProcedure
+    .output(z.number())
+    .query(() => {
+      return messages.length;
+    }),
+});
 
 export type AppRouter = typeof appRouter;

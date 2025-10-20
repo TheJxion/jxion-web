@@ -6,7 +6,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "concurrently \"wsrun --parallel start\""
+    "start": "concurrently \"wsrun --parallel start\"",
+    "dev": "node packages/jxion-cli/dist/cli.js dev --framework all",
+    "dev:react": "node packages/jxion-cli/dist/cli.js dev --framework react",
+    "dev:vue": "node packages/jxion-cli/dist/cli.js dev --framework vue",
+    "dev:svelte": "node packages/jxion-cli/dist/cli.js dev --framework svelte",
+    "dev:solidjs": "node packages/jxion-cli/dist/cli.js dev --framework solidjs",
+    "build": "npm run build -w @jxion/core --legacy-peer-deps && npm run build -w @jxion/shared --legacy-peer-deps && npm run build -w @jxion/backend --legacy-peer-deps",
+    "build:cli": "npm run build -w @jxion/cli --legacy-peer-deps"
   },
   "workspaces": [
     "packages/*"
@@ -14,5 +21,9 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "wsrun": "^5.2.0"
+  },
+  "overrides": {
+    "vite": "^5.4.21",
+    "@sveltejs/vite-plugin-svelte": "3.1.2"
   }
 }

@@ -1,0 +1,172 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.sidebar {
+  width: tokens.$spacing-sidebar-width;
+  background: tokens.$color-background-primary;
+  border-right: 1px solid tokens.$color-border-primary;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: tokens.$z-index-fixed;
+  overflow-y: auto;
+  transition: tokens.$transition-transform;
+  
+  @media (max-width: tokens.$breakpoint-lg) {
+    transform: translateX(-100%);
+    
+    &--open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebar__header {
+  padding: tokens.$spacing-lg;
+  border-bottom: 1px solid tokens.$color-border-primary;
+}
+
+.sidebar__logo {
+  font-family: tokens.$font-family-logo;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-extrabold;
+  color: tokens.$color-primary-green;
+  text-decoration: none;
+  letter-spacing: tokens.$letter-spacing-tight;
+  display: block;
+  
+  &:hover {
+    color: tokens.$color-primary-green-dark;
+  }
+}
+
+.sidebar__nav {
+  padding: tokens.$spacing-md 0;
+}
+
+.sidebar__nav__section {
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.sidebar__nav__title {
+  @include typography.footnote;
+  color: tokens.$color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: tokens.$letter-spacing-wide;
+  padding: 0 tokens.$spacing-lg tokens.$spacing-sm;
+  margin: 0;
+}
+
+.sidebar__nav__item {
+  display: block;
+  @include typography.text-nav;
+  color: tokens.$color-text-primary;
+  text-decoration: none;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
+  transition: tokens.$transition-colors;
+  position: relative;
+  
+  &:hover {
+    background: tokens.$color-background-secondary;
+    color: tokens.$color-primary-green;
+  }
+  
+  &--active {
+    background: tokens.$color-background-accent;
+    color: tokens.$color-primary-green;
+    font-weight: tokens.$font-weight-semibold;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: tokens.$color-primary-green;
+    }
+  }
+}
+
+.sidebar__nav__item__icon {
+  margin-right: tokens.$spacing-sm;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sidebar__nav__item__badge {
+  background: tokens.$color-primary-green;
+  color: tokens.$color-text-inverse;
+  font-size: tokens.$font-size-xs;
+  padding: 2px 6px;
+  border-radius: tokens.$border-radius-full;
+  margin-left: auto;
+  float: right;
+}
+
+.sidebar__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: tokens.$spacing-lg;
+  border-top: 1px solid tokens.$color-border-primary;
+  background: tokens.$color-background-primary;
+}
+
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.sidebar__user__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: tokens.$border-radius-full;
+  background: tokens.$color-primary-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: tokens.$color-text-inverse;
+  font-weight: tokens.$font-weight-semibold;
+}
+
+.sidebar__user__info {
+  flex: 1;
+}
+
+.sidebar__user__name {
+  @include typography.text-nav;
+  color: tokens.$color-text-primary;
+  margin: 0;
+  font-weight: tokens.$font-weight-semibold;
+}
+
+.sidebar__user__email {
+  @include typography.footnote;
+  color: tokens.$color-text-muted;
+  margin: 0;
+}
+
+.sidebar__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: tokens.$z-index-modal-backdrop;
+  display: none;
+  
+  &--open {
+    display: block;
+  }
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    display: none;
+  }
+}

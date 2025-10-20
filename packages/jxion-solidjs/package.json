@@ -1,0 +1,24 @@
+{
+  "name": "@jxion/solidjs",
+  "version": "0.1.0",
+  "description": "Jxion SolidJS Components",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@jxion/core": "file:../jxion-core",
+    "@jxion/design": "file:../jxion-design",
+    "@jxion/shared": "file:../jxion-shared",
+    "sass": "^1.93.2",
+    "solid-js": "^1.8.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-solid": "^2.8.0"
+  }
+}

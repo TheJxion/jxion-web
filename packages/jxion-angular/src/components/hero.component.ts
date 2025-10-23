@@ -28,8 +28,26 @@ import type { HeroProps } from "@jxion/shared";
   standalone: true,
   imports: [CommonModule],
   template: `
-    <!-- Template rendered from @jxion-core -->
-    <div [innerHTML]="renderedTemplate()"></div>
+    <div class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">{{ title() }}</h1>
+        <h2 class="hero__subtitle">{{ subtitle() }}</h2>
+        <p class="hero__description">{{ description() }}</p>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="hero__stat-value">{{ statsValue() }}</span>
+            <span class="hero__stat-label">{{ statsLabel() }}</span>
+          </div>
+        </div>
+        <button
+          class="hero__cta"
+          (click)="onCtaClick.emit()"
+          [attr.data-testid]="testId()"
+        >
+          {{ ctaText() }}
+        </button>
+      </div>
+    </div>
   `,
   styleUrls: [],
 })
@@ -46,42 +64,4 @@ export class HeroComponent {
 
   // Output event emitter
   @Output() onCtaClick = new EventEmitter<void>();
-
-  // Render the HTML template from @jxion-core
-  renderedTemplate = computed(() => {
-    const variables = {
-      title: this.title(),
-      subtitle: this.subtitle(),
-      description: this.description(),
-      ctaText: this.ctaText(),
-      statsValue: this.statsValue(),
-      statsLabel: this.statsLabel(),
-      cardSubtitle: this.cardSubtitle(),
-      testId: this.testId(),
-      onCtaClick: this.onCtaClick ? "onCtaClick" : "",
-    };
-
-    // Get the base HTML template from @jxion-core
-    const baseTemplate = heroTemplate.html;
-
-    // Render template with variables
-    let rendered = TemplateRenderer.render({
-      template: baseTemplate,
-      variables,
-    });
-
-    // For Angular, we'll use the original class names since CSS modules aren't supported
-    // The styles will be applied globally through the design system
-
-    // Set up click handler for template
-    if (this.onCtaClick) {
-      (window as any).heroCtaClick = () => this.onCtaClick.emit();
-      rendered = rendered.replace(
-        /onclick="onCtaClick"/g,
-        'onclick="window.heroCtaClick"'
-      );
-    }
-
-    return rendered;
-  });
 }

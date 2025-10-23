@@ -8,7 +8,7 @@
  * @version 1.0.0
  */
 
-import React from "react";
+import * as React from "react";
 import { TemplateRenderer } from "./template-renderer";
 
 export interface JSXRenderOptions {

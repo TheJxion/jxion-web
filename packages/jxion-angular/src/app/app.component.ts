@@ -16,7 +16,7 @@ import { HeroComponent } from "../components/hero.component";
         [statsValue]="heroStatsValue"
         [statsLabel]="heroStatsLabel"
         [cardSubtitle]="heroCardSubtitle"
-        [testId]="'hero'"
+        [testId]="heroTestId"
         (onCtaClick)="onHeroCtaClick()"
       />
 
@@ -118,6 +118,7 @@ export class AppComponent {
   heroStatsValue = signal("5");
   heroStatsLabel = signal("Frameworks Supported");
   heroCardSubtitle = signal("React, Vue, Svelte, SolidJS, Angular");
+  heroTestId = signal("hero");
 
   onHeroCtaClick() {
     console.log("Hero CTA clicked!");

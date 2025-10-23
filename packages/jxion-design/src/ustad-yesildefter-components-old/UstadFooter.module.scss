@@ -1,0 +1,63 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.footer {
+  width: 100%;
+  background-color: tokens.$color-background-dark;
+  padding: 24px;
+  color: tokens.$color-text-light;
+
+  &__container {
+    max-width: 1344px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  &__link {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$color-text-light;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: tokens.$color-text-light;
+    }
+  }
+
+  &__copyright {
+    font-size: tokens.$font-size-lg;
+    color: tokens.$color-text-light;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: tokens.$breakpoint-tablet) {
+  .footer {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    &__links {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

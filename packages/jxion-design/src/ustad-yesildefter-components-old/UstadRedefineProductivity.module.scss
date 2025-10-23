@@ -1,0 +1,67 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.redefine {
+  padding: 40px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__title {
+    font-size: tokens.$font-size-xxl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$color-text-primary;
+    text-align: center;
+  }
+
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  background: tokens.$color-background-secondary;
+  border-radius: tokens.$radius-card-md;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: tokens.$shadow-card-lg;
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: tokens.$color-background-accent;
+    border-radius: tokens.$radius-circle;
+  }
+
+  &__title {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$color-text-primary;
+  }
+
+  &__description {
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-text-secondary;
+    line-height: 1.5;
+  }
+}

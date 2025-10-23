@@ -1,0 +1,14 @@
+@import './UstadDesignTokens.scss';
+
+.layout {
+  min-height: 100vh;
+  background: $background-gradient;
+
+  &__main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 $spacing-2xl 0;
+  }
+}

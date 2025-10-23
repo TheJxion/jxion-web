@@ -1,0 +1,138 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+$safe-area-inset: 180px;
+
+.hero {
+  position: relative;
+  width: 100%;
+  padding: 48px;
+  overflow: hidden;
+  margin: $safe-area-inset 0;
+
+  &__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 24px;
+    padding: 48px;
+    background: tokens.$color-background-light;
+    border-radius: 24px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+    background: tokens.$color-background-secondary;
+    border-radius: 18px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    &--label {
+      color: tokens.$color-text-secondary;
+      font-weight: tokens.$font-weight-bold;
+      font-size: tokens.$font-size-base;
+    }
+    &--title {
+      color: tokens.$color-text-primary;
+      font-size: tokens.$font-size-5xl;
+      font-weight: tokens.$font-weight-bold;
+      line-height: 1.2;
+      letter-spacing: -0.08em;
+    }
+  }
+
+  &__cta {
+    width: 100%;
+    padding: tokens.$spacing-md tokens.$spacing-sm;
+    margin: auto 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: tokens.$color-primary-green;
+    border: 1px solid tokens.$color-text-primary;
+    border-radius: 18px;
+    color: tokens.$color-background-light;
+    font-weight: tokens.$font-weight-semibold;
+    text-decoration: none;
+    box-shadow: 0 5px 0 rgba(10, 10, 10, 1);
+    transition: all 0.2s ease;
+    &:hover {
+      transform: translateY(-2px);
+    }
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  &__users {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &--text {
+      color: tokens.$color-text-primary;
+      font-weight: tokens.$font-weight-semibold;
+      font-size: tokens.$font-size-sm;
+    }
+
+    &--avatars {
+      display: flex;
+      gap: 12px;
+      padding: tokens.$spacing-sm tokens.$spacing-md;
+      background: tokens.$color-background-light;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      &:hover {
+        transform: translateY(-2px);
+      }
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+
+  &__image {
+    width: 505px;
+    height: 390px;
+    margin-top: 45px;
+    object-fit: cover;
+    filter: contrast(0.9) brightness(0.9);
+  }
+}
+
+.avatar-group {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  &__circle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    &--red {
+      background: #f21b3f;
+      top: 12px;
+      left: 17px;
+    }
+    &--orange {
+      background: #ff9914;
+      top: 20px;
+      left: 12px;
+    }
+  }
+  &__image {
+    position: absolute;
+    top: 16px;
+    left: 15px;
+    width: 39px;
+    height: 40px;
+    border-radius: 100px;
+    object-fit: cover;
+  }
+}

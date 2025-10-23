@@ -1,0 +1,296 @@
+// Typography
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, sans-serif;
+$font-family-heading: $font-family-base;
+
+// Brand Colors
+$color-primary: #ff4d00; // Orange primary
+$color-background-dark: #0a0a0a; // Dark background
+$color-background-primary: #ffffff;
+$color-background-secondary: rgba(#0a0a0a, 0.05);
+$color-background-accent: rgba(#ff4d00, 0.1);
+$color-background-light: #ffffff; // White background (added)
+$color-text-primary: #0a0a0a;
+$color-text-secondary: rgba(#0a0a0a, 0.7);
+$color-border: rgba(255, 255, 255, 0.1); // Border color
+
+// Button Specific
+$button-padding-sm: 12px 20px;
+$button-padding-md: 14px 24px;
+$button-padding-lg: 16px 32px;
+$button-radius: 8px;
+$button-font-weight: 500;
+
+// Typography Sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3.5rem; // 56px
+$font-size-6xl: 4.5rem; // 72px
+
+$button-border: none;
+
+// Typography
+$font-family-base: 'Inter', sans-serif; // Using Inter font
+$color-text-light: #fafafa;
+$color-text-dark: #121114;
+
+// Border Colors
+$color-border-primary: rgba(#0a0a0a, 0.1);
+$color-border-dark: #0f172a;
+$color-border-light: rgba(255, 255, 255, 0.1);
+
+// Border Radius
+$button-radius-sm: 8px; // Small buttons
+$button-radius-md: 20px; // Medium buttons
+$border-radius-md: 20px; // Medium buttons
+$button-radius-lg: 26px; // Large buttons
+
+// Shadow Colors
+$color-shadow-primary: rgba(60, 60, 60, 0.1); // Card shadows
+$color-shadow-secondary: rgba(189, 183, 164, 1); // Secondary button shadows
+$color-shadow-button: rgba(16, 128, 54, 1); // Green button shadows
+$color-shadow-cream: rgba(189, 183, 164, 1); // Cream button shadows
+
+// State Colors
+$color-success: #2dd4bf; // Success/positive state
+$color-warning: #fbbf24; // Warning/caution state
+$color-error: #ef4444; // Error/negative state
+$color-info: #3b82f6; // Info/neutral state
+
+// Status Variants
+$color-success-light: #ccfbf1; // Light success background
+$color-warning-light: #fef3c7; // Light warning background
+$color-error-light: #fee2e2; // Light error background
+$color-info-light: #dbeafe; // Light info background
+
+// Status Text
+$color-success-dark: #0f766e; // Dark success text
+$color-warning-dark: #b45309; // Dark warning text
+$color-error-dark: #b91c1c; // Dark error text
+$color-info-dark: #1d4ed8; // Dark info text
+
+// Shadows
+$shadow-card: 0px 4px 6px -1px $color-shadow-primary;
+$shadow-card-lg: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+$shadow-button: 0px 4px 0px 0px $color-shadow-button;
+$shadow-dropdown: 0px 10px 15px -3px $color-shadow-primary;
+
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 12px;
+$radius-full: 9999px;
+
+// Border Radius
+$radius-card: 27px;
+$radius-card-md: 20px;
+$radius-button: 26px;
+$radius-tab: 20px;
+$radius-circle: 100%;
+
+// Border Widths
+$border-width-none: 0;
+$border-width-default: 1px;
+$border-width-medium: 2px;
+$border-width-thick: 4px;
+
+// Border Styles
+$border-style-solid: solid;
+$border-style-dashed: dashed;
+$border-style-dotted: dotted;
+
+// Typography Sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-xxl: 1.75rem; // 28px - Added for RedefineProductivityCard
+$font-size-2xl: 2rem; // 32px
+$font-size-3xl: 2.5rem; // 40px
+$font-size-4xl: 3rem; // 48px
+$font-size-5xl: 4rem; // 64px
+
+// Typography Sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Layout
+$container-width: 1280px;
+$container-padding: 16px 24px;
+
+// Breakpoints
+$breakpoint-tablet: 1240px;
+$breakpoint-mobile: 640px;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Component Specific
+$button-padding-sm: 8px 16px;
+$button-padding-md: 12px 24px;
+$button-padding-lg: 16px 32px;
+$button-radius: $radius-lg;
+$button-font-weight: $font-weight-semibold;
+
+// Transitions
+$transition-base: all 0.2s ease;
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal: 1050;
+$z-index-tooltip: 1070;
+
+// Spacing
+$spacing-none: 0;
+$spacing-xxs: 0.25rem; // 4px
+$spacing-xs: 0.5rem; // 8px
+$spacing-sm: 0.75rem; // 12px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.25rem; // 20px
+$spacing-xl: 1.5rem; // 24px
+$spacing-2xl: 2rem; // 32px
+$spacing-3xl: 2.5rem; // 40px
+$spacing-4xl: 3rem; // 48px
+
+// Typography Sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-xxl: 1.75rem; // 28px - Added for RedefineProductivityCard
+$font-size-2xl: 2rem; // 32px
+$font-size-3xl: 2.5rem; // 40px
+$font-size-4xl: 3rem; // 48px
+$font-size-5xl: 4rem; // 64px
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Layout
+$container-width: 1280px;
+$container-padding: 16px 24px;
+
+// Breakpoints
+$breakpoint-tablet: 1240px;
+$breakpoint-mobile: 640px;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Component Specific
+$button-padding-sm: 8px 16px;
+$button-padding-md: 12px 24px;
+$button-padding-lg: 16px 32px;
+$button-radius: $radius-lg;
+$button-font-weight: $font-weight-semibold;
+
+// Transitions
+$transition-base: all 0.2s ease;
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal: 1050;
+$z-index-tooltip: 1070;
+
+// Spacing
+$spacing-none: 0;
+$spacing-xxs: 0.25rem; // 4px
+$spacing-xs: 0.5rem; // 8px
+$spacing-sm: 0.75rem; // 12px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.25rem; // 20px
+$spacing-xl: 1.5rem; // 24px
+$spacing-2xl: 2rem; // 32px
+$spacing-3xl: 2.5rem; // 40px
+$spacing-4xl: 3rem; // 48px
+
+// Component Spacing
+$spacing-button-gap: $spacing-xs; // 8px gap between button elements
+$spacing-card-padding: $spacing-xl; // 24px padding for cards
+$spacing-section-gap: $spacing-2xl; // 32px gap between sections
+
+// Colors from Figma
+$color-primary-green: #497f18;
+$color-primary-orange: #ff9914;
+$color-primary-dark: #231b3b;
+$color-background-gradient: linear-gradient(
+  to bottom,
+  #d3dad6 0%,
+  #ebffe9 33.33%,
+  #f7ebd9 66.67%,
+  #e4e4e7 100%
+);
+
+// Text Colors
+$color-text-primary: $color-primary-dark;
+$color-text-secondary: rgba($color-primary-dark, 0.7);
+
+// Background Colors
+$color-background-primary: #ffffff;
+$color-background-secondary: rgba($color-primary-dark, 0.05);
+$color-background-accent: rgba($color-primary-orange, 0.1);
+
+// Border Colors
+$color-border-primary: rgba($color-primary-dark, 0.1);
+$color-border-secondary: rgba($color-primary-dark, 0.05);
+
+// Add to existing color definitions
+$color-gradient-start: #d3dad6;
+$color-gradient-second: #ebffe9;
+$color-gradient-third: #f7ebd9;
+$color-gradient-end: #e4e4e7;
+
+// Add gradient variable
+$background-gradient: linear-gradient(
+  to bottom,
+  $color-gradient-start 0%,
+  $color-gradient-second 33.33%,
+  $color-gradient-third 66.67%,
+  $color-gradient-end 100%
+);
+
+// Update brand colors to match Figma
+$color-primary-green: #497f18;
+$color-primary-orange: #ff9914;
+$color-primary-dark: #231b3b;
+
+// Update text colors
+$color-text-light: #fafafa;
+$color-text-dark: #121114;
+
+// Component-specific colors
+$color-footer-text: #c4cfb3;

@@ -1,7 +1,12 @@
 import React from "react";
-import styles from "@jxion/design/src/components/UstadLayout.module.scss";
+import styles from "@jxion/design/src/components/layout.module.scss";
 
-interface LayoutProps {
+/**
+ * Layout Component - React Implementation
+ *
+ * Simple wrapper component using SCSS from @jxion-design
+ */
+export interface LayoutProps {
   params: {
     lang: string;
     theme: string;
@@ -11,7 +16,11 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ params, children }) => {
   return (
-    <div className={styles.layout} data-lang={params.lang} data-theme={params.theme}>
+    <div
+      className={styles.layout}
+      data-lang={params.lang}
+      data-theme={params.theme}
+    >
       {children}
     </div>
   );

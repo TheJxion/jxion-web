@@ -1,0 +1,53 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+
+  &__container {
+    max-width: tokens.$container-width;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: tokens.$spacing-sm;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    background: tokens.$color-primary-green;
+    border-radius: tokens.$button-radius-md;
+    color: tokens.$color-background-light;
+  }
+
+  &__menu {
+    display: flex;
+    gap: tokens.$spacing-xl;
+    align-items: center;
+
+    &-item {
+      font-size: tokens.$font-size-base;
+      font-weight: tokens.$font-weight-medium;
+      color: tokens.$color-text-primary;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: tokens.$color-primary-green;
+      }
+
+      &--active {
+        color: tokens.$color-primary-green;
+        font-weight: tokens.$font-weight-semibold;
+      }
+    }
+  }
+}

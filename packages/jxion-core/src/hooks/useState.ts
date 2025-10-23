@@ -1,6 +1,6 @@
 /**
  * @fileoverview Universal useState Hook
- * 
+ *
  * Provides consistent state management API across all frameworks in the Jxion ecosystem.
  * Framework-specific implementations are provided for optimal performance.
  */
@@ -12,10 +12,10 @@ export interface UseStateResult<T> {
 
 /**
  * Universal useState hook interface
- * 
+ *
  * @param initialState - Initial state value
  * @returns Object with state and setState function
- * 
+ *
  * @todo(@janberk) Implement framework-specific reactivity systems
  * @todo(@janberk) Add performance optimizations for large state objects
  * @todo(@janberk) Add state persistence capabilities

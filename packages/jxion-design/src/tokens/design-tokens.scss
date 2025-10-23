@@ -1,42 +1,41 @@
 // Font Imports
 // Using system fonts with proper fallbacks - no need for Google Fonts for basic text
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap");
 
 // ============================================================================
 // CORE COLOR SYSTEM (Matching Tailwind Components)
 // ============================================================================
 
-// Primary Brand Colors (from your Tailwind components)
-$color-primary-green: #295C00;
+// Primary Brand Colors (Updated with Ustad Yesildefter design)
+$color-primary: #ff4d00; // Orange primary
+$color-primary-green: #295c00;
 $color-primary-green-light: #8e9c78; // Hover state color
 $color-primary-green-dark: #3a4a0e; // Darker variant
 $color-primary-orange: #ff9914; // Brand orange for CTAs
 $color-primary-red: #ea4335; // Error and warning states
 
-// Background System (Matching your components)
+// Background System (Updated with Ustad Yesildefter design)
 $color-background-primary: #ffffff; // Pure white for main content
-$color-background-secondary: #f8f9fa; // Very light gray for subtle separation
+$color-background-secondary: rgba(
+  #0a0a0a,
+  0.05
+); // Very light gray for subtle separation
 $color-background-tertiary: #f1f3f4; // Light gray for cards and elevated content
-$color-background-accent: rgba(
-  76,
-  175,
-  80,
-  0.08
-); // Subtle green tint for highlights
+$color-background-accent: rgba(#ff4d00, 0.1); // Orange accent for highlights
 $color-background-light: #ffffff; // White background
-$color-background-dark: #241b3b; // Dark background for contrast
+$color-background-dark: #0a0a0a; // Dark background for contrast
 $color-background-amber: #fef3c7; // Amber background from your components
 $color-background-gray: #f9fafb; // Gray background from your components
 
-// Text System (Matching your Tailwind components)
-$color-text-primary: #000000; // Black for primary text (from your h2)
-$color-text-secondary: #374151; // Gray-700 from your components
+// Text System (Updated with Ustad Yesildefter design)
+$color-text-primary: #0a0a0a; // Dark text for primary content
+$color-text-secondary: rgba(#0a0a0a, 0.7); // Gray for secondary text
 $color-text-tertiary: #6b7280; // Gray-600 from your components
 $color-text-inverse: #ffffff; // White text for dark backgrounds
-$color-text-dark: #111827; // Gray-900 from your components
+$color-text-dark: #0a0a0a; // Dark text variant
 $color-text-light: #fafafa; // Light text variant
 $color-text-muted: #9ca3af; // Gray-400 for muted text
 
@@ -78,19 +77,19 @@ $color-primary-light: #fff;
 // ============================================================================
 
 // Font Families
-$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-  'Helvetica Neue', sans-serif;
-$font-family-secondary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-  'Helvetica Neue', sans-serif;
-$font-family-tertiary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-  'Helvetica Neue', sans-serif;
-$font-family-logo: 'Fira Sans Extra Condensed', -apple-system,
+$font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif;
+$font-family-secondary: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif;
+$font-family-tertiary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif;
+$font-family-logo: "Fira Sans Extra Condensed", -apple-system,
   BlinkMacSystemFont, sans-serif;
-$font-family-mono: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code',
-  'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+$font-family-mono: "Fira Code", "SF Mono", Monaco, "Cascadia Code",
+  "Roboto Mono", "Consolas", "Liberation Mono", "Courier New", monospace;
 
 // Font Sizes (Matching your Tailwind components)
 $font-size-xs: 0.75rem; // 12px - text-xs

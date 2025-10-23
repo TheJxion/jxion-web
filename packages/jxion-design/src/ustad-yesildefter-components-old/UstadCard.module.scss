@@ -1,0 +1,46 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.card {
+  background: tokens.$color-background-light;
+  border-radius: tokens.$border-radius-md;
+  padding: tokens.$spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: tokens.$button-radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--primary {
+      background: tokens.$color-primary-green;
+      color: tokens.$color-background-light;
+    }
+
+    &--secondary {
+      background: tokens.$color-primary-orange;
+      color: tokens.$color-background-light;
+    }
+  }
+
+  &__title {
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$color-text-primary;
+  }
+
+  &__description {
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-text-secondary;
+    line-height: 1.6;
+  }
+}

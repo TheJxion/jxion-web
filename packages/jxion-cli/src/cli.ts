@@ -1,6 +1,6 @@
 /**
  * @fileoverview Jxion Framework CLI
- * 
+ *
  * Command-line interface for the Jxion multi-framework component library.
  * Provides project scaffolding, development tools, and component generation.
  */
@@ -10,7 +10,10 @@ import inquirer from "inquirer";
 import ora from "ora";
 import chalk from "chalk";
 import { ComponentGenerator } from "./generators/component.generator";
-import { ProjectGenerator, ProjectOptions } from "./generators/project.generator";
+import {
+  ProjectGenerator,
+  ProjectOptions,
+} from "./generators/project.generator";
 
 const program = new Command();
 

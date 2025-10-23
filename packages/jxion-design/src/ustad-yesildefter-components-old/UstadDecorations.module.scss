@@ -1,0 +1,68 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.decorations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  &__shape {
+    position: absolute;
+    opacity: 0.8;
+    transform-origin: center;
+    transition: transform 0.6s ease;
+
+    // Top left shape
+    &--1 {
+      top: -60px;
+      left: 5%;
+      width: 320px;
+      transform: rotate(-15deg);
+    }
+
+    // Top right shape
+    &--2 {
+      top: 20%;
+      right: 10%;
+      width: 280px;
+      transform: rotate(10deg);
+    }
+
+    // Bottom left shape
+    &--3 {
+      bottom: -40px;
+      left: 15%;
+      width: 300px;
+      transform: rotate(5deg);
+    }
+
+    // Bottom right shape
+    &--4 {
+      bottom: 10%;
+      right: 5%;
+      width: 260px;
+      transform: rotate(-8deg);
+    }
+
+    &:hover {
+      transform: scale(1.05) rotate(var(--rotation));
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}
+
+.decorations__shape {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: var(--delay);
+}

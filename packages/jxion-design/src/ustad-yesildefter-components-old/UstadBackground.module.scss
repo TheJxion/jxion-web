@@ -1,0 +1,105 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    #d3dad6 0%,
+    #ebffe9 33.33%,
+    #f7ebd9 66.67%,
+    #e4e4e7 100%
+  );
+
+  &__shapes {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    img {
+      position: absolute;
+      opacity: 0.03;
+      transition: transform 0.6s ease;
+    }
+
+    &--1 {
+      top: 5%;
+      left: 10%;
+      width: 320px;
+      transform: rotate(-15deg);
+    }
+
+    &--2 {
+      top: 30%;
+      right: 15%;
+      width: 280px;
+      transform: rotate(10deg);
+    }
+
+    &--3 {
+      bottom: 15%;
+      left: 20%;
+      width: 300px;
+      transform: rotate(5deg);
+    }
+
+    &--4 {
+      bottom: 25%;
+      right: 10%;
+      width: 260px;
+      transform: rotate(-8deg);
+    }
+  }
+}
+
+// Keep existing noise overlay
+.background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/noise.png');
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+// Keep existing animation
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.background--animated {
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+
+  .background__shapes img {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}

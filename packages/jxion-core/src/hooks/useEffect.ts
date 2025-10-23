@@ -1,6 +1,6 @@
 /**
  * @fileoverview Universal useEffect Hook
- * 
+ *
  * Provides consistent side effect management across all frameworks in the Jxion ecosystem.
  * Handles lifecycle management and dependency tracking.
  */
@@ -12,10 +12,10 @@ export interface UseEffectOptions {
 
 /**
  * Universal useEffect hook for side effects
- * 
+ *
  * @param effect - Effect function to run
  * @param deps - Dependency array for effect re-execution
- * 
+ *
  * @todo(@janberk) Implement proper dependency comparison
  * @todo(@janberk) Add cleanup function handling
  * @todo(@janberk) Add framework-specific lifecycle integration

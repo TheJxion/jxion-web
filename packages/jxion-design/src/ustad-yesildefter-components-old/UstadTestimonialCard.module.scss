@@ -1,0 +1,149 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.testimonial {
+  background: tokens.$color-text-primary !important;
+  color: tokens.$color-background-primary;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__quote {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid rgba(tokens.$color-background-primary, 0.1);
+  }
+
+  &__logos {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(tokens.$color-background-primary, 0.1);
+
+    img {
+      height: 32px;
+      width: auto;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.quote {
+  &__title {
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    line-height: 1.2;
+    max-width: 720px;
+  }
+
+  &__text {
+    font-size: tokens.$font-size-lg;
+    line-height: 1.6;
+    opacity: 0.8;
+    max-width: 840px;
+  }
+}
+
+.author {
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: tokens.$radius-circle;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__name {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-semibold;
+  }
+
+  &__role,
+  &__company {
+    font-size: tokens.$font-size-sm;
+    opacity: 0.8;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.tags {
+  &__item {
+    padding: 4px 12px;
+    background: rgba(tokens.$color-background-primary, 0.1);
+    border-radius: 16px;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-medium;
+    white-space: nowrap;
+  }
+}
+
+// Responsive styles
+@media (max-width: tokens.$breakpoint-tablet) {
+  .testimonial {
+    &__author {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    &__logos {
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+  }
+
+  .quote {
+    &__title {
+      font-size: tokens.$font-size-lg;
+    }
+
+    &__text {
+      font-size: tokens.$font-size-base;
+    }
+  }
+}
+
+@media (max-width: tokens.$breakpoint-mobile) {
+  .author {
+    &__tags {
+      flex-wrap: wrap;
+    }
+  }
+}

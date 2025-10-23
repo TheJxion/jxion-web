@@ -95,6 +95,10 @@ public
 tmp/
 temp/
 
+
+packages/jxion-angular/.angular/
+packages/jxion-angular/node_modules/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

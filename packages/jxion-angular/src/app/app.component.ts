@@ -9,13 +9,13 @@ import { HeroComponent } from "../components/hero.component";
   template: `
     <div class="app">
       <jx-hero
-        [title]="heroTitle()"
-        [subtitle]="heroSubtitle()"
-        [description]="heroDescription()"
-        [ctaText]="heroCtaText()"
-        [statsValue]="heroStatsValue()"
-        [statsLabel]="heroStatsLabel()"
-        [cardSubtitle]="heroCardSubtitle()"
+        [title]="heroTitle"
+        [subtitle]="heroSubtitle"
+        [description]="heroDescription"
+        [ctaText]="heroCtaText"
+        [statsValue]="heroStatsValue"
+        [statsLabel]="heroStatsLabel"
+        [cardSubtitle]="heroCardSubtitle"
         [testId]="'hero'"
         (onCtaClick)="onHeroCtaClick()"
       />

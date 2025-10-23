@@ -69,15 +69,15 @@
 
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
-import { Layout } from "./components/Layout.vue";
-import { Header } from "./components/Header.vue";
-import { Hero } from "./components/Hero.vue";
-import { Card } from "./components/Card.vue";
-import { Input } from "./components/Input.vue";
-import { CTA } from "./components/CTA.vue";
-import { Section } from "./components/Section.vue";
-import { Footer } from "./components/Footer.vue";
-import { Modal } from "./components/Modal.vue";
+import Layout from "./components/Layout.vue";
+import Header from "./components/Header.vue";
+import Hero from "./components/Hero.vue";
+import Card from "./components/Card.vue";
+import Input from "./components/Input.vue";
+import CTA from "./components/CTA.vue";
+import Section from "./components/Section.vue";
+import Footer from "./components/Footer.vue";
+import Modal from "./components/Modal.vue";
 import { messageService, greetingService } from "@jxion/core";
 
 // Global state management

@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Hero } from "./components/Hero";
 import { Card } from "./components/Card";
 import { Layout } from "./components/Layout";
 import { CTA } from "./components/CTA";
-import { Button } from "./components/Button";
 import { Header } from "./components/Header";
 import { Input } from "./components/Input";
 import { Modal } from "./components/Modal";
@@ -12,33 +11,9 @@ import { Footer } from "./components/Footer";
 import {
   useMessages,
   useGreetings,
-  TemplateRenderer,
   frameworkConfigs,
   componentRegistry,
 } from "@jxion/core";
-
-// Fallback values for demo
-const fallbackFrameworkConfigs = {
-  react: {
-    name: "React",
-    version: "18.0.0",
-  },
-};
-
-const fallbackComponentRegistry = {
-  components: {
-    hero: { name: "Hero" },
-    card: { name: "Card" },
-    button: { name: "Button" },
-    input: { name: "Input" },
-    modal: { name: "Modal" },
-    header: { name: "Header" },
-    footer: { name: "Footer" },
-    section: { name: "Section" },
-    cta: { name: "CTA" },
-    layout: { name: "Layout" },
-  },
-};
 
 /**
  * Jxion Framework Demo - React Implementation
@@ -52,19 +27,17 @@ const fallbackComponentRegistry = {
  */
 function App() {
   // Global state management with optimized hooks
-  const {
-    messages,
-    isLoading: messagesLoading,
-    error: messagesError,
-    fetchMessages,
-    addMessage,
-  } = useMessages();
+  const { messages, fetchMessages } = useMessages();
   const {
     greeting,
     isLoading: greetingLoading,
     error: greetingError,
     fetchGreeting,
   } = useGreetings();
+
+  // Computed values for loading and error states
+  const isLoading = greetingLoading;
+  const error = greetingError;
 
   // Local state with performance optimization
   const [modalOpen, setModalOpen] = useState(false);
@@ -120,22 +93,78 @@ function App() {
   useEffect(() => {
     fetchGreeting();
     fetchMessages();
-  }, [fetchGreeting, fetchMessages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array - only run once on mount
 
-  const isLoading = messagesLoading || greetingLoading;
-  const error = messagesError || greetingError;
+  // Memoize static props to prevent unnecessary re-renders
+  const navItems = useMemo(
+    () => [
+      { text: "Home", href: "/", active: true },
+      { text: "Components", href: "/components" },
+      { text: "Documentation", href: "/docs" },
+    ],
+    []
+  );
+
+  const actionsContent = useMemo(
+    () => "<button class='button primary'>Get Started</button>",
+    []
+  );
+
+  // Memoize footer data to prevent unnecessary re-renders
+  const footerData = useMemo(
+    () => ({
+      logoText: "Jxion Framework",
+      logoHref: "/",
+      description:
+        "A modern, framework-agnostic component library for building beautiful web applications.",
+      socialLinks: [
+        { href: "https://github.com", icon: "GitHub" },
+        { href: "https://twitter.com", icon: "Twitter" },
+        { href: "https://linkedin.com", icon: "LinkedIn" },
+      ],
+      sections: [
+        {
+          title: "Product",
+          links: [
+            { text: "Features", href: "/features" },
+            { text: "Pricing", href: "/pricing" },
+            { text: "Documentation", href: "/docs" },
+          ],
+        },
+        {
+          title: "Company",
+          links: [
+            { text: "About", href: "/about" },
+            { text: "Blog", href: "/blog" },
+            { text: "Careers", href: "/careers" },
+          ],
+        },
+        {
+          title: "Support",
+          links: [
+            { text: "Help Center", href: "/help" },
+            { text: "Contact", href: "/contact" },
+            { text: "Status", href: "/status" },
+          ],
+        },
+      ],
+      copyright: "© 2024 Jxion Framework. All rights reserved.",
+      legalLinks: [
+        { text: "Privacy Policy", href: "/privacy" },
+        { text: "Terms of Service", href: "/terms" },
+      ],
+    }),
+    []
+  );
 
   return (
     <Layout params={{ lang: "en", theme: "light" }}>
       <Header
         logoText="Jxion Framework"
         logoHref="/"
-        navItems={[
-          { text: "Home", href: "/", active: true },
-          { text: "Components", href: "/components" },
-          { text: "Documentation", href: "/docs" },
-        ]}
-        actionsContent="<button class='button primary'>Get Started</button>"
+        navItems={navItems}
+        actionsContent={actionsContent}
         onMobileToggle={handleMobileToggle}
         mobileMenuOpen={mobileMenuOpen}
       />
@@ -284,40 +313,7 @@ function App() {
         }
       />
 
-      <Footer
-        logoText="Jxion Framework"
-        logoHref="/"
-        description="Multi-framework component library with centralized templates and design system."
-        socialLinks={[
-          { href: "#", icon: "🐙" },
-          { href: "#", icon: "📦" },
-          { href: "#", icon: "💬" },
-        ]}
-        sections={[
-          {
-            title: "Components",
-            links: [
-              { text: "Hero", href: "#hero" },
-              { text: "Card", href: "#card" },
-              { text: "Button", href: "#button" },
-            ],
-          },
-          {
-            title: "Frameworks",
-            links: [
-              { text: "React", href: "#react" },
-              { text: "Vue", href: "#vue" },
-              { text: "Svelte", href: "#svelte" },
-            ],
-          },
-        ]}
-        copyright="© 2025 Jxion Framework. All rights reserved."
-        copyrightYear="2025"
-        legalLinks={[
-          { text: "Privacy Policy", href: "#privacy" },
-          { text: "Terms of Service", href: "#terms" },
-        ]}
-      />
+      <Footer {...footerData} />
 
       <Modal
         isOpen={modalOpen}

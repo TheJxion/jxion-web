@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@jxion/design/src/components/cta.module.scss";
 import { ctaTemplate, TemplateRenderer } from "@jxion/core";
 
@@ -30,34 +30,46 @@ export const CTA: React.FC<CTAProps> = ({
   // Get the base HTML template from @jxion-core
   const baseTemplate = ctaTemplate.html;
 
-  // Prepare variables for template rendering
-  const variables = {
+  // Memoize template rendering to prevent unnecessary re-renders
+  const rendered = useMemo(() => {
+    // Prepare variables for template rendering
+    const variables = {
+      variant,
+      primaryText,
+      secondaryButton: secondaryText
+        ? `<button class="cta cta--secondary" data-testid="cta-secondary" onclick="${
+            onSecondaryClick ? "onSecondaryClick" : ""
+          }">${secondaryText}</button>`
+        : "",
+      onPrimaryClick: onPrimaryClick ? "onPrimaryClick" : "",
+      onSecondaryClick: onSecondaryClick ? "onSecondaryClick" : "",
+      testId,
+    };
+
+    // Render template with variables
+    let result = TemplateRenderer.render({ template: baseTemplate, variables });
+
+    // Map CSS module classes
+    Object.keys(styles).forEach((className) => {
+      const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
+      result = result.replace(regex, (_, classList) => {
+        const mappedClasses = classList
+          .split(" ")
+          .map((cls: string) => styles[cls] || cls)
+          .join(" ");
+        return `class="${mappedClasses}"`;
+      });
+    });
+
+    return result;
+  }, [
     variant,
     primaryText,
-    secondaryButton: secondaryText
-      ? `<button class="cta cta--secondary" data-testid="cta-secondary" onclick="${
-          onSecondaryClick ? "onSecondaryClick" : ""
-        }">${secondaryText}</button>`
-      : "",
-    onPrimaryClick: onPrimaryClick ? "onPrimaryClick" : "",
-    onSecondaryClick: onSecondaryClick ? "onSecondaryClick" : "",
+    secondaryText,
+    onPrimaryClick,
+    onSecondaryClick,
     testId,
-  };
-
-  // Render template with variables
-  let rendered = TemplateRenderer.render({ template: baseTemplate, variables });
-
-  // Map CSS module classes
-  Object.keys(styles).forEach((className) => {
-    const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
-    rendered = rendered.replace(regex, (match, classList) => {
-      const mappedClasses = classList
-        .split(" ")
-        .map((cls: string) => styles[cls] || cls)
-        .join(" ");
-      return `class="${mappedClasses}"`;
-    });
-  });
+  ]);
 
   // Set up click handlers for template
   React.useEffect(() => {

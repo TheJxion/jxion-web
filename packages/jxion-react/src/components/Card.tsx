@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@jxion/design/src/components/card.module.scss";
 import { cardTemplate, TemplateRenderer } from "@jxion/core";
 
@@ -30,30 +30,35 @@ export const Card: React.FC<CardProps> = ({
   // Get the base HTML template from @jxion-core
   const baseTemplate = cardTemplate.html;
 
-  // Prepare variables for template rendering
-  const variables = {
-    title,
-    subtitle,
-    description,
-    statsValue,
-    statsLabel,
-    testId,
-  };
+  // Memoize template rendering to prevent unnecessary re-renders
+  const rendered = useMemo(() => {
+    // Prepare variables for template rendering
+    const variables = {
+      title,
+      subtitle,
+      description,
+      statsValue,
+      statsLabel,
+      testId,
+    };
 
-  // Render template with variables
-  let rendered = TemplateRenderer.render({ template: baseTemplate, variables });
+    // Render template with variables
+    let result = TemplateRenderer.render({ template: baseTemplate, variables });
 
-  // Map CSS module classes
-  Object.keys(styles).forEach((className) => {
-    const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
-    rendered = rendered.replace(regex, (match, classList) => {
-      const mappedClasses = classList
-        .split(" ")
-        .map((cls: string) => styles[cls] || cls)
-        .join(" ");
-      return `class="${mappedClasses}"`;
+    // Map CSS module classes
+    Object.keys(styles).forEach((className) => {
+      const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
+      result = result.replace(regex, (_, classList) => {
+        const mappedClasses = classList
+          .split(" ")
+          .map((cls: string) => styles[cls] || cls)
+          .join(" ");
+        return `class="${mappedClasses}"`;
+      });
     });
-  });
+
+    return result;
+  }, [title, subtitle, description, statsValue, statsLabel, testId]);
 
   return (
     <div

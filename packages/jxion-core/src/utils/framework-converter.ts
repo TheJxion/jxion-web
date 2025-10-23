@@ -1,6 +1,8 @@
 /**
- * Template to Framework Converter
- * Converts HTML templates from @jxion-core to framework-specific syntax
+ * @fileoverview Framework Converter
+ *
+ * Converts HTML templates to framework-specific syntax for optimal performance
+ * and framework compatibility across React, Vue, Svelte, SolidJS, and Angular.
  */
 
 import { TemplateRenderer } from "./template-renderer";
@@ -11,89 +13,75 @@ export interface FrameworkConverterOptions {
   framework: "react" | "vue" | "svelte" | "solidjs" | "angular";
 }
 
+/**
+ * Framework-specific template converter with optimized transformations
+ *
+ * @todo(@janberk) Add AST-based conversion for better performance
+ * @todo(@janberk) Implement framework-specific optimizations
+ * @todo(@janberk) Add validation for framework-specific syntax
+ */
 export class FrameworkConverter {
   /**
    * Converts HTML template to React JSX
    */
   static toReact(template: string, variables: Record<string, any>): string {
-    // First render the template with variables
     const renderedTemplate = TemplateRenderer.render({ template, variables });
 
-    // Convert HTML to React JSX
-    let jsx = renderedTemplate
-      .replace(/class=/g, "className=") // class -> className
-      .replace(/onclick=/g, "onClick=") // onclick -> onClick
-      .replace(/for=/g, "htmlFor=") // for -> htmlFor
-      .replace(/\{\{([^}]+)\}\}/g, "{$1}"); // {{var}} -> {var}
-
-    return jsx;
+    return renderedTemplate
+      .replace(/class=/g, "className=")
+      .replace(/onclick=/g, "onClick=")
+      .replace(/for=/g, "htmlFor=")
+      .replace(/\{\{([^}]+)\}\}/g, "{$1}");
   }
 
   /**
    * Converts HTML template to Vue template
    */
   static toVue(template: string, variables: Record<string, any>): string {
-    // First render the template with variables
     const renderedTemplate = TemplateRenderer.render({ template, variables });
 
-    // Convert HTML to Vue template syntax
-    let vueTemplate = renderedTemplate
-      .replace(/class=/g, ":class=") // class -> :class
-      .replace(/onclick=/g, "@click=") // onclick -> @click
-      .replace(/\{\{([^}]+)\}\}/g, "{{ $1 }}"); // {{var}} -> {{ var }}
-
-    return vueTemplate;
+    return renderedTemplate
+      .replace(/class=/g, ":class=")
+      .replace(/onclick=/g, "@click=")
+      .replace(/\{\{([^}]+)\}\}/g, "{{ $1 }}");
   }
 
   /**
    * Converts HTML template to Svelte template
    */
   static toSvelte(template: string, variables: Record<string, any>): string {
-    // First render the template with variables
     const renderedTemplate = TemplateRenderer.render({ template, variables });
 
-    // Convert HTML to Svelte template syntax
-    let svelteTemplate = renderedTemplate
-      .replace(/onclick=/g, "on:click=") // onclick -> on:click
-      .replace(/\{\{([^}]+)\}\}/g, "{$1}"); // {{var}} -> {var}
-
-    return svelteTemplate;
+    return renderedTemplate
+      .replace(/onclick=/g, "on:click=")
+      .replace(/\{\{([^}]+)\}\}/g, "{$1}");
   }
 
   /**
    * Converts HTML template to SolidJS JSX
    */
   static toSolidJS(template: string, variables: Record<string, any>): string {
-    // First render the template with variables
     const renderedTemplate = TemplateRenderer.render({ template, variables });
 
-    // Convert HTML to SolidJS JSX
-    let solidTemplate = renderedTemplate
-      .replace(/class=/g, "class=") // Keep class
-      .replace(/onclick=/g, "onClick=") // onclick -> onClick
-      .replace(/\{\{([^}]+)\}\}/g, "{$1}"); // {{var}} -> {var}
-
-    return solidTemplate;
+    return renderedTemplate
+      .replace(/onclick=/g, "onClick=")
+      .replace(/\{\{([^}]+)\}\}/g, "{$1}");
   }
 
   /**
    * Converts HTML template to Angular template
    */
   static toAngular(template: string, variables: Record<string, any>): string {
-    // First render the template with variables
     const renderedTemplate = TemplateRenderer.render({ template, variables });
 
-    // Convert HTML to Angular template syntax
-    let angularTemplate = renderedTemplate
-      .replace(/class=/g, "[class]=") // class -> [class]
-      .replace(/onclick=/g, "(click)=") // onclick -> (click)
-      .replace(/\{\{([^}]+)\}\}/g, "{{ $1() }}"); // {{var}} -> {{ var() }}
-
-    return angularTemplate;
+    return renderedTemplate
+      .replace(/class=/g, "[class]=")
+      .replace(/onclick=/g, "(click)=")
+      .replace(/\{\{([^}]+)\}\}/g, "{{ $1() }}");
   }
 
   /**
-   * Main converter method
+   * Main converter method with framework routing
    */
   static convert(options: FrameworkConverterOptions): string {
     const { template, variables, framework } = options;

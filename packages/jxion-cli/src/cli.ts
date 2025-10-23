@@ -1,8 +1,17 @@
+/**
+ * @fileoverview Jxion Framework CLI
+ * 
+ * Command-line interface for the Jxion multi-framework component library.
+ * Provides project scaffolding, development tools, and component generation.
+ */
+
 import { Command } from "commander";
 import inquirer from "inquirer";
 import ora from "ora";
 import chalk from "chalk";
 import { ComponentGenerator } from "./generators/component.generator";
+import { ProjectGenerator, ProjectOptions } from "./generators/project.generator";
+
 const program = new Command();
 
 program.name("jxion").description("Jxion Framework CLI").version("1.0.0");
@@ -13,12 +22,20 @@ program
   .description("Create a new Jxion project")
   .option(
     "-f, --framework <framework>",
-    "Frontend framework (vue, react, svelte, solidjs)"
+    "Frontend framework (vue, react, svelte, solidjs, angular)"
   )
   .option(
     "-b, --backend <backend>",
     "Backend technology (trpc, go, python-flask, none)"
   )
+  .option(
+    "-m, --meta-framework <meta>",
+    "Meta-framework (next, nuxt, sveltekit, solidstart, angular-ssr)"
+  )
+  .option("--typescript", "Enable TypeScript", true)
+  .option("--eslint", "Enable ESLint", true)
+  .option("--husky", "Enable Husky", true)
+  .option("--design-tokens", "Enable design tokens", true)
   .action(async (projectName, options) => {
     const spinner = ora("Creating Jxion project...").start();
 
@@ -62,10 +79,65 @@ program
         backend = backendAnswer.backend;
       }
 
-      spinner.text = `Creating ${framework} project with ${backend} backend...`;
+      // Prompt for meta-framework if not provided
+      let metaFramework = options.metaFramework;
+      if (!metaFramework) {
+        const metaAnswer = await inquirer.prompt([
+          {
+            type: "list",
+            name: "metaFramework",
+            message: "Choose meta-framework (optional):",
+            choices: [
+              { name: "None", value: undefined },
+              { name: "Next.js (React)", value: "next" },
+              { name: "Nuxt (Vue)", value: "nuxt" },
+              { name: "SvelteKit (Svelte)", value: "sveltekit" },
+              { name: "SolidStart (SolidJS)", value: "solidstart" },
+              { name: "Angular SSR", value: "angular-ssr" },
+            ],
+          },
+        ]);
+        metaFramework = metaAnswer.metaFramework;
+      }
 
-      // Simulate project creation
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Prompt for additional options
+      const additionalOptions = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "typescript",
+          message: "Enable TypeScript?",
+          default: options.typescript,
+        },
+        {
+          type: "confirm",
+          name: "eslint",
+          message: "Enable ESLint?",
+          default: options.eslint,
+        },
+        {
+          type: "confirm",
+          name: "husky",
+          message: "Enable Husky (Git hooks)?",
+          default: options.husky,
+        },
+        {
+          type: "confirm",
+          name: "designTokens",
+          message: "Enable design tokens?",
+          default: options.designTokens,
+        },
+      ]);
+
+      const projectOptions: ProjectOptions = {
+        name: projectName,
+        framework,
+        backend,
+        metaFramework,
+        ...additionalOptions,
+      };
+
+      const generator = new ProjectGenerator(projectName);
+      await generator.generate(projectOptions);
 
       spinner.succeed(
         chalk.green(`✅ Project "${projectName}" created successfully!`)
@@ -74,6 +146,7 @@ program
       console.log(chalk.blue("\n📁 Project structure:"));
       console.log(`  ${projectName}/`);
       console.log(`  ├── src/`);
+      console.log(`  ├── backend/`);
       console.log(`  ├── package.json`);
       console.log(`  └── README.md`);
 
@@ -81,6 +154,15 @@ program
       console.log(`  cd ${projectName}`);
       console.log(`  npm install`);
       console.log(`  npm run dev`);
+
+      if (backend !== "none") {
+        console.log(chalk.magenta("\n🔧 Backend setup:"));
+        console.log(`  cd backend`);
+        console.log(
+          `  npm install  # or go mod init, pip install -r requirements.txt`
+        );
+        console.log(`  npm run dev  # or go run main.go, python app.py`);
+      }
     } catch (error) {
       spinner.fail(chalk.red("❌ Failed to create project"));
       console.error(error);

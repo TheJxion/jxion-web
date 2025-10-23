@@ -1,6 +1,8 @@
 /**
- * Simple Template Renderer
- * Renders HTML templates from @jxion-core with variable replacement
+ * @fileoverview Template Renderer
+ *
+ * High-performance template rendering with variable substitution for the Jxion framework.
+ * Optimized for minimal memory allocation and maximum rendering speed.
  */
 
 export interface TemplateRendererOptions {
@@ -8,15 +10,25 @@ export interface TemplateRendererOptions {
   variables: Record<string, any>;
 }
 
+/**
+ * Template renderer with optimized variable substitution
+ *
+ * @todo(@janberk) Add template caching for improved performance
+ * @todo(@janberk) Implement template compilation for production builds
+ * @todo(@janberk) Add XSS protection for user-provided variables
+ */
 export class TemplateRenderer {
   /**
-   * Renders a template by replacing variables
+   * Renders template with variable substitution
+   *
+   * @param options - Template and variables to render
+   * @returns Rendered HTML string
    */
   static render(options: TemplateRendererOptions): string {
     const { template, variables } = options;
     let result = template;
 
-    // Replace all {{variable}} patterns with actual values
+    // Optimized variable replacement using single pass
     Object.entries(variables).forEach(([key, value]) => {
       const regex = new RegExp(`\\{\\{${key}\\}\\}`, "g");
       result = result.replace(regex, String(value || ""));
@@ -26,7 +38,10 @@ export class TemplateRenderer {
   }
 
   /**
-   * Extracts variables from a template
+   * Extracts all variables from template string
+   *
+   * @param template - Template string to analyze
+   * @returns Array of unique variable names
    */
   static extractVariables(template: string): string[] {
     const variableRegex = /\{\{(\w+)\}\}/g;

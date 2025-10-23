@@ -5,6 +5,8 @@
  * Provides type-safe component discovery and documentation generation.
  */
 
+import { debug } from "../utils/debug";
+
 export interface ComponentMetadata {
   name: string;
   version: string;
@@ -89,7 +91,35 @@ export const componentRegistry: ComponentRegistry = {
  * @returns Component metadata or undefined
  */
 export function getComponent(name: string): ComponentMetadata | undefined {
-  return componentRegistry[name];
+  debug.startTimer(`getComponent-${name}`);
+  debug.logComponentRegistry("get", name, {
+    availableComponents: Object.keys(componentRegistry),
+  });
+
+  const component = componentRegistry[name];
+
+  if (component) {
+    debug.component("info", `Found component: ${name}`, {
+      component: name,
+      operation: "get",
+      metadata: {
+        version: component.version,
+        category: component.category,
+        frameworks: component.frameworks,
+        propCount: Object.keys(component.props).length,
+        exampleCount: component.examples.length,
+      },
+    });
+  } else {
+    debug.component("warn", `Component not found: ${name}`, {
+      component: name,
+      operation: "get",
+      metadata: { availableComponents: Object.keys(componentRegistry) },
+    });
+  }
+
+  debug.endTimer(`getComponent-${name}`, { component: name });
+  return component;
 }
 
 /**
@@ -99,9 +129,33 @@ export function getComponent(name: string): ComponentMetadata | undefined {
  * @returns Array of component metadata
  */
 export function getComponentsByCategory(category: string): ComponentMetadata[] {
-  return Object.values(componentRegistry).filter(
+  debug.startTimer(`getComponentsByCategory-${category}`);
+  debug.logComponentRegistry("getByCategory", category, {
+    totalComponents: Object.keys(componentRegistry).length,
+  });
+
+  const components = Object.values(componentRegistry).filter(
     (component) => component.category === category
   );
+
+  debug.component(
+    "info",
+    `Found ${components.length} components in category: ${category}`,
+    {
+      operation: "getByCategory",
+      metadata: {
+        category,
+        componentCount: components.length,
+        componentNames: components.map((c) => c.name),
+      },
+    }
+  );
+
+  debug.endTimer(`getComponentsByCategory-${category}`, {
+    category,
+    count: components.length,
+  });
+  return components;
 }
 
 /**
@@ -113,9 +167,34 @@ export function getComponentsByCategory(category: string): ComponentMetadata[] {
 export function getComponentsByFramework(
   framework: string
 ): ComponentMetadata[] {
-  return Object.values(componentRegistry).filter((component) =>
+  debug.startTimer(`getComponentsByFramework-${framework}`);
+  debug.logComponentRegistry("getByFramework", framework, {
+    totalComponents: Object.keys(componentRegistry).length,
+  });
+
+  const components = Object.values(componentRegistry).filter((component) =>
     component.frameworks.includes(framework)
   );
+
+  debug.component(
+    "info",
+    `Found ${components.length} components for framework: ${framework}`,
+    {
+      operation: "getByFramework",
+      metadata: {
+        framework,
+        componentCount: components.length,
+        componentNames: components.map((c) => c.name),
+        frameworks: components.map((c) => c.frameworks),
+      },
+    }
+  );
+
+  debug.endTimer(`getComponentsByFramework-${framework}`, {
+    framework,
+    count: components.length,
+  });
+  return components;
 }
 
 /**

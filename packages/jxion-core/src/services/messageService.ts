@@ -1,4 +1,5 @@
 import { createJxionClient } from "../trpc/client";
+import { debug } from "../utils/debug";
 
 export interface Message {
   id: string;
@@ -15,9 +16,46 @@ export class MessageService {
   private client = createJxionClient();
 
   async getMessages(limit: number = 10): Promise<Message[]> {
+    debug.startTimer(`messageService-getMessages-${limit}`);
+    debug.logTrpcOperation("query", "getMessages", { limit });
+
     try {
-      return await this.client.getMessages.query(limit);
+      const result = await this.client.getMessages.query(limit);
+
+      debug.trpc("info", "Successfully fetched messages", {
+        operation: "query",
+        metadata: {
+          endpoint: "getMessages",
+          limit,
+          resultCount: result.length,
+          success: true,
+        },
+      });
+
+      debug.endTimer(`messageService-getMessages-${limit}`, {
+        operation: "getMessages",
+        limit,
+        resultCount: result.length,
+      });
+
+      return result;
     } catch (error) {
+      debug.trpc("error", "Failed to fetch messages", {
+        operation: "query",
+        metadata: {
+          endpoint: "getMessages",
+          limit,
+          error: error instanceof Error ? error.message : "Unknown error",
+          success: false,
+        },
+      });
+
+      debug.endTimer(`messageService-getMessages-${limit}`, {
+        operation: "getMessages",
+        limit,
+        error: true,
+      });
+
       console.error("Failed to fetch messages:", error);
       throw error;
     }

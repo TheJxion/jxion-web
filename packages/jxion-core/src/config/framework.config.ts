@@ -5,6 +5,8 @@
  * dependencies, and capabilities. Optimized for CLI project generation.
  */
 
+import { debug } from "../utils/debug";
+
 export interface FrameworkConfig {
   name: string;
   version: string;
@@ -310,7 +312,39 @@ export const frameworkConfigs: Record<string, FrameworkConfig> = {
  * @returns Framework configuration or undefined
  */
 export function getFrameworkConfig(name: string): FrameworkConfig | undefined {
-  return frameworkConfigs[name];
+  debug.startTimer(`getFrameworkConfig-${name}`);
+  debug.logConfigLoad("framework", name, {
+    availableFrameworks: Object.keys(frameworkConfigs),
+  });
+
+  const config = frameworkConfigs[name];
+
+  if (config) {
+    debug.configuration("info", `Found framework config: ${name}`, {
+      operation: "get",
+      metadata: {
+        framework: name,
+        type: config.type,
+        version: config.version,
+        port: config.port,
+        featureCount: config.features.length,
+        limitationCount: config.limitations.length,
+        dependencyCount: Object.keys(config.dependencies).length,
+        devDependencyCount: Object.keys(config.devDependencies).length,
+      },
+    });
+  } else {
+    debug.configuration("warn", `Framework config not found: ${name}`, {
+      operation: "get",
+      metadata: {
+        framework: name,
+        availableFrameworks: Object.keys(frameworkConfigs),
+      },
+    });
+  }
+
+  debug.endTimer(`getFrameworkConfig-${name}`, { framework: name });
+  return config;
 }
 
 /**

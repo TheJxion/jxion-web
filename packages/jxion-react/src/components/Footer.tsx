@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@jxion/design/src/components/footer.module.scss";
 import { footerTemplate, TemplateRenderer } from "@jxion/core";
 
@@ -37,19 +37,21 @@ export const Footer: React.FC<FooterProps> = ({
   // Get the base HTML template from @jxion-core
   const baseTemplate = footerTemplate.html;
 
-  // Process socialLinks for template
-  const socialLinksHtml = socialLinks
-    .map(
-      (link, index) =>
-        `<a href="${link.href}" class="footer__social__link" data-testid="social-${index}" target="_blank" rel="noopener noreferrer">${link.icon}</a>`
-    )
-    .join("");
+  // Memoize template rendering to prevent unnecessary re-renders
+  const rendered = useMemo(() => {
+    // Process socialLinks for template
+    const socialLinksHtml = socialLinks
+      .map(
+        (link, index) =>
+          `<a href="${link.href}" class="footer__social__link" data-testid="social-${index}" target="_blank" rel="noopener noreferrer">${link.icon}</a>`
+      )
+      .join("");
 
-  // Process sections for template
-  const sectionsHtml = sections
-    .map(
-      (section, sectionIndex) =>
-        `<div class="footer__section">
+    // Process sections for template
+    const sectionsHtml = sections
+      .map(
+        (section, sectionIndex) =>
+          `<div class="footer__section">
         <h4 class="footer__title">${section.title}</h4>
         <ul class="footer__links">
           ${section.links
@@ -60,43 +62,55 @@ export const Footer: React.FC<FooterProps> = ({
             .join("")}
         </ul>
       </div>`
-    )
-    .join("");
+      )
+      .join("");
 
-  // Process legalLinks for template
-  const legalLinksHtml = legalLinks
-    .map(
-      (link, index) =>
-        `<a href="${link.href}" class="footer__legal__link" data-testid="legal-${index}">${link.text}</a>`
-    )
-    .join("");
+    // Process legalLinks for template
+    const legalLinksHtml = legalLinks
+      .map(
+        (link, index) =>
+          `<a href="${link.href}" class="footer__legal__link" data-testid="legal-${index}">${link.text}</a>`
+      )
+      .join("");
 
-  // Prepare variables for template rendering
-  const variables = {
+    // Prepare variables for template rendering
+    const variables = {
+      logoHref,
+      logoText,
+      description,
+      socialLinks: socialLinksHtml,
+      sections: sectionsHtml,
+      copyright,
+      legalLinks: legalLinksHtml,
+      testId,
+    };
+
+    // Render template with variables
+    let result = TemplateRenderer.render({ template: baseTemplate, variables });
+
+    // Map CSS module classes
+    Object.keys(styles).forEach((className) => {
+      const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
+      result = result.replace(regex, (_, classList) => {
+        const mappedClasses = classList
+          .split(" ")
+          .map((cls: string) => styles[cls] || cls)
+          .join(" ");
+        return `class="${mappedClasses}"`;
+      });
+    });
+
+    return result;
+  }, [
     logoHref,
     logoText,
     description,
-    socialLinks: socialLinksHtml,
-    sections: sectionsHtml,
+    socialLinks,
+    sections,
     copyright,
-    legalLinks: legalLinksHtml,
+    legalLinks,
     testId,
-  };
-
-  // Render template with variables
-  let rendered = TemplateRenderer.render({ template: baseTemplate, variables });
-
-  // Map CSS module classes
-  Object.keys(styles).forEach((className) => {
-    const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
-    rendered = rendered.replace(regex, (match, classList) => {
-      const mappedClasses = classList
-        .split(" ")
-        .map((cls: string) => styles[cls] || cls)
-        .join(" ");
-      return `class="${mappedClasses}"`;
-    });
-  });
+  ]);
 
   return (
     <div

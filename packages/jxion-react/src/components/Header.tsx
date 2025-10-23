@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@jxion/design/src/components/header.module.scss";
 import { headerTemplate, TemplateRenderer } from "@jxion/core";
 
@@ -32,41 +32,54 @@ export const Header: React.FC<HeaderProps> = ({
   // Get the base HTML template from @jxion-core
   const baseTemplate = headerTemplate.html;
 
-  // Process navItems for template
-  const navItemsHtml = navItems
-    .map(
-      (item, index) =>
-        `<a href="${item.href}" class="header__nav__item ${
-          item.active ? "header__nav__item--active" : ""
-        }" data-testid="nav-${index}">${item.text}</a>`
-    )
-    .join("");
+  // Memoize template rendering to prevent unnecessary re-renders
+  const rendered = useMemo(() => {
+    // Process navItems for template
+    const navItemsHtml = navItems
+      .map(
+        (item, index) =>
+          `<a href="${item.href}" class="header__nav__item ${
+            item.active ? "header__nav__item--active" : ""
+          }" data-testid="nav-${index}">${item.text}</a>`
+      )
+      .join("");
 
-  // Prepare variables for template rendering
-  const variables = {
+    // Prepare variables for template rendering
+    const variables = {
+      logoHref,
+      logoText,
+      navItems: navItemsHtml,
+      actionsContent: actionsContent ? actionsContent.toString() : "",
+      onMobileToggle: onMobileToggle ? "onMobileToggle" : "",
+      mobileMenuOpen: mobileMenuOpen ? "header__mobile-menu--open" : "",
+      testId,
+    };
+
+    // Render template with variables
+    let result = TemplateRenderer.render({ template: baseTemplate, variables });
+
+    // Map CSS module classes
+    Object.keys(styles).forEach((className) => {
+      const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
+      result = result.replace(regex, (_, classList) => {
+        const mappedClasses = classList
+          .split(" ")
+          .map((cls: string) => styles[cls] || cls)
+          .join(" ");
+        return `class="${mappedClasses}"`;
+      });
+    });
+
+    return result;
+  }, [
     logoHref,
     logoText,
-    navItems: navItemsHtml,
-    actionsContent: actionsContent ? actionsContent.toString() : "",
-    onMobileToggle: onMobileToggle ? "onMobileToggle" : "",
-    mobileMenuOpen: mobileMenuOpen ? "header__mobile-menu--open" : "",
+    navItems,
+    actionsContent,
+    onMobileToggle,
+    mobileMenuOpen,
     testId,
-  };
-
-  // Render template with variables
-  let rendered = TemplateRenderer.render({ template: baseTemplate, variables });
-
-  // Map CSS module classes
-  Object.keys(styles).forEach((className) => {
-    const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
-    rendered = rendered.replace(regex, (match, classList) => {
-      const mappedClasses = classList
-        .split(" ")
-        .map((cls: string) => styles[cls] || cls)
-        .join(" ");
-      return `class="${mappedClasses}"`;
-    });
-  });
+  ]);
 
   // Set up click handler for template
   React.useEffect(() => {

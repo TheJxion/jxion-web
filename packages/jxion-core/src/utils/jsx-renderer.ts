@@ -1,9 +1,9 @@
 /**
  * @fileoverview JSX Template Renderer
- * 
+ *
  * Renders HTML templates from @jxion-core as React JSX elements.
  * Provides optimized conversion from HTML strings to React components.
- * 
+ *
  * @author Jxion Framework Team
  * @version 1.0.0
  */
@@ -20,7 +20,7 @@ export interface JSXRenderOptions {
 
 /**
  * JSX renderer for converting HTML templates to React elements
- * 
+ *
  * @todo(@janberk) Add SSR support for server-side rendering
  * @todo(@janberk) Implement event handler mapping for all event types
  * @todo(@janberk) Add performance optimization for large templates
@@ -28,7 +28,7 @@ export interface JSXRenderOptions {
 export class JSXRenderer {
   /**
    * Renders HTML template as React JSX elements
-   * 
+   *
    * @param options - Render options including template, variables, and styles
    * @returns React element
    */
@@ -44,7 +44,7 @@ export class JSXRenderer {
 
   /**
    * Parses HTML string and converts to React JSX elements
-   * 
+   *
    * @param html - HTML string to parse
    * @param styles - CSS module styles object
    * @param onCtaClick - Optional click handler

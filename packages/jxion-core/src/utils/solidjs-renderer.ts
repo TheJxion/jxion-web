@@ -1,6 +1,11 @@
 /**
- * SolidJS Template Renderer
- * Renders HTML templates from @jxion-core as SolidJS JSX strings
+ * @fileoverview SolidJS Template Renderer
+ *
+ * Renders HTML templates from @jxion-core as SolidJS JSX strings.
+ * Provides optimized conversion from HTML to SolidJS template syntax.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 import { TemplateRenderer } from "./template-renderer";
@@ -11,9 +16,19 @@ export interface SolidJSRenderOptions {
   styles: Record<string, string>;
 }
 
+/**
+ * SolidJS renderer for converting HTML templates to SolidJS JSX syntax
+ *
+ * @todo(@janberk) Add SolidJS signals support
+ * @todo(@janberk) Implement reactive primitive conversion
+ * @todo(@janberk) Add SolidJS store mapping for state management
+ */
 export class SolidJSRenderer {
   /**
    * Renders HTML template as SolidJS JSX string
+   *
+   * @param options - Render options including template, variables, and styles
+   * @returns SolidJS JSX string
    */
   static render(options: SolidJSRenderOptions): string {
     const { template, variables, styles } = options;

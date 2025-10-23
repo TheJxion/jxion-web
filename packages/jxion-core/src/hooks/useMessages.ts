@@ -1,3 +1,13 @@
+/**
+ * @fileoverview Messages Hook
+ *
+ * Universal hook for managing messages with tRPC backend integration.
+ * Provides type-safe message operations across all frameworks.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
+ */
+
 import { useState, useCallback } from "react";
 import { createJxionClient } from "../trpc/client";
 
@@ -11,6 +21,13 @@ export interface Greeting {
   message: string;
 }
 
+/**
+ * Hook for managing messages with tRPC backend
+ *
+ * @returns Object containing messages state and operations
+ * @todo(@janberk) Add message pagination support
+ * @todo(@janberk) Implement optimistic updates for better UX
+ */
 export const useMessages = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);

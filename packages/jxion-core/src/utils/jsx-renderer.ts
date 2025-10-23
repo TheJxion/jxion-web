@@ -1,6 +1,11 @@
 /**
- * JSX Template Renderer
- * Renders HTML templates from @jxion-core as React JSX elements
+ * @fileoverview JSX Template Renderer
+ * 
+ * Renders HTML templates from @jxion-core as React JSX elements.
+ * Provides optimized conversion from HTML strings to React components.
+ * 
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 import React from "react";
@@ -13,9 +18,19 @@ export interface JSXRenderOptions {
   onCtaClick?: () => void;
 }
 
+/**
+ * JSX renderer for converting HTML templates to React elements
+ * 
+ * @todo(@janberk) Add SSR support for server-side rendering
+ * @todo(@janberk) Implement event handler mapping for all event types
+ * @todo(@janberk) Add performance optimization for large templates
+ */
 export class JSXRenderer {
   /**
    * Renders HTML template as React JSX elements
+   * 
+   * @param options - Render options including template, variables, and styles
+   * @returns React element
    */
   static render(options: JSXRenderOptions): React.ReactElement {
     const { template, variables, styles, onCtaClick } = options;
@@ -29,6 +44,11 @@ export class JSXRenderer {
 
   /**
    * Parses HTML string and converts to React JSX elements
+   * 
+   * @param html - HTML string to parse
+   * @param styles - CSS module styles object
+   * @param onCtaClick - Optional click handler
+   * @returns React element
    */
   private static parseHTMLToJSX(
     html: string,
@@ -53,7 +73,7 @@ export class JSXRenderer {
             // Map class names to styles object
             const classNames = value
               .split(" ")
-              .map((cls) => styles[cls] || cls)
+              .map((cls: string) => styles[cls] || cls)
               .join(" ");
             props.className = classNames;
             break;

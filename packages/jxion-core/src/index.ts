@@ -3,6 +3,9 @@
  *
  * Central business logic, templates, and utilities for the Jxion multi-framework
  * component library. Provides unified APIs across React, Vue, Svelte, SolidJS, and Angular.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 // Core business logic and tRPC integration

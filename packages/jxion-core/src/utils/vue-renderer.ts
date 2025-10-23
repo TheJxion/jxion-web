@@ -1,6 +1,11 @@
 /**
- * Vue Template Renderer
- * Renders HTML templates from @jxion-core as Vue template strings
+ * @fileoverview Vue Template Renderer
+ *
+ * Renders HTML templates from @jxion-core as Vue template strings.
+ * Provides optimized conversion from HTML to Vue template syntax.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 import { TemplateRenderer } from "./template-renderer";
@@ -11,9 +16,19 @@ export interface VueRenderOptions {
   styles: Record<string, string>;
 }
 
+/**
+ * Vue renderer for converting HTML templates to Vue template syntax
+ *
+ * @todo(@janberk) Add Vue 3 Composition API support
+ * @todo(@janberk) Implement reactive data binding conversion
+ * @todo(@janberk) Add Vue directive mapping for complex interactions
+ */
 export class VueRenderer {
   /**
    * Renders HTML template as Vue template string
+   *
+   * @param options - Render options including template, variables, and styles
+   * @returns Vue template string
    */
   static render(options: VueRenderOptions): string {
     const { template, variables, styles } = options;

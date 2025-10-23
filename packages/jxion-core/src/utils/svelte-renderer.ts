@@ -1,6 +1,11 @@
 /**
- * Svelte Template Renderer
- * Renders HTML templates from @jxion-core as Svelte template strings
+ * @fileoverview Svelte Template Renderer
+ *
+ * Renders HTML templates from @jxion-core as Svelte template strings.
+ * Provides optimized conversion from HTML to Svelte template syntax.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 import { TemplateRenderer } from "./template-renderer";
@@ -11,9 +16,19 @@ export interface SvelteRenderOptions {
   styles: Record<string, string>;
 }
 
+/**
+ * Svelte renderer for converting HTML templates to Svelte template syntax
+ *
+ * @todo(@janberk) Add Svelte 5 runes support
+ * @todo(@janberk) Implement reactive statement conversion
+ * @todo(@janberk) Add Svelte action mapping for complex interactions
+ */
 export class SvelteRenderer {
   /**
    * Renders HTML template as Svelte template string
+   *
+   * @param options - Render options including template, variables, and styles
+   * @returns Svelte template string
    */
   static render(options: SvelteRenderOptions): string {
     const { template, variables, styles } = options;

@@ -1,3 +1,13 @@
+/**
+ * @fileoverview Greetings Hook
+ * 
+ * Universal hook for fetching greetings from tRPC backend.
+ * Provides type-safe greeting operations across all frameworks.
+ * 
+ * @author Jxion Framework Team
+ * @version 1.0.0
+ */
+
 import { useState, useCallback } from "react";
 import { createJxionClient } from "../trpc/client";
 
@@ -5,6 +15,13 @@ export interface Greeting {
   message: string;
 }
 
+/**
+ * Hook for managing greetings with tRPC backend
+ * 
+ * @returns Object containing greeting state and operations
+ * @todo(@janberk) Add greeting caching for improved performance
+ * @todo(@janberk) Implement greeting refresh mechanism
+ */
 export const useGreetings = () => {
   const [greeting, setGreeting] = useState<Greeting | null>(null);
   const [isLoading, setIsLoading] = useState(false);

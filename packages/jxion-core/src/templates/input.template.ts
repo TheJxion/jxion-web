@@ -3,6 +3,9 @@
  *
  * Professional HTML template for Input components across all frameworks.
  * Located in @jxion-core - templates only, no styles.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 export const inputTemplate = {

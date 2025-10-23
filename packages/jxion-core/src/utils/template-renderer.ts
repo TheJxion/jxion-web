@@ -3,6 +3,9 @@
  *
  * High-performance template rendering with variable substitution for the Jxion framework.
  * Optimized for minimal memory allocation and maximum rendering speed.
+ *
+ * @author Jxion Framework Team
+ * @version 1.0.0
  */
 
 export interface TemplateRendererOptions {

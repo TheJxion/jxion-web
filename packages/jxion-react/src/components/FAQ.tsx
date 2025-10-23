@@ -20,7 +20,7 @@ export const FAQ: React.FC<FAQProps> = ({ params }) => {
     },
     {
       question: "How do I get started with Jxion?",
-      answer: "Use our CLI tool to create a new project: \`jxion create my-app\` and choose your preferred framework.",
+      answer: "Use our CLI tool to create a new project: `jxion create my-app` and choose your preferred framework.",
     },
     {
       question: "Can I customize the design system?",

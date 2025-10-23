@@ -65,19 +65,19 @@ export const NextSteps: React.FC<NextStepsProps> = ({
   ];
 
   return (
-    <section className={`${styles.nextSteps} ${styles[\`nextSteps--\${variant}\`]}`}>
+    <section className={`${styles.nextSteps} ${styles[`nextSteps--${variant}`]}`}>
       <div className={styles.nextSteps__container}>
         <div className={styles.nextSteps__header}>
           <h2 className={styles.nextSteps__title}>{title}</h2>
           <p className={styles.nextSteps__subtitle}>{subtitle}</p>
         </div>
         
-        <div className={`${styles.nextSteps__content} ${styles[\`nextSteps__content--\${layout}\`]} ${styles[\`nextSteps__content--\${columns}\`]}`}>
+        <div className={`${styles.nextSteps__content} ${styles[`nextSteps__content--${layout}`]} ${styles[`nextSteps__content--${columns}`]}`}>
           {steps.map((step, index) => (
             <div 
               key={index} 
               className={styles.nextSteps__item}
-              style={{ animationDelay: \`\${delay + index * 0.1}s\` }}
+              style={{ animationDelay: `${delay + index * 0.1}s` }}
             >
               {showIcons && (
                 <div className={styles.nextSteps__icon}>

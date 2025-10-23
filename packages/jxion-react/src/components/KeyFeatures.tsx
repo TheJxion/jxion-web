@@ -49,7 +49,7 @@ export const KeyFeatures: React.FC<KeyFeaturesProps> = ({
   ];
 
   return (
-    <section className={`${styles.keyFeatures} ${styles[\`keyFeatures--\${variant}\`]}`}>
+    <section className={`${styles.keyFeatures} ${styles[`keyFeatures--${variant}`]}`}>
       <div className={styles.keyFeatures__container}>
         <div className={styles.keyFeatures__header}>
           <h2 className={styles.keyFeatures__title}>Key Features</h2>
@@ -58,12 +58,12 @@ export const KeyFeatures: React.FC<KeyFeaturesProps> = ({
           </p>
         </div>
         
-        <div className={`${styles.keyFeatures__grid} ${styles[\`keyFeatures__grid--\${columns}\`]}`}>
+        <div className={`${styles.keyFeatures__grid} ${styles[`keyFeatures__grid--${columns}`]}`}>
           {features.map((feature, index) => (
             <div 
               key={index} 
               className={styles.keyFeatures__item}
-              style={{ animationDelay: \`\${delay + index * 0.1}s\` }}
+              style={{ animationDelay: `${delay + index * 0.1}s` }}
             >
               {showIcons && (
                 <div className={styles.keyFeatures__icon}>

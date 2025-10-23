@@ -35,7 +35,7 @@ export const WhatsOurImpact: React.FC<WhatsOurImpactProps> = ({
         <div className={styles.whatsOurImpact__stats}>
           {stats.map((stat, index) => (
             <div key={index} className={styles.whatsOurImpact__stat}>
-              <div className={`${styles.whatsOurImpact__statValue} ${styles[\`whatsOurImpact__statValue--\${stat.color}\`]}`}>
+              <div className={`${styles.whatsOurImpact__statValue} ${styles[`whatsOurImpact__statValue--${stat.color}`]}`}>
                 {stat.value}
               </div>
               <div className={styles.whatsOurImpact__statLabel}>

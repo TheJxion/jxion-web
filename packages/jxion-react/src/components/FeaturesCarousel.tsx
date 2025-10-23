@@ -64,7 +64,11 @@ export const FeaturesCarousel: React.FC<FeaturesCarouselProps> = ({
   ];
 
   return (
-    <section className={`${styles.featuresCarousel} ${styles[\`featuresCarousel--\${variant}\`]}`}>
+    <section
+      className={`${styles.featuresCarousel} ${
+        styles[`featuresCarousel--${variant}`]
+      }`}
+    >
       <div className={styles.featuresCarousel__container}>
         <div className={styles.featuresCarousel__header}>
           <h2 className={styles.featuresCarousel__title}>Framework Features</h2>
@@ -72,13 +76,17 @@ export const FeaturesCarousel: React.FC<FeaturesCarouselProps> = ({
             Everything you need for modern web development
           </p>
         </div>
-        
-        <div className={`${styles.featuresCarousel__content} ${styles[\`featuresCarousel__content--\${layout}\`]}`}>
+
+        <div
+          className={`${styles.featuresCarousel__content} ${
+            styles[`featuresCarousel__content--${layout}`]
+          }`}
+        >
           {features.map((feature, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={styles.featuresCarousel__item}
-              style={{ animationDelay: \`\${delay + index * 0.1}s\` }}
+              style={{ animationDelay: `${delay + index * 0.1}s` }}
             >
               <div className={styles.featuresCarousel__icon}>
                 {feature.icon}
@@ -92,19 +100,26 @@ export const FeaturesCarousel: React.FC<FeaturesCarouselProps> = ({
             </div>
           ))}
         </div>
-        
+
         {showControls && (
           <div className={styles.featuresCarousel__controls}>
             {showNavigation && (
               <div className={styles.featuresCarousel__navigation}>
-                <button className={styles.featuresCarousel__navButton}>←</button>
-                <button className={styles.featuresCarousel__navButton}>→</button>
+                <button className={styles.featuresCarousel__navButton}>
+                  ←
+                </button>
+                <button className={styles.featuresCarousel__navButton}>
+                  →
+                </button>
               </div>
             )}
             {showPagination && (
               <div className={styles.featuresCarousel__pagination}>
                 {features.map((_, index) => (
-                  <button key={index} className={styles.featuresCarousel__paginationDot} />
+                  <button
+                    key={index}
+                    className={styles.featuresCarousel__paginationDot}
+                  />
                 ))}
               </div>
             )}

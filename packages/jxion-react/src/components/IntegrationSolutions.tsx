@@ -41,7 +41,7 @@ export const IntegrationSolutions: React.FC<IntegrationSolutionsProps> = ({
   ];
 
   return (
-    <section className={`${styles.integrationSolutions} ${styles[\`integrationSolutions--\${layout}\`]}`}>
+    <section className={`${styles.integrationSolutions} ${styles[`integrationSolutions--${layout}`]}`}>
       <div className={styles.integrationSolutions__container}>
         <div className={styles.integrationSolutions__header}>
           <h2 className={styles.integrationSolutions__title}>

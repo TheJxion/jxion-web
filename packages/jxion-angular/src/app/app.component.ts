@@ -30,8 +30,8 @@ import { HeroComponent } from "../components/hero.component";
         <div class="app__demo">
           <h3>Jxion Framework Demo</h3>
           <p>
-            This Angular component uses the Hero component from @jxion/core with
-            styles from @jxion/design
+            This Angular component uses the Hero component from &#64;jxion/core
+            with styles from &#64;jxion/design
           </p>
         </div>
       </div>

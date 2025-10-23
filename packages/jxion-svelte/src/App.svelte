@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Layout } from './components/Layout.svelte'
-  import { Header } from './components/Header.svelte'
-  import { Hero } from './components/Hero.svelte'
-  import { Section } from './components/Section.svelte'
-  import { Footer } from './components/Footer.svelte'
-  import { Modal } from './components/Modal.svelte'
+  import Layout from './components/Layout.svelte'
+  import Header from './components/Header.svelte'
+  import Hero from './components/Hero.svelte'
+  import Section from './components/Section.svelte'
+  import Footer from './components/Footer.svelte'
+  import Modal from './components/Modal.svelte'
   import { messageService, greetingService } from '@jxion/core'
   
   let messages: Array<{ id: string; user: string; message: string }> = []

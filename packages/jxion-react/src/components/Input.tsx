@@ -52,7 +52,9 @@ export const Input: React.FC<InputProps> = ({
 
   // Prepare variables for template rendering
   const variables = {
-    label: label || "",
+    label: label
+      ? `<label for="${id}" class="input-label" data-testid="input-label">${label}</label>`
+      : "",
     id,
     type,
     name: name || id,
@@ -62,9 +64,14 @@ export const Input: React.FC<InputProps> = ({
     value,
     required: required ? "required" : "",
     disabled: disabled ? "disabled" : "",
-    error: error || "",
-    success: success ? "input--success" : "",
-    helpText: helpText || "",
+    error: error
+      ? `<div class="input-error" data-testid="input-error">${error}</div>`
+      : "",
+    errorClass: error ? "input--error" : "",
+    successClass: success ? "input--success" : "",
+    helpText: helpText
+      ? `<div class="input-help" data-testid="input-help">${helpText}</div>`
+      : "",
     onChange: onChange ? "onChange" : "",
     onInput: onInput ? "onInput" : "",
     testId,

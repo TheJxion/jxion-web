@@ -119,10 +119,6 @@ const renderedTemplate = computed(() => {
 });
 </script>
 
-<script>
-export { Footer };
-</script>
-
 <style scoped>
 @import "@jxion/design/src/components/footer.module.scss";
 </style>

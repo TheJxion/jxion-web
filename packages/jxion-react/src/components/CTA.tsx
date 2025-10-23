@@ -34,7 +34,11 @@ export const CTA: React.FC<CTAProps> = ({
   const variables = {
     variant,
     primaryText,
-    secondaryText: secondaryText || "",
+    secondaryButton: secondaryText
+      ? `<button class="cta cta--secondary" data-testid="cta-secondary" onclick="${
+          onSecondaryClick ? "onSecondaryClick" : ""
+        }">${secondaryText}</button>`
+      : "",
     onPrimaryClick: onPrimaryClick ? "onPrimaryClick" : "",
     onSecondaryClick: onSecondaryClick ? "onSecondaryClick" : "",
     testId,
@@ -69,8 +73,14 @@ export const CTA: React.FC<CTAProps> = ({
     <div
       dangerouslySetInnerHTML={{
         __html: rendered
-          .replace(/onclick="onPrimaryClick"/g, 'onclick="window.ctaPrimaryClick"')
-          .replace(/onclick="onSecondaryClick"/g, 'onclick="window.ctaSecondaryClick"'),
+          .replace(
+            /onclick="onPrimaryClick"/g,
+            'onclick="window.ctaPrimaryClick"'
+          )
+          .replace(
+            /onclick="onSecondaryClick"/g,
+            'onclick="window.ctaSecondaryClick"'
+          ),
       }}
     />
   );

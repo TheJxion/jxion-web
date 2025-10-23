@@ -8,28 +8,22 @@
 export const inputTemplate = {
   html: `
     <div class="input-wrapper" data-testid="input-wrapper">
-      {{#if label}}
-      <label for="{{id}}" class="input-label" data-testid="input-label">{{label}}</label>
-      {{/if}}
+      {{label}}
       <input 
         type="{{type}}"
         id="{{id}}"
         name="{{name}}"
-        class="input {{variant}} {{size}} {{#if error}}input--error{{/if}} {{#if success}}input--success{{/if}}"
+        class="input {{variant}} {{size}} {{errorClass}} {{successClass}}"
         placeholder="{{placeholder}}"
         value="{{value}}"
-        {{#if required}}required{{/if}}
-        {{#if disabled}}disabled{{/if}}
+        {{required}}
+        {{disabled}}
         data-testid="input"
         onchange="{{onChange}}"
         oninput="{{onInput}}"
       />
-      {{#if error}}
-      <div class="input-error" data-testid="input-error">{{error}}</div>
-      {{/if}}
-      {{#if helpText}}
-      <div class="input-help" data-testid="input-help">{{helpText}}</div>
-      {{/if}}
+      {{error}}
+      {{helpText}}
     </div>
   `,
   variables: [
@@ -44,7 +38,8 @@ export const inputTemplate = {
     "required",
     "disabled",
     "error",
-    "success",
+    "errorClass",
+    "successClass",
     "helpText",
     "onChange",
     "onInput",

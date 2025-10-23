@@ -15,22 +15,14 @@ export const ctaTemplate = {
       >
         {{primaryText}}
       </button>
-      {{#if secondaryText}}
-      <button 
-        class="cta cta--secondary" 
-        data-testid="cta-secondary"
-        onclick="{{onSecondaryClick}}"
-      >
-        {{secondaryText}}
-      </button>
-      {{/if}}
+      {{secondaryButton}}
     </div>
   `,
   variables: [
     "variant",
     "primaryText",
-    "secondaryText",
+    "secondaryButton",
     "onPrimaryClick",
-    "onSecondaryClick"
-  ]
+    "onSecondaryClick",
+  ],
 };

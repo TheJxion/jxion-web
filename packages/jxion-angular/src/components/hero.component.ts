@@ -7,7 +7,8 @@ import {
   computed,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import styles from "@jxion/design/src/components/hero.module.scss";
+// Angular doesn't support CSS modules import like React/Vue
+// We'll use the styles directly in the component
 import { heroTemplate, TemplateRenderer } from "@jxion/core";
 import type { HeroProps } from "@jxion/shared";
 
@@ -30,7 +31,7 @@ import type { HeroProps } from "@jxion/shared";
     <!-- Template rendered from @jxion-core -->
     <div [innerHTML]="renderedTemplate()"></div>
   `,
-  styleUrls: ["@jxion/design/src/components/hero.module.scss"],
+  styleUrls: [],
 })
 export class HeroComponent {
   // Input signals with default values
@@ -69,17 +70,8 @@ export class HeroComponent {
       variables,
     });
 
-    // Map CSS module classes
-    Object.keys(styles).forEach((className) => {
-      const regex = new RegExp(`class="([^"]*\\b${className}\\b[^"]*)"`, "g");
-      rendered = rendered.replace(regex, (match, classList) => {
-        const mappedClasses = classList
-          .split(" ")
-          .map((cls: string) => styles[cls] || cls)
-          .join(" ");
-        return `class="${mappedClasses}"`;
-      });
-    });
+    // For Angular, we'll use the original class names since CSS modules aren't supported
+    // The styles will be applied globally through the design system
 
     // Set up click handler for template
     if (this.onCtaClick) {

@@ -20,6 +20,7 @@ export const useMessages = () => {
 
   const fetchMessages = useCallback(
     async (limit: number = 10) => {
+      if (isLoading) return;
       setIsLoading(true);
       setError(null);
       try {
@@ -31,7 +32,7 @@ export const useMessages = () => {
         setIsLoading(false);
       }
     },
-    [client]
+    [client, isLoading]
   );
 
   const addMessage = useCallback(

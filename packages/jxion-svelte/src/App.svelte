@@ -241,7 +241,7 @@
   />
 
   <Modal
-    {isOpen: modalOpen}
+    isOpen={modalOpen}
     title="Jxion Framework Demo"
     bodyContent="This modal demonstrates the complete Jxion Framework integration with template rendering from @jxion-core and proper event handling."
     showFooter={true}

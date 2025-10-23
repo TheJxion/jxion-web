@@ -31,6 +31,11 @@ export const Hero: Component<HeroProps> = (props) => {
   const [renderedTemplate, setRenderedTemplate] = createSignal("");
 
   createEffect(() => {
+    // Set global event handler
+    if (typeof window !== "undefined" && onCtaClick) {
+      (window as any).onCtaClick = onCtaClick;
+    }
+
     const template = SolidJSRenderer.render({
       template: heroTemplate.html,
       variables: {

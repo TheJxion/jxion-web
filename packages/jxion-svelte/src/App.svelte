@@ -79,7 +79,7 @@
     </div>
   `
 
-  const backendIntegrationContent = `
+  $: backendIntegrationContent = `
     <div class="backend-integration">
       ${isLoading ? '<div class="loading">Loading backend data...</div>' : ''}
       ${error ? `<div class="error">Error: ${error}</div>` : ''}

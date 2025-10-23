@@ -13,6 +13,7 @@ export const useGreetings = () => {
   const client = createJxionClient();
 
   const fetchGreeting = useCallback(async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setError(null);
     try {
@@ -23,7 +24,7 @@ export const useGreetings = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [client]);
+  }, [client, isLoading]);
 
   return {
     greeting,

@@ -8,8 +8,12 @@ import { Modal } from "./components/Modal";
 import { messageService, greetingService } from "@jxion/core";
 
 export default function App() {
-  const [messages, setMessages] = createSignal<Array<{ id: string; user: string; message: string }>>([]);
-  const [greeting, setGreeting] = createSignal<{ message: string } | null>(null);
+  const [messages, setMessages] = createSignal<
+    Array<{ id: string; user: string; message: string }>
+  >([]);
+  const [greeting, setGreeting] = createSignal<{ message: string } | null>(
+    null
+  );
   const [isLoadingMessages, setIsLoadingMessages] = createSignal(false);
   const [isLoadingGreeting, setIsLoadingGreeting] = createSignal(false);
   const [messagesError, setMessagesError] = createSignal<string | null>(null);
@@ -81,9 +85,21 @@ export default function App() {
 
   const backendIntegrationContent = () => `
     <div class="backend-integration">
-      ${isLoadingMessages() || isLoadingGreeting() ? '<div class="loading">Loading backend data...</div>' : ''}
-      ${messagesError() || greetingError() ? `<div class="error">Error: ${messagesError() || greetingError()}</div>` : ''}
-      ${greeting() ? `
+      ${
+        isLoadingMessages() || isLoadingGreeting()
+          ? '<div class="loading">Loading backend data...</div>'
+          : ""
+      }
+      ${
+        messagesError() || greetingError()
+          ? `<div class="error">Error: ${
+              messagesError() || greetingError()
+            }</div>`
+          : ""
+      }
+      ${
+        greeting()
+          ? `
         <div class="card">
           <h3>Greeting</h3>
           <p>From tRPC Backend</p>
@@ -93,15 +109,21 @@ export default function App() {
             <span class="stats-label">Connected</span>
           </div>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
       <div class="messages-section">
         <h3>Messages (${messages().length})</h3>
         <div class="messages">
-          ${messages().map(message => `
+          ${messages()
+            .map(
+              (message) => `
             <div class="message">
               <strong>${message.user}:</strong> ${message.message}
             </div>
-          `).join('')}
+          `
+            )
+            .join("")}
         </div>
       </div>
     </div>

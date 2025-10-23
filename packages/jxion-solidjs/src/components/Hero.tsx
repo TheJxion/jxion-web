@@ -1,7 +1,19 @@
-import { Component } from "solid-js";
+import { Component, createEffect, createSignal } from "solid-js";
 import styles from "@jxion/design/src/components/hero.module.scss";
+import { heroTemplate, SolidJSRenderer } from "@jxion/core";
 import type { HeroProps } from "@jxion/shared";
 
+/**
+ * Hero Component - SolidJS Implementation
+ *
+ * Uses:
+ * - HTML template from @jxion-core (heroTemplate.html)
+ * - SCSS styles from @jxion-design
+ * - Types from @jxion/shared
+ *
+ * This component renders the actual HTML template from @jxion-core
+ * converted to SolidJS JSX syntax.
+ */
 export const Hero: Component<HeroProps> = (props) => {
   const {
     title,
@@ -15,51 +27,29 @@ export const Hero: Component<HeroProps> = (props) => {
     onCtaClick,
   } = props;
 
-  return (
-    <section class={styles.hero} data-testid={testId}>
-      <div class={styles.hero__container}>
-        <div class={styles.hero__content}>
-          <div class={styles.hero__text}>
-            <h1 class={styles.hero__title} data-testid={`${testId}-title`}>
-              {title}
-              <br />
-              <span class={styles["hero__title--highlight"]}>{subtitle}</span>
-            </h1>
-            <p
-              class={styles.hero__description}
-              data-testid={`${testId}-description`}
-            >
-              {description}
-            </p>
-            <div class={styles["hero__cta-group"]}>
-              <button
-                class={styles.hero__cta}
-                data-testid={`${testId}-cta`}
-                onClick={onCtaClick}
-              >
-                {ctaText}
-              </button>
-            </div>
-          </div>
-          <div class={styles.hero__visual}>
-            <div class={styles.hero__card} data-testid={`${testId}-card`}>
-              <div class={styles["hero__card__header"]}>
-                <div class={styles["hero__card__stats"]}>
-                  <span class={styles["hero__card__stats__value"]}>
-                    {statsValue}
-                  </span>
-                  <span class={styles["hero__card__stats__label"]}>
-                    {statsLabel}
-                  </span>
-                </div>
-              </div>
-              <div class={styles["hero__card__subtitle"]}>{cardSubtitle}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  // Render the HTML template from @jxion-core
+  const [renderedTemplate, setRenderedTemplate] = createSignal("");
+
+  createEffect(() => {
+    const template = SolidJSRenderer.render({
+      template: heroTemplate.html,
+      variables: {
+        title,
+        subtitle,
+        description,
+        ctaText,
+        statsValue,
+        statsLabel,
+        cardSubtitle,
+        testId,
+        onCtaClick: onCtaClick ? "onCtaClick" : "",
+      },
+      styles,
+    });
+    setRenderedTemplate(template);
+  });
+
+  return <div class="hero-template" innerHTML={renderedTemplate()} />;
 };
 
 export default Hero;

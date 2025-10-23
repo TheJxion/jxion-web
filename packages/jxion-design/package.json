@@ -2,6 +2,7 @@
   "name": "@jxion/design",
   "version": "0.1.0",
   "description": "Jxion Design System - SCSS modules and design tokens",
+  "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
@@ -9,11 +10,13 @@
     "./src/components/*": "./src/components/*",
     "./src/tokens/*": "./src/tokens/*"
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "build": "echo 'Design system - no build needed'"
   },
-  "devDependencies": {
+  "dependencies": {
     "sass": "^1.69.5"
   }
 }

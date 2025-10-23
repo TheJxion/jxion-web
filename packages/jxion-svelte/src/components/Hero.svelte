@@ -1,5 +1,18 @@
 <script lang="ts">
+  /**
+   * Hero Component - Svelte Implementation
+   * 
+   * Uses:
+   * - HTML template from @jxion-core (heroTemplate.html)
+   * - SCSS styles from @jxion-design
+   * - Types from @jxion/shared
+   * 
+   * This component renders the actual HTML template from @jxion-core
+   * converted to Svelte template syntax.
+   */
+
   import styles from '@jxion/design/src/components/hero.module.scss';
+  import { heroTemplate, SvelteRenderer } from '@jxion/core';
   import type { HeroProps } from '@jxion/shared';
 
   export let title: string;
@@ -11,52 +24,26 @@
   export let cardSubtitle: string = "";
   export let testId: string = "hero";
   export let onCtaClick: (() => void) | undefined = undefined;
+
+  // Render the HTML template from @jxion-core
+  $: renderedTemplate = SvelteRenderer.render({
+    template: heroTemplate.html,
+    variables: {
+      title,
+      subtitle,
+      description,
+      ctaText,
+      statsValue,
+      statsLabel,
+      cardSubtitle,
+      testId,
+      onCtaClick: onCtaClick ? "onCtaClick" : ""
+    },
+    styles
+  });
 </script>
 
-<section class={styles.hero} data-testid={testId}>
-  <div class={styles.hero__container}>
-    <div class={styles.hero__content}>
-      <div class={styles.hero__text}>
-        <h1 class={styles.hero__title} data-testid={`${testId}-title`}>
-          {title}
-          <br />
-          <span class={styles["hero__title--highlight"]}>
-            {subtitle}
-          </span>
-        </h1>
-        <p
-          class={styles.hero__description}
-          data-testid={`${testId}-description`}
-        >
-          {description}
-        </p>
-        <div class={styles["hero__cta-group"]}>
-          <button
-            class={styles.hero__cta}
-            data-testid={`${testId}-cta`}
-            on:click={onCtaClick}
-          >
-            {ctaText}
-          </button>
-        </div>
-      </div>
-      <div class={styles.hero__visual}>
-        <div class={styles.hero__card} data-testid={`${testId}-card`}>
-          <div class={styles["hero__card__header"]}>
-            <div class={styles["hero__card__stats"]}>
-              <span class={styles["hero__card__stats__value"]}>
-                {statsValue}
-              </span>
-              <span class={styles["hero__card__stats__label"]}>
-                {statsLabel}
-              </span>
-            </div>
-          </div>
-          <div class={styles["hero__card__subtitle"]}>
-            {cardSubtitle}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Template rendered from @jxion-core -->
+<div class="hero-template">
+  {@html renderedTemplate}
+</div>

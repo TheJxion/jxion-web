@@ -2,6 +2,7 @@ import { Command } from "commander";
 import inquirer from "inquirer";
 import ora from "ora";
 import chalk from "chalk";
+import { ComponentGenerator } from "./generators/component.generator";
 const program = new Command();
 
 program.name("jxion").description("Jxion Framework CLI").version("1.0.0");
@@ -35,6 +36,7 @@ program
               { name: "React", value: "react" },
               { name: "Svelte", value: "svelte" },
               { name: "SolidJS", value: "solidjs" },
+              { name: "Angular", value: "angular" },
             ],
           },
         ]);
@@ -91,7 +93,7 @@ program
   .description("Start all development servers")
   .option(
     "-f, --framework <framework>",
-    "Start specific framework (vue, react, svelte, solidjs, all)"
+    "Start specific framework (vue, react, svelte, solidjs, angular, all)"
   )
   .action(async (options) => {
     const { spawn } = await import("child_process");
@@ -144,6 +146,20 @@ program
           name: "SolidJS",
           process: solidjsProcess,
           port: 3004,
+        });
+      }
+
+      if (framework === "all" || framework === "angular") {
+        spinner.text = "Starting Angular app on port 3003...";
+        const angularProcess = spawn("npm", ["run", "dev"], {
+          cwd: path.join(process.cwd(), "packages", "jxion-angular"),
+          stdio: "inherit",
+          shell: true,
+        });
+        processes.push({
+          name: "Angular",
+          process: angularProcess,
+          port: 3003,
         });
       }
 
@@ -249,11 +265,12 @@ program
     console.log("  @jxion/react   - React integration");
     console.log("  @jxion/svelte  - Svelte integration");
     console.log("  @jxion/solidjs - SolidJS integration");
+    console.log("  @jxion/angular - Angular integration");
     console.log("  @jxion/backend - tRPC backend");
     console.log("  @jxion/cli    - Command line interface");
 
     console.log(chalk.green("\n🎯 Supported Frameworks:"));
-    console.log("  Vue 3, React, Svelte, SolidJS");
+    console.log("  Vue 3, React, Svelte, SolidJS, Angular");
 
     console.log(chalk.magenta("\n🔧 Backend Options:"));
     console.log("  tRPC, Go, Python Flask");

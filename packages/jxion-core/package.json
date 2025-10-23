@@ -10,6 +10,16 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/esm/components/index.js",
+      "require": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./templates": {
+      "import": "./dist/esm/templates/index.js",
+      "require": "./dist/templates/index.js",
+      "types": "./dist/templates/index.d.ts"
     }
   },
   "files": [

@@ -108,3 +108,8 @@ packages/jxion-angular/node_modules/
 *.njsproj
 *.sln
 *.sw?
+
+# Documentation and office files
+*.md
+*.odt
+.cursor/

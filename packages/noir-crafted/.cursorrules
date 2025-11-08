@@ -1,0 +1,141 @@
+# Noir Crafted - Cursor AI Configuration
+
+## Project Context
+
+This is **Noir Crafted**, a luxury jewelry e-commerce website built with SvelteKit, Tailwind CSS, and TypeScript. The project follows atomic design principles and emphasizes elegant, sophisticated design with Turkish language support.
+
+## Brand Identity
+
+- **Luxury jewelry brand** for women
+- **Turkish language** primary (all UI in Turkish)
+- **Design motifs**: Moon cycles, Virgo zodiac, Tulip, Şahmeran
+- **Color palette**: Noir black (#000000), Gold accent (#FFD700), White
+- **Typography**: Playfair Display (headings), Inter (body)
+- **Tone**: Elegant, poetic, authentic, inspiring
+
+## Technical Stack
+
+- **Framework**: SvelteKit 2.x
+- **Styling**: Tailwind CSS 3.x
+- **Language**: TypeScript (strict mode)
+- **Deployment**: Vercel
+- **Build**: Vite 5.x
+
+## Code Organization
+
+### Atomic Design Pattern
+- `$atoms/` - Button, Card, Input
+- `$molecules/` - ProductCard, SearchBar
+- `$organisms/` - Header, Footer, Hero, ProductSection
+- `$layouts/` - AppLayout, PageLayout
+
+### Import Aliases (svelte.config.js)
+- `$components` → `src/lib/components`
+- `$atoms` → `src/lib/components/atoms`
+- `$molecules` → `src/lib/components/molecules`
+- `$organisms` → `src/lib/components/organisms`
+- `$layouts` → `src/lib/components/layouts`
+- `$lib` → `src/lib`
+- `$types` → `src/lib/types`
+- `$utils` → `src/lib/utils`
+- `$stores` → `src/lib/stores`
+
+## Component Principles
+
+1. **TypeScript First**: All props must be typed with interfaces from `$types`
+2. **Reactive**: Use Svelte reactivity (`$:`, stores) for dynamic content
+3. **Accessible**: Include ARIA labels, keyboard navigation, focus states
+4. **Responsive**: Mobile-first design, test all breakpoints
+5. **Turkish Language**: All UI text in Turkish
+6. **Elegant Styling**: Use Tailwind classes, follow design system
+
+## Design System
+
+### Colors
+- `bg-noir-black`, `text-noir-black`
+- `bg-noir-primary` (gold), `text-noir-primary`
+- `bg-noir-white`, `text-noir-white`
+- `bg-noir-gray-50` through `bg-noir-gray-900`
+
+### Typography
+- `font-serif` (Playfair Display)
+- `font-sans` (Inter)
+- `text-display-1`, `text-display-2`, `text-display-3`
+
+### Spacing
+- `container-custom` (max-w-7xl, centered, padding)
+
+## Product Categories (Turkish)
+
+- Kolye (Necklace)
+- Bilezik (Bracelet)
+- Yüzük (Ring)
+- Küpe (Earring)
+- Şahmeran (Shahmaran)
+- Yetişkin Tokaları (Adult Hairpins)
+- Fular (Scarf)
+
+## Common UI Text (Turkish)
+
+- Sepete Ekle (Add to Cart)
+- Keşfet (Discover)
+- Daha Fazla (Learn More)
+- Stokta Yok (Out of Stock)
+- Sepet (Cart)
+- Favoriler (Favorites)
+- Ara (Search)
+- Filtrele (Filter)
+- Sırala (Sort)
+
+## Currency Formatting
+
+Use Turkish Lira format:
+```typescript
+new Intl.NumberFormat('tr-TR', {
+  style: 'currency',
+  currency: 'TRY'
+}).format(price)
+// Output: "1.234,56 ₺"
+```
+
+## Documentation
+
+- **MASTER_PROMPT.md**: Complete project context, brand identity, design system
+- **PROMPT_HELPERS.md**: Quick reference prompts for AI assistants
+- **DOCUMENTATION.md**: Documentation index and quick links
+
+## Quick Reference
+
+### When Creating Components
+1. Define TypeScript interface in `$types`
+2. Create component in appropriate directory (atoms/molecules/organisms)
+3. Use Tailwind classes (no custom CSS unless necessary)
+4. Add accessibility attributes
+5. Implement responsive design
+6. Test with demo data
+
+### When Writing Content
+1. Use Turkish language
+2. Follow brand voice (elegant, poetic, authentic)
+3. Keep headlines concise (3-8 words)
+4. Make descriptions evocative
+5. Include relevant details (material, inspiration)
+
+### When Implementing Features
+1. Read MASTER_PROMPT.md for complete context
+2. Check PROMPT_HELPERS.md for specific prompts
+3. Follow atomic design pattern
+4. Use TypeScript types from `$types`
+5. Implement Turkish language content
+6. Ensure accessibility
+7. Test responsive design
+
+## Code Style
+
+- Use Svelte 4 syntax
+- Prefer reactive statements (`$:`) over computed
+- Use Tailwind utility classes
+- Follow existing component patterns
+- Keep components focused and composable
+- Add proper error/loading states
+

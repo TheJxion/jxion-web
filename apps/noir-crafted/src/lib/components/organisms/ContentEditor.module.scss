@@ -1,0 +1,219 @@
+@import '@jxion/design/styles/_noir-variables.scss';
+
+.contentEditor {
+  width: 100%;
+  padding: $spacing-2xl 0;
+  background: $color-noir-black;
+  color: $color-noir-text-primary;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.title {
+  font-family: $font-family-serif;
+  font-size: $font-size-display-2;
+  font-weight: $font-weight-bold;
+  color: $color-noir-text-primary;
+  margin-bottom: $spacing-md;
+  text-align: center;
+}
+
+.description {
+  font-family: $font-family-sans;
+  font-size: $font-size-body;
+  color: $color-noir-text-secondary;
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.label {
+  font-family: $font-family-sans;
+  font-size: $font-size-body;
+  font-weight: $font-weight-semibold;
+  color: $color-noir-text-primary;
+}
+
+.textarea {
+  width: 100%;
+  padding: $spacing-md;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-md;
+  color: $color-noir-text-primary;
+  font-family: $font-family-sans;
+  font-size: $font-size-body;
+  resize: vertical;
+  transition: all $transition-normal;
+
+  &:focus {
+    outline: none;
+    border-color: $color-noir-gold;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.button {
+  padding: $spacing-md $spacing-xl;
+  background: $color-noir-gold;
+  color: $color-noir-black;
+  border: none;
+  border-radius: $radius-full;
+  font-family: $font-family-sans;
+  font-size: $font-size-body;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-normal;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) {
+    background: #ffc700;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-2xl;
+  color: $color-noir-text-secondary;
+  font-family: $font-family-sans;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 215, 0, 0.2);
+  border-top-color: $color-noir-gold;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  padding: $spacing-md;
+  background: rgba(234, 67, 53, 0.1);
+  border: 1px solid rgba(234, 67, 53, 0.3);
+  border-radius: $radius-md;
+  color: #ff6b6b;
+  font-family: $font-family-sans;
+  margin-bottom: $spacing-lg;
+}
+
+.output {
+  margin-top: $spacing-xl;
+  padding: $spacing-xl;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-lg;
+}
+
+.outputHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.outputTitle {
+  font-family: $font-family-serif;
+  font-size: $font-size-display-3;
+  font-weight: $font-weight-semibold;
+  color: $color-noir-text-primary;
+}
+
+.copyButton {
+  padding: $spacing-sm $spacing-md;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: $radius-md;
+  color: $color-noir-gold;
+  font-family: $font-family-sans;
+  font-size: 0.875rem;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+
+  &:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: $color-noir-gold;
+  }
+}
+
+.outputContent {
+  font-family: $font-family-sans;
+  font-size: $font-size-body;
+  line-height: 1.8;
+  color: $color-noir-text-primary;
+
+  strong {
+    font-weight: $font-weight-bold;
+    color: $color-noir-gold;
+  }
+
+  em {
+    font-style: italic;
+  }
+}
+
+// Mobile optimizations
+@media (max-width: $breakpoint-md) {
+  .title {
+    font-size: $font-size-display-3;
+  }
+
+  .container {
+    padding: 0 $spacing-md;
+  }
+
+  .button {
+    width: 100%;
+    align-self: stretch;
+  }
+}

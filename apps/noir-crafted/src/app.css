@@ -20,6 +20,144 @@
 @import '@jxion/design/styles/modules/whyNoir.module.scss';
 @import '@jxion/design/styles/modules/motifs.module.scss';
 @import '@jxion/design/styles/modules/newsletter.module.scss';
+@import '@jxion/design/styles/_noir-variables.scss';
+@import './lib/components/organisms/ContentEditor.module.scss';
+
+/* ImmersiveHero Styles - Canvas-Driven Background */
+:root {
+  --color-primary-black: #000000;
+  --color-gold-accent: #ffd700;
+  --color-soft-gold-glow: #e6b800;
+}
+
+.hero-container {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-primary-black);
+  isolation: isolate;
+}
+
+/* Canvas Background Layer */
+.canvas-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Apply subtle filter effects directly to the canvas */
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.svg-canvas {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  max-height: 80vh;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+}
+
+/* SVG Element Styles */
+.ring-band {
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9));
+  }
+}
+
+.gem-group {
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9));
+}
+
+.gem {
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+  animation: gemShine 4s ease-in-out infinite;
+}
+
+@keyframes gemShine {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1));
+  }
+}
+
+.sparkle-main {
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 1));
+}
+
+.sparkle-secondary {
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+}
+
+.sparkle-tertiary {
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+}
+
+.sparkle-glow {
+  filter: blur(4px);
+  animation: sparklePulse 2s ease-in-out infinite;
+}
+
+@keyframes sparklePulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .canvas-background {
+    filter: blur(40px);
+  }
+
+  .svg-canvas {
+    max-width: 400px;
+    max-height: 60vh;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .ring-band {
+    animation: none;
+  }
+
+  .sparkle-glow {
+    animation: none;
+  }
+}
 
 @tailwind base;
 @tailwind components;

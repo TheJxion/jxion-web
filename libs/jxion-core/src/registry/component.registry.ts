@@ -237,6 +237,49 @@ export const componentRegistry: ComponentRegistry = {
     examples: [],
     frameworks: ['react', 'vue', 'svelte', 'solidjs', 'angular'],
   },
+  productCard: {
+    name: 'ProductCard',
+    version: '1.0.0',
+    category: 'E-commerce',
+    description:
+      'Premium product card component for displaying jewelry items. Demonstrates Jxion framework interoperability (React component used in SvelteKit via LocalReactWrapper).',
+    props: {
+      title: 'string',
+      description: 'string',
+      price: 'string',
+      imageUrl: 'string',
+    },
+    examples: [
+      {
+        title: 'ProductCard in SvelteKit',
+        description:
+          'React ProductCard component used in SvelteKit via LocalReactWrapper',
+        code: `<LocalReactWrapper
+  componentModule={productCardModule}
+  componentName="ProductCard"
+  props={{
+    title: "Ay Döngüsü Kolye",
+    description: "Ayın evrelerinden ilham alan zarif bir kolye",
+    price: "₺1.299,00",
+    imageUrl: "https://example.com/kolye.jpg"
+  }}
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'ProductCard in React',
+        description: 'Direct usage in React application',
+        code: `<ProductCard
+  title="Ay Döngüsü Kolye"
+  description="Ayın evrelerinden ilham alan zarif bir kolye"
+  price="₺1.299,00"
+  imageUrl="https://example.com/kolye.jpg"
+/>`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
 };
 
 /**

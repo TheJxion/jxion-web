@@ -113,3 +113,5 @@ packages/jxion-angular/node_modules/
 *.md
 *.odt
 .cursor/
+.nx/cache
+.nx/workspace-data

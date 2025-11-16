@@ -1,0 +1,33 @@
+{
+  "name": "jxion-design",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-design/src",
+  "projectType": "library",
+  "tags": [
+    "type:lib",
+    "scope:jxion-design"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/jxion-design",
+        "main": "libs/jxion-design/src/index.ts",
+        "tsConfig": "libs/jxion-design/tsconfig.json",
+        "assets": [
+          "libs/jxion-design/**/*.scss",
+          "libs/jxion-design/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test"
+    }
+  }
+}

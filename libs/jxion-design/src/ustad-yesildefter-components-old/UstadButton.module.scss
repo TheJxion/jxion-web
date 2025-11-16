@@ -1,0 +1,30 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: tokens.$spacing-xs;
+  padding: tokens.$spacing-md tokens.$spacing-xl;
+  border-radius: tokens.$radius-lg;
+  font-weight: tokens.$font-weight-semibold;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background: tokens.$color-primary-green;
+    color: tokens.$color-background-primary;
+
+    &:hover {
+      background: darken(tokens.$color-primary-green, 5%);
+    }
+  }
+
+  &--secondary {
+    background: tokens.$color-primary-orange;
+    color: tokens.$color-background-primary;
+
+    &:hover {
+      background: darken(tokens.$color-primary-orange, 5%);
+    }
+  }
+}

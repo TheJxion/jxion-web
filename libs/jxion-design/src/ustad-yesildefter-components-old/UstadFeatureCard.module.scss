@@ -1,0 +1,134 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.features {
+  margin: 100px auto;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  &__item {
+    display: flex;
+    gap: 28px;
+    padding: 36px;
+    background: tokens.$color-background-secondary;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: tokens.$shadow-card-lg;
+      background: linear-gradient(
+        135deg,
+        tokens.$color-background-secondary 0%,
+        tokens.$color-background-accent 100%
+      );
+
+      .item__icon {
+        background: tokens.$color-primary;
+
+        img {
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+  }
+}
+
+.item {
+  &__icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: tokens.$color-background-accent;
+    border-radius: tokens.$radius-circle;
+    transition: all 0.3s ease;
+
+    img {
+      width: 28px;
+      height: 28px;
+      transition: all 0.3s ease;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__title {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$color-text-primary;
+    line-height: 1.4;
+  }
+
+  &__description {
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-text-secondary;
+    line-height: 1.6;
+  }
+}
+
+// Responsive styles
+@media (max-width: tokens.$breakpoint-tablet) {
+  .features {
+    margin: 60px auto;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    &__item {
+      padding: 24px;
+    }
+  }
+}
+
+@media (max-width: tokens.$breakpoint-mobile) {
+  .features {
+    margin: 40px auto;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Apply animations to items
+.features__item {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}

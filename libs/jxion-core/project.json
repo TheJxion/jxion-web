@@ -1,0 +1,25 @@
+{
+  "name": "jxion-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-core/src",
+  "projectType": "library",
+  "tags": ["type:lib", "scope:jxion-core"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "libs/jxion-core/dist",
+        "main": "libs/jxion-core/src/index.ts",
+        "tsConfig": "libs/jxion-core/tsconfig.json",
+        "assets": ["libs/jxion-core/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "jxion-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-shared/src",
+  "projectType": "library",
+  "tags": ["type:lib", "scope:jxion-shared"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "libs/jxion-shared/dist",
+        "main": "libs/jxion-shared/src/index.ts",
+        "tsConfig": "libs/jxion-shared/tsconfig.json",
+        "assets": ["libs/jxion-shared/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test"
+    }
+  }
+}

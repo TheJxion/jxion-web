@@ -1,0 +1,103 @@
+@use "../tokens/design-tokens" as tokens;
+@use "../tokens/typography" as typography;
+
+.cta {
+  background: linear-gradient(135deg, tokens.$color-primary-green 0%, #5a7323 100%);
+  border: none;
+  padding: tokens.$spacing-lg tokens.$spacing-2xl;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$color-text-inverse;
+  border-radius: tokens.$border-radius-full;
+  transition: tokens.$transition-all;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: tokens.$shadow-elevation-3;
+  position: relative;
+  overflow: hidden;
+  font-family: tokens.$font-family-base;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-elevation-4;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: tokens.$breakpoint-sm) {
+    width: 100%;
+    padding: tokens.$spacing-md tokens.$spacing-xl;
+  }
+}
+
+.cta--secondary {
+  background: tokens.$color-background-primary;
+  color: tokens.$color-text-primary;
+  border: 2px solid tokens.$color-primary-green;
+  
+  &:hover {
+    background: tokens.$color-primary-green;
+    color: tokens.$color-text-inverse;
+  }
+}
+
+.cta--outline {
+  background: transparent;
+  color: tokens.$color-primary-green;
+  border: 2px solid tokens.$color-primary-green;
+  
+  &:hover {
+    background: tokens.$color-primary-green;
+    color: tokens.$color-text-inverse;
+  }
+}
+
+.cta--large {
+  padding: tokens.$spacing-xl tokens.$spacing-3xl;
+  font-size: tokens.$font-size-xl;
+}
+
+.cta--small {
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  font-size: tokens.$font-size-base;
+}
+
+.cta-group {
+  display: flex;
+  gap: tokens.$spacing-md;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  @media (max-width: tokens.$breakpoint-sm) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.cta-group--center {
+  justify-content: center;
+}
+
+.cta-group--between {
+  justify-content: space-between;
+}

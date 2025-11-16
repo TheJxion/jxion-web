@@ -1,0 +1,106 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.layout {
+  min-height: 100vh;
+  height: -webkit-fill-available;
+  overflow: auto;
+  background: tokens.$color-background-gradient;
+  z-index: 0;
+  position: relative;
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__main {
+    position: initial;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: tokens.$spacing-lg;
+    transition: all 0.3s ease;
+    margin-left: 320px; // Match sidebar width
+    margin-top: tokens.$spacing-safearea * 3;
+    background: tokens.$test-background;
+    border-radius: tokens.$border-radius;
+    max-width: calc(1000px - 172px);
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  &__title {
+    @include typography.heading-title-serif;
+    margin-bottom: tokens.$spacing-sm;
+    color: tokens.$color-text-primary;
+    text-transform: capitalize;
+  }
+  &__description {
+    @include typography.paragraph;
+    color: tokens.$color-text-secondary;
+    max-width: 720px;
+  }
+}
+.sidebar {
+  &__content {
+    padding: tokens.$spacing-md;
+    transition: opacity 0.2s ease;
+  }
+  &__nav {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.nav {
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  &__item {
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__link {
+    display: block;
+    padding: tokens.$spacing-sm;
+    color: tokens.$color-text-primary;
+    text-decoration: none;
+    border-radius: tokens.$border-radius-sm;
+    transition: all 0.2s ease;
+    &:hover {
+      background: tokens.$color-background-secondary;
+      color: tokens.$color-primary;
+    }
+    &--active {
+      background: tokens.$color-primary;
+      color: tokens.$color-text-light;
+      &:hover {
+        background: darken(tokens.$color-primary, 5%);
+        color: tokens.$color-text-light;
+      }
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-tablet) {
+  .layout {
+    &__main {
+      margin-left: 0;
+      padding: tokens.$spacing-lg;
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-mobile) {
+  .layout {
+    &__main {
+      margin-left: 0;
+      padding: tokens.$spacing-md;
+    }
+    &__title {
+      font-size: 32px;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@jxion/i18n",
+  "version": "0.1.0",
+  "description": "Jxion i18n - Runtime translation manager and hooks",
+  "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "require": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./get-dictionary": {
+      "import": "./dist/src/get-dictionary.js",
+      "require": "./dist/src/get-dictionary.js",
+      "types": "./dist/src/get-dictionary.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@jxion/shared": "*",
+    "@jxion/backend": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

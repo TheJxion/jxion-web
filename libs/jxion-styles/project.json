@@ -1,0 +1,32 @@
+{
+  "name": "jxion-styles",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-styles/src",
+  "projectType": "library",
+  "tags": [
+    "type:lib",
+    "scope:jxion-styles"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/jxion-styles",
+        "main": "libs/jxion-styles/src/index.ts",
+        "tsConfig": "libs/jxion-styles/tsconfig.json",
+        "assets": [
+          "libs/jxion-styles/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test"
+    }
+  }
+}

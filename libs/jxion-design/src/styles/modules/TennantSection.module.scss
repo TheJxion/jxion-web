@@ -1,0 +1,138 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+
+.tenant__section {
+  width: 100%;
+  padding: tokens.$spacing-20 0;
+}
+
+.tenant__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 tokens.$spacing-md;
+}
+
+.tenant__header {
+  @include typography.heading-1;
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.tenant__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 1200px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding: tokens.$spacing-md;
+
+  // Responsive grid
+  @media (max-width: 1199px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 899px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 599px) {
+    grid-template-columns: 1fr;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: tokens.$color-primary-green;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.tenant__card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 24px;
+  padding: tokens.$spacing-xl;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 140px;
+  max-height: 240px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+.tenant__card--selected {
+  border-color: tokens.$color-primary-green;
+}
+
+.tenant__title {
+  font-size: clamp(1.125rem, 1.5vw + 1rem, 1.5rem);
+  font-weight: tokens.$font-weight-semibold;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  hyphens: auto;
+  text-size-adjust: 100%;
+  min-height: 2.5em;
+  margin-bottom: tokens.$spacing-sm;
+  color: tokens.$color-primary-dark;
+  @include typography.heading-title;
+}
+
+.tenant__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.tenant__card-button {
+  margin-top: auto;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$color-primary-green;
+  color: #fff;
+  border: none;
+  border-radius: tokens.$border-radius;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.tenant__footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding-top: tokens.$spacing-md;
+  text-align: center;
+}
+
+.tenant__link {
+  background: none;
+  border: none;
+  color: tokens.$color-primary-green;
+  cursor: pointer;
+}

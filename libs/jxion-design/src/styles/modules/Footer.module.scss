@@ -1,0 +1,123 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.footer {
+  width: 100%;
+  background: tokens.$color-background-secondary;
+  padding: 3rem 1rem;
+  @media (min-width: tokens.$breakpoint-md) {
+    padding: 4rem 2rem;
+  }
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  &__content {
+    margin-bottom: 2rem;
+    @media (min-width: tokens.$breakpoint-sm) {
+      margin-bottom: 3rem;
+    }
+  }
+  &__title {
+    @include typography.heading-title;
+    color: tokens.$color-text-primary;
+    font-size: 3.75rem;
+    font-weight: tokens.$font-weight-normal;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    @media (min-width: tokens.$breakpoint-sm) {
+      margin: 0 0 2rem 0;
+    }
+  }
+  &__description {
+    @include typography.paragraph;
+    color: tokens.$color-text-secondary;
+    font-size: tokens.$font-size-sm;
+    line-height: 1.6;
+    margin: 0 auto 1.5rem auto;
+    max-width: 42rem;
+    @media (min-width: tokens.$breakpoint-sm) {
+      font-size: tokens.$font-size-base;
+      margin: 0 auto 2rem auto;
+    }
+  }
+  &__cta {
+    margin: 0 auto;
+    background-color: rgb(72, 92, 17);
+    border-color: rgb(72, 92, 17);
+    transition: background-color tokens.$transition-smooth;
+    width: 100%;
+    @media (min-width: tokens.$breakpoint-sm) {
+      width: auto;
+    }
+    &:hover {
+      background-color: #8e9c78;
+      border-color: #8e9c78;
+    }
+  }
+  &__bottom {
+    border-top: 1px solid tokens.$color-border-primary;
+    padding-top: 1.5rem;
+    @media (min-width: tokens.$breakpoint-sm) {
+      padding-top: 2rem;
+    }
+  }
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    @media (min-width: tokens.$breakpoint-sm) {
+      gap: 2rem;
+    }
+  }
+  &__link {
+    @include typography.text-body;
+    color: tokens.$color-text-secondary;
+    text-decoration: none;
+    font-size: tokens.$font-size-xs;
+    line-height: 1.5;
+    transition: color tokens.$transition-smooth;
+    &:hover {
+      color: tokens.$color-text-primary;
+    }
+    @media (min-width: tokens.$breakpoint-sm) {
+      font-size: tokens.$font-size-sm;
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-tablet) {
+  .footer {
+    padding: 2rem 1rem;
+    &__title {
+      font-size: 3rem;
+    }
+    &__content {
+      margin-bottom: 2rem;
+    }
+    &__bottom {
+      padding-top: 1.5rem;
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-mobile) {
+  .footer {
+    padding: 1.5rem 0.5rem;
+    &__title {
+      font-size: 2.5rem;
+    }
+    &__description {
+      font-size: tokens.$font-size-sm;
+    }
+    &__content {
+      margin-bottom: 1.5rem;
+    }
+    &__bottom {
+      padding-top: 1rem;
+    }
+    &__links {
+      gap: 1rem;
+    }
+  }
+}

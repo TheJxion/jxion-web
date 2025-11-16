@@ -1,0 +1,32 @@
+{
+  "name": "jxion-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-backend",
+  "projectType": "library",
+  "tags": [
+    "type:lib",
+    "scope:jxion-backend"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/jxion-backend",
+        "main": "libs/jxion-backend/index.ts",
+        "tsConfig": "libs/jxion-backend/tsconfig.json",
+        "assets": [
+          "libs/jxion-backend/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test"
+    }
+  }
+}

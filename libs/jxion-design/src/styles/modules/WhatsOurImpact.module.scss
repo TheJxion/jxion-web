@@ -1,0 +1,141 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.section {
+  width: 100%;
+  padding: tokens.$spacing-xl 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  @include typography.heading-1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 tokens.$spacing-md;
+  @media (min-width: tokens.$breakpoint-md) {
+    padding: 0 tokens.$spacing-lg;
+  }
+  @media (min-width: tokens.$breakpoint-lg) {
+    padding: 0 tokens.$spacing-xl;
+  }
+}
+.title { 
+  text-align: center;
+  margin-bottom: tokens.$spacing-2xl;
+  @media (max-width: tokens.$breakpoint-md) {
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__regular {
+    color: tokens.$color-text-primary;
+  }
+  &__highlight {
+    margin: 0 tokens.$spacing-1-5;
+    color: tokens.$color-primary-green;
+  }
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  @media (max-width: tokens.$breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: tokens.$breakpoint-sm) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.stat {
+  background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
+  border-radius: 24px;
+  padding: 48px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.04),
+    0 2px 8px 0 rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(var(--stat-color), 0.03) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  @media (max-width: tokens.$breakpoint-md) {
+    padding: 32px 20px;
+  }
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.04);
+    &::before {
+      opacity: 1;
+    }
+    .stat__value {
+      transform: scale(1.05);
+    }
+  }
+  &__value {
+    @include typography.heading-title;
+    color: tokens.$color-text-primary;
+    margin: 0 0 tokens.$spacing-sm 0;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 1.125rem;
+    }
+    &--orange {
+      background: linear-gradient(135deg, #ff9500 0%, #ffb143 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      --stat-color: 255, 149, 0;
+    }
+    &--green {
+      background: linear-gradient(
+        135deg,
+        tokens.$color-primary-green 0%,
+        #8bc34a 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      --stat-color: 72, 92, 17;
+    }
+    &--red {
+      background: linear-gradient(135deg, #ff3b30 0%, #ff6b64 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      --stat-color: 255, 59, 48;
+    }
+    &--blue {
+      background: linear-gradient(135deg, #007aff 0%, #4da3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      --stat-color: 0, 122, 255;
+    }
+  }
+  &__label {
+    @include typography.paragraph;
+    color: tokens.$color-text-tertiary;
+    margin: 0 0 tokens.$spacing-sm 0;
+    flex: 1;
+    opacity: 0.85;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 0.8125rem;
+    }
+  }
+}

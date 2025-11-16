@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "title": "Luxury Jewelry Collection",
+    "subtitle": "Timeless Elegance",
+    "description": "Discover style and sophistication with carefully selected jewelry. Each piece is designed to reflect quality and elegance.",
+    "primaryCta": "Explore Collection",
+    "secondaryCta": "About Us"
+  },
+  "demo": {
+    "title": "Jxion Stack Demo",
+    "backToHome": "← Back to Home",
+    "infoTitle": "Demo Information",
+    "componentId": "Component ID",
+    "framework": "Framework",
+    "translationSource": "Translation Source",
+    "registrySource": "Registry Source",
+    "note": "This demo shows the concept of runtime translations and registry-driven components. In Phase 1, this will be powered by @jxion-i18n and @jxion-core packages.",
+    "implementationNotes": "Implementation Notes",
+    "phase1Goals": "Phase 1 Goals",
+    "phase2Goals": "Phase 2 Goals",
+    "phase3Goals": "Phase 3 Goals"
+  }
+}

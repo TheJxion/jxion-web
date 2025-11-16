@@ -1,0 +1,59 @@
+// styles/UstadUtilities.scss
+
+@use './UstadDesignTokens.scss' as tokens; // Use a namespace for design tokens
+
+// Border Width
+.border-width-default {
+  border-width: tokens.$border-width-default; // Reference the variable with the namespace
+}
+
+// Visibility and Display Utilities
+.d-flex {
+  display: flex;
+}
+.d-inline-flex {
+  display: inline-flex;
+}
+.d-block {
+  display: block;
+}
+.d-none {
+  display: none;
+}
+.text-center {
+  text-align: center;
+}
+
+// Layout
+.flex-column {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+
+// Padding and Margin Utilities (standardized for elements like frames)
+.p-xs {
+  padding: tokens.$spacing-xs;
+}
+.m-xs {
+  margin: tokens.$spacing-xs;
+}
+.p-sm {
+  padding: tokens.$spacing-sm;
+}
+.m-sm {
+  margin: tokens.$spacing-sm;
+}
+.p-md {
+  padding: tokens.$spacing-md;
+}
+.m-md {
+  margin: tokens.$spacing-md;
+}
+.p-lg {
+  padding: tokens.$spacing-lg;
+}
+.m-lg {
+  margin: tokens.$spacing-lg;
+}

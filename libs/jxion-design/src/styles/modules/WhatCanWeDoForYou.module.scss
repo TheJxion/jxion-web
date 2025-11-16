@@ -1,0 +1,166 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.section {
+  margin: 0 auto;
+  padding: tokens.$spacing-lg;
+  width: 100%;
+}
+.container {
+  margin: 0 auto;
+  padding: tokens.$spacing-lg;
+}
+.title {
+  @include typography.heading-title-serif;
+  display: flex;
+  flex-wrap: wrap;
+  gap: tokens.$spacing-md;
+  &__regular {
+    color: tokens.$color-text-primary;
+  }
+  &__highlight {
+    color: tokens.$color-primary;
+  }
+}
+.content {
+  width: 100%;
+}
+.tabs {
+  @include typography.heading-3;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: tokens.$spacing-lg;
+  border-bottom: 1px solid tokens.$color-border;
+}
+.tab {
+  padding: tokens.$spacing-md;
+  margin: tokens.$spacing-md;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$color-text-secondary;
+  position: relative;
+  transition: all 0.3s ease;
+  &:hover {
+    color: tokens.$color-primary;
+  }
+  &__active {
+    color: tokens.$color-primary;
+    font-weight: tokens.$font-weight-bold;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: tokens.$color-primary;
+    }
+  }
+}
+.cards {
+  padding: tokens.$spacing-xl;
+  width: 100%;
+}
+.card {
+  background: tokens.$test-background;
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-xl;
+  padding: tokens.$spacing-xl;
+  border-radius: tokens.$border-radius;
+  box-shadow: tokens.$effects-test-dropshadow;
+  &__image {
+    height: 420px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #e0eae0, #f0f5f0);
+    border-radius: tokens.$border-radius;
+    box-shadow: tokens.$effects-test-dropshadow;
+    overflow: hidden;
+  }
+  &__illustration {
+    object-fit: contain;
+    max-width: 100%;
+    height: auto;
+  }
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: tokens.$spacing-lg;
+    gap: tokens.$spacing-lg;
+  }
+  &__title {
+    @include typography.heading-title;
+    color: tokens.$color-primary;
+    max-width: 24rem;
+    margin-bottom: tokens.$spacing-xs;
+  }
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: tokens.$spacing-xs;
+  }
+  &__feature {
+    @include typography.heading-title;
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$color-text-primary;
+  }
+  &__description {
+    @include typography.text-description;
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-text-secondary;
+    margin-bottom: tokens.$spacing-xs;
+  }
+  &__actions {
+    padding: tokens.$spacing-lg 0;
+    display: flex;
+    align-items: center;
+    gap: tokens.$spacing-lg;
+  }
+  &__link {
+    @include typography.paragraph;
+    color: tokens.$color-primary;
+    font-weight: tokens.$font-weight-bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-tablet) {
+  .card {
+    flex-direction: column;
+    &__image {
+      width: 100%;
+      height: 300px;
+      flex: 0 0 auto;
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-mobile) {
+  .tabs {
+    flex-direction: column;
+  }
+  .tab {
+    text-align: center;
+    &__active:after {
+      width: 50%;
+      left: 25%;
+    }
+  }
+  .card {
+    padding: tokens.$spacing-md;
+    &__actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}

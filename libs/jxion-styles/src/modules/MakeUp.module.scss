@@ -1,0 +1,80 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.makeup {
+  @include typography.cta-title;
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: initial;
+  background: tokens.$color-primary-green;
+  background-color: tokens.$color-primary-green;
+  box-shadow: tokens.$effects-drop-shadow;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: tokens.$spacing-sm;
+  border: tokens.$effects-drop-shadow;
+  border-radius: 0 0 tokens.$border-radius tokens.$border-radius;
+  color: tokens.$color-text-light;
+  & > div {
+    max-width: 1440px;
+  }
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: tokens.$spacing-xs;
+    .alertIcon {
+      color: tokens.$color-primary-orange;
+      width: 16px;
+      height: 16px;
+    }
+    .message {
+      white-space: nowrap;
+    }
+  }
+  .rightSection {
+    display: flex;
+    align-items: center;
+    gap: tokens.$spacing-lg;
+    .phoneGroup,
+    .contactGroup {
+      display: flex;
+      align-items: center;
+      gap: tokens.$spacing-xs;
+      .icon {
+        color: tokens.$color-primary-green;
+        width: 1rem;
+        height: 1rem;
+      }
+      .whatsappIcon {
+        color: tokens.$color-primary-orange;
+        width: 1rem;
+        height: 1rem;
+      }
+      .phoneIcon {
+        color: tokens.$color-primary-light;
+        width: 0.825rem;
+        height: 0.825rem;
+      }
+    }
+  }
+}
+@media (max-width: tokens.$breakpoint-tablet) {
+  .makeup {
+    height: auto;
+    padding: tokens.$spacing-sm;
+    flex-direction: column;
+    gap: tokens.$spacing-sm;
+    text-align: center;
+    .leftSection {
+      flex-direction: column;
+      gap: tokens.$spacing-xs;
+    }
+    .rightSection {
+      flex-direction: column;
+      gap: tokens.$spacing-sm;
+    }
+  }
+}

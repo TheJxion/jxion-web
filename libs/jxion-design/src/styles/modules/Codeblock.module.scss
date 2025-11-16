@@ -1,0 +1,70 @@
+@use './DesignTokens' as tokens;
+.codeblock {
+  background-color: tokens.$color-background-dark;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: rgba(tokens.$color-background-dark, 0.8);
+    border-bottom: 1px solid rgba(tokens.$color-text-light, 0.1);
+  }
+  &__filename {
+    font-family: tokens.$font-family-mono;
+    font-size: 14px;
+    color: tokens.$color-text-light;
+  }
+  &__language {
+    font-family: tokens.$font-family-mono;
+    font-size: 12px;
+    color: tokens.$color-text-primary;
+    background-color: rgba(tokens.$color-text-light, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  &__content {
+    position: relative;
+    padding: 16px;
+  }
+  &__code {
+    font-family: tokens.$font-family-mono;
+    font-size: 14px;
+    line-height: 1.5;
+    color: tokens.$color-text-light;
+    overflow-x: auto;
+    pre {
+      margin: 0;
+    }
+    code {
+      font-family: inherit;
+    }
+  }
+  &__copyButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(tokens.$color-background-light, 0.1);
+    color: tokens.$color-text-light;
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    &:hover {
+      opacity: 1;
+      background-color: rgba(tokens.$color-background-light, 0.2);
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px tokens.$color-primary-green;
+    }
+  }
+}

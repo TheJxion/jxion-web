@@ -1,0 +1,90 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.layout {
+  overflow: hidden;
+  height: -webkit-fill-available;
+  background: #f5f7f9;
+  margin: auto;
+  z-index: 0;
+  &__container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+  }
+  &__main {
+    position: relative;
+    margin-top: 120px;
+    margin-left: 96px;
+    margin-right: 96px;
+    margin-bottom: 240px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0 2.4rem 0;
+  }
+  &__title {
+    @include typography.heading-title;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1d1d1f;
+    text-transform: capitalize;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.003em;
+  }
+  &__description {
+    @include typography.text-nav-bold;
+    color: #6e6e73;
+    max-width: 720px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.022em;
+  }
+  * {
+    @include typography.paragraph;
+    margin: 0;
+    padding: 0;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.022em;
+  }
+  h1 {
+    @include typography.heading-1;
+    font-weight: 600;
+    margin: 1.5rem;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.003em;
+  }
+  h2 {
+    @include typography.heading-1-bold;
+    margin: 1rem;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.003em;
+  }
+  h3 {
+    @include typography.text-nav-bold;
+    margin: 0.5rem;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    letter-spacing: -0.003em;
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "jxion-react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/jxion-react/src",
+  "projectType": "application",
+  "tags": [
+    "type:app",
+    "framework:react",
+    "scope:demo"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/jxion-react"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "jxion-react:build",
+        "port": 3001,
+        "host": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "jxion-react:build:development"
+        },
+        "production": {
+          "buildTarget": "jxion-react:build:production"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "jxion-react:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}

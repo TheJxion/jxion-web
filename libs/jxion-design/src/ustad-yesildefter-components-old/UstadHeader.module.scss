@@ -1,0 +1,118 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  padding: 48px;
+  background: transparent;
+
+  &__container {
+    max-width: 1344px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 327px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 81px;
+    height: 50px;
+    background: tokens.$color-primary-green;
+    border: 1px solid tokens.$color-text-primary;
+    border-radius: 20px;
+    box-shadow: 0 5px 0 rgba(10, 10, 10, 1);
+    color: tokens.$color-background-light;
+    font-size: tokens.$font-size-base;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 4.98px;
+    padding: 12px 24px;
+    background: tokens.$color-primary-green;
+    border: 1px solid tokens.$color-text-primary;
+    border-radius: 20px;
+    box-shadow: 0 5px 0 rgba(10, 10, 10, 1);
+    color: tokens.$color-background-light;
+    font-size: tokens.$font-size-base;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+}
+
+.nav {
+  &__item {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$color-text-primary;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: tokens.$color-primary-green;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: tokens.$breakpoint-tablet) {
+  .header {
+    height: 70px;
+
+    &__nav {
+      display: none; // Hide navigation on mobile
+    }
+
+    &__container {
+      padding: 0 16px;
+    }
+  }
+}
+
+// Add mobile menu styles if needed
+.header__mobile {
+  display: none;
+
+  @media (max-width: tokens.$breakpoint-tablet) {
+    display: block;
+  }
+}

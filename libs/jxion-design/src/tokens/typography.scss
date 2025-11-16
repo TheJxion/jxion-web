@@ -1,0 +1,420 @@
+@use './design-tokens' as tokens;
+
+// ============================================================================
+// MODERN FONT FAMILIES (Inter & DM Sans)
+// ============================================================================
+
+// Primary Font Families
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+  'Helvetica Neue', sans-serif;
+$font-family-secondary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+  'Helvetica Neue', sans-serif;
+$font-family-tertiary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+  'Helvetica Neue', sans-serif;
+$font-family-logo: 'Fira Sans Extra Condensed', -apple-system,
+  BlinkMacSystemFont, sans-serif;
+$font-family-mono: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code',
+  'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+
+// ============================================================================
+// BASE TYPOGRAPHY MIXIN (Modern CSS Properties)
+// ============================================================================
+
+@mixin base-typography {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  word-break: break-word;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 1.4;
+  font-variation-settings: 'opsz' 14;
+}
+
+// ============================================================================
+// NAVIGATION TYPOGRAPHY
+// ============================================================================
+
+@mixin text-nav {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-size: 14px;
+  line-height: 3.14286;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #1d1d1f;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0 10px;
+  height: 44px;
+  opacity: 1;
+  background: no-repeat;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  outline-offset: -7px;
+}
+
+@mixin text-nav-bold {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-text-nav;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-text-nav;
+}
+
+// ============================================================================
+// HERO TYPOGRAPHY ============================================================================ 
+@mixin heading-hero {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-heading-hero;
+  font-size: tokens.$font-size-heading-hero;
+  line-height: tokens.$line-height-heading-hero;
+  letter-spacing: tokens.$letter-spacing-heading-hero;
+}
+
+// ============================================================================
+// HEADING TYPOGRAPHY
+// ============================================================================
+
+@mixin heading-1 {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-heading-1;
+  font-size: tokens.$font-size-heading-1;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-1-bold {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-1-bold;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-3 {
+  @include base-typography;
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-heading-3;
+  font-size: tokens.$font-size-heading-3;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-title {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-title;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+// ============================================================================
+// PARAGRAPH TYPOGRAPHY
+// ============================================================================
+
+@mixin paragraph {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-paragraph;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin paragraph-description {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-paragraph-description;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+// ============================================================================
+// FOOTNOTE TYPOGRAPHY
+// ============================================================================
+
+@mixin footnote {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-footnote;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+// ============================================================================
+// CTA AND BUTTON TYPOGRAPHY
+// ============================================================================
+
+@mixin cta-title {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-cta-title;
+  font-size: tokens.$font-size-cta-title;
+  line-height: 1rem;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+// ============================================================================
+// SECTION AND FEATURE TYPOGRAPHY
+// ============================================================================
+
+@mixin text-section-title {
+  @include base-typography;
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-5xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: -0.02em;
+}
+
+@mixin text-description {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-semibold;
+  font-size: tokens.$font-size-2xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: -0.02em;
+}
+
+@mixin text-feature-title {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-lg;
+  line-height: tokens.$line-height-snug;
+  letter-spacing: -0.02em;
+}
+
+@mixin text-yesildefter-title {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-5xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-subtitle {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-semibold;
+  font-size: tokens.$font-size-xl;
+  line-height: tokens.$line-height-snug;
+  letter-spacing: -0.01em;
+}
+
+@mixin text-caption {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-xs;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: 0.01em;
+}
+
+@mixin text-body {
+  @include base-typography;
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-base;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: -0.02em;
+}
+
+// ============================================================================
+// MODERN TYPOGRAPHY CLASSES
+// ============================================================================
+
+.text-nav {
+  @include text-nav;
+}
+
+.text-nav-bold {
+  @include text-nav-bold;
+}
+
+.heading-1 {
+  @include heading-1;
+}
+
+.heading-1-bold {
+  @include heading-1-bold;
+}
+
+.heading-3 {
+  @include heading-3;
+}
+
+.heading-title {
+  @include heading-title;
+}
+
+.paragraph {
+  @include paragraph;
+}
+
+.paragraph-description {
+  @include paragraph-description;
+}
+
+.footnote {
+  @include footnote;
+}
+
+.cta-title {
+  @include cta-title;
+}
+
+.section-title {
+  @include text-section-title;
+}
+
+.description {
+  @include text-description;
+}
+
+.feature-title {
+  @include text-feature-title;
+}
+
+.yesiLdefter-title {
+  @include text-yesildefter-title;
+}
+
+.heading-subtitle {
+  @include heading-subtitle;
+}
+
+.text-caption {
+  @include text-caption;
+}
+
+.body {
+  @include text-body;
+}
+
+// ============================================================================
+// MODERN TYPOGRAPHY UTILITIES
+// ============================================================================
+
+// Text Alignment
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// Font Weights
+.font-bold {
+  font-weight: tokens.$font-weight-bold;
+}
+
+.font-semibold {
+  font-weight: tokens.$font-weight-semibold;
+}
+
+.font-medium {
+  font-weight: tokens.$font-weight-medium;
+}
+
+.font-normal {
+  font-weight: tokens.$font-weight-normal;
+}
+
+.font-light {
+  font-weight: tokens.$font-weight-light;
+}
+
+// Letter Spacing
+.tracking-tight {
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+.tracking-normal {
+  letter-spacing: tokens.$letter-spacing-normal;
+}
+
+.tracking-wide {
+  letter-spacing: tokens.$letter-spacing-wide;
+}
+
+// Line Heights
+.leading-tight {
+  line-height: tokens.$line-height-tight;
+}
+
+.leading-snug {
+  line-height: tokens.$line-height-snug;
+}
+
+.leading-normal {
+  line-height: tokens.$line-height-normal;
+}
+
+.leading-relaxed {
+  line-height: tokens.$line-height-relaxed;
+}
+
+// ============================================================================
+// RESPONSIVE TYPOGRAPHY UTILITIES
+// ============================================================================
+
+// Mobile-first responsive typography
+.text-responsive-xs {
+  font-size: tokens.$font-size-xs;
+
+  @media (min-width: tokens.$breakpoint-sm) {
+    font-size: tokens.$font-size-sm;
+  }
+}
+
+.text-responsive-sm {
+  font-size: tokens.$font-size-sm;
+
+  @media (min-width: tokens.$breakpoint-sm) {
+    font-size: tokens.$font-size-base;
+  }
+}
+
+.text-responsive-base {
+  font-size: tokens.$font-size-base;
+
+  @media (min-width: tokens.$breakpoint-sm) {
+    font-size: tokens.$font-size-lg;
+  }
+}
+
+.text-responsive-lg {
+  font-size: tokens.$font-size-lg;
+
+  @media (min-width: tokens.$breakpoint-sm) {
+    font-size: tokens.$font-size-xl;
+  }
+}
+
+.text-responsive-xl {
+  font-size: tokens.$font-size-xl;
+
+  @media (min-width: tokens.$breakpoint-sm) {
+    font-size: tokens.$font-size-2xl;
+  }
+}

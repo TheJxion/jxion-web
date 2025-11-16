@@ -1,0 +1,514 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+
+// Noisy background texture
+.noisy {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/noise.png');
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 2; // Above hero content but below interactive elements
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+}
+
+.hero {
+  position: relative;
+  z-index: 10; // Above video (z-index: 0) - matching reference
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  overflow: visible;
+
+  h1.title {
+    margin-top: 10rem;
+    font-size: 6rem;
+    line-height: 1;
+    text-align: center;
+    font-family: tokens.$font-family-logo;
+    position: relative;
+    z-index: 3; // Above noisy overlay
+    color: #ffffff; // Pure white for maximum contrast
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 1), 0 4px 20px rgba(0, 0, 0, 0.9),
+      0 6px 30px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.7); // Stronger, layered shadows for better visibility
+
+    @media (min-width: 768px) {
+      margin-top: 8rem;
+      font-size: 20vw;
+    }
+  }
+
+  .body {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 30vh;
+    z-index: 3; // Above noisy overlay
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 1.25rem;
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      bottom: 5rem;
+      top: auto;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 2.5rem;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+
+      @media (min-width: 1024px) {
+        flex-direction: row;
+        align-items: flex-end;
+      }
+
+      .space-y-5 {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
+        @media (max-width: 767px) {
+          display: none;
+        }
+
+        p {
+          color: #ffffff; // Pure white for better contrast
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 4px 16px rgba(0, 0, 0, 0.9); // Stronger shadows for visibility
+        }
+
+        p:nth-of-type(2),
+        .subtitle {
+          font-family: tokens.$font-family-logo;
+          font-size: 3.75rem;
+          color: #ffffff; // Changed to white for better visibility over video
+          max-width: 36rem;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 1),
+            0 4px 24px rgba(0, 0, 0, 0.9), 0 0 30px rgba(53, 29, 99, 0.8); // Stronger shadows with purple glow
+        }
+      }
+
+      .view-collection {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        font-size: 1.125rem;
+        width: 100%;
+
+        @media (min-width: 768px) {
+          max-width: 20rem;
+        }
+
+        @media (min-width: 1024px) {
+          max-width: 18rem;
+        }
+
+        @media (min-width: 1536px) {
+          text-align: left;
+        }
+
+        p {
+          text-align: left;
+          color: #ffffff; // Pure white for better contrast
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 4px 16px rgba(0, 0, 0, 0.9); // Stronger shadows for visibility
+        }
+
+        .subtitle {
+          color: #ffffff; // Pure white for better contrast
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 4px 16px rgba(0, 0, 0, 0.9); // Stronger shadows for visibility
+        }
+
+        a {
+          font-weight: 600;
+          opacity: 0.9;
+          text-align: center;
+          color: #351d63; // deep purple for Noir jewelry
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); // Add shadow for visibility
+          background: rgba(255, 255, 255, 0.1); // Semi-transparent background
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem;
+          backdrop-filter: blur(10px); // Blur effect for glassmorphism
+          transition: all 0.3s ease;
+
+          @media (min-width: 1536px) {
+            text-align: left;
+          }
+
+          &:hover {
+            color: #4a2a7a; // lighter purple on hover
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.2); // More visible on hover
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+.hero__container {
+  max-width: tokens.$container-max-width;
+  display: flex;
+  margin: auto;
+  width: 100%;
+  padding: tokens.$spacing-lg 0;
+  position: relative;
+  z-index: 1;
+  @media (max-width: tokens.$breakpoint-md) {
+    padding: tokens.$spacing-md 0;
+  }
+  @media (max-width: tokens.$breakpoint-lg) {
+    padding: tokens.$spacing-lg 0;
+  }
+}
+
+.hero__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: tokens.$spacing-2xl;
+  align-items: center;
+  @media (min-width: tokens.$breakpoint-lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  font-size: tokens.$font-size-heading-hero;
+  padding: 0 tokens.$spacing-lg;
+  gap: tokens.$spacing-md;
+  @media (max-width: tokens.$breakpoint-lg) {
+    gap: tokens.$spacing-sm;
+  }
+}
+
+.hero__title {
+  font-family: tokens.$font-family-logo;
+  font-size: tokens.$font-size-5xl;
+  font-weight: 800;
+  line-height: 1.64;
+  letter-spacing: tokens.$letter-spacing-heading-hero;
+  margin: 0;
+  color: tokens.$color-text-primary;
+  padding: tokens.$spacing-md 0;
+  span {
+    display: block;
+    margin-top: 0.25em;
+  }
+  @media (max-width: tokens.$breakpoint-sm) {
+    font-size: 2.5rem;
+  }
+  @media (max-width: tokens.$breakpoint-md) {
+    font-size: 3rem;
+  }
+}
+
+.hero__title--highlight {
+  @include typography.heading-hero;
+  color: tokens.$color-accent-purple;
+  font-weight: 800;
+  line-height: tokens.$line-height-heading-hero;
+  font-size: tokens.$font-size-heading-hero;
+  letter-spacing: tokens.$letter-spacing-heading-hero;
+  @media (max-width: tokens.$breakpoint-md) {
+    font-size: 3.2rem;
+  }
+  display: inline-block;
+}
+
+.hero__description {
+  font-family: tokens.$font-family-base;
+  color: tokens.$color-text-secondary;
+  margin: 0;
+  @media (min-width: tokens.$breakpoint-md) {
+    font-size: 0.64rem;
+  }
+  @media (min-width: tokens.$breakpoint-lg) {
+    font-size: 1.24rem;
+    max-width: 600px;
+  }
+}
+
+.hero__cta-group {
+  display: flex;
+  gap: tokens.$spacing-md;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero__cta {
+  background: tokens.$color-accent-purple;
+  border: none;
+  padding: 18px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: tokens.$color-text-primary;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px 0 rgba(72, 2, 43, 0.4);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5em;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(53, 29, 99, 0.5);
+    background: #3d2170; // #351d63 lightened by ~5%
+    &::before {
+      left: 100%;
+    }
+  }
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: tokens.$breakpoint-sm) {
+    width: 100%;
+    padding: 14px 28px;
+  }
+}
+
+.hero__visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: tokens.$spacing-lg 0;
+  @media (max-width: tokens.$breakpoint-lg) {
+    order: -1;
+    margin: 0;
+    padding: 0 tokens.$spacing-md;
+  }
+}
+
+.hero__card {
+  background: rgba(67, 67, 67, 0.3);
+  border: 1px solid rgba(72, 2, 43, 0.3);
+  border-radius: tokens.$radius-card;
+  padding: tokens.$spacing-xl tokens.$spacing-lg;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5),
+    0 18px 36px -18px rgba(72, 2, 43, 0.2);
+  width: 100%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: tokens.$color-text-primary;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.6),
+      0 24px 48px -18px rgba(72, 2, 43, 0.3);
+    border-color: rgba(72, 2, 43, 0.5);
+  }
+  @media (max-width: tokens.$breakpoint-sm) {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
+
+.hero__card__header {
+  margin-bottom: tokens.$spacing-sm;
+}
+
+.hero__card__stats {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.hero__card__stats__value {
+  font-family: tokens.$font-family-base;
+  font-size: 3rem;
+  font-weight: 700;
+  color: tokens.$color-accent-purple;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  @media (max-width: tokens.$breakpoint-sm) {
+    font-size: 2rem;
+  }
+}
+
+.hero__card__stats__label {
+  @include typography.paragraph;
+  color: tokens.$color-text-secondary;
+}
+
+.hero__card__chart {
+  height: 24vh;
+  background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  @media (max-width: tokens.$breakpoint-sm) {
+    height: 16vh;
+  }
+}
+
+.hero__progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  margin: 16px;
+}
+
+.hero__progress-fill {
+  height: 100%;
+  width: 78%;
+  background: linear-gradient(
+    90deg,
+    tokens.$color-primary-green 0%,
+    #8bc34a 100%
+  );
+  border-radius: 4px;
+  position: relative;
+  animation: progressGrow 1.5s ease-out;
+  @keyframes progressGrow {
+    from {
+      width: 0;
+    }
+    to {
+      width: 78%;
+    }
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border: 2px solid tokens.$color-primary-green;
+    border-radius: 50%;
+  }
+}
+
+.hero__chart-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background: #ff9500;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 149, 0, 0.2);
+}
+
+.hero__card__subtitle {
+  font-family: tokens.$font-family-base;
+  font-size: 0.875rem;
+  color: tokens.$color-text-secondary;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+}
+
+// Video container - separate from hero section (matching reference)
+// Video is a sibling of hero section, positioned absolutely
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+
+  // Dark overlay to blend video with background
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    pointer-events: none;
+  }
+
+  video {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50%; // Match reference: h-1/2 on mobile
+    object-fit: cover;
+    object-position: bottom;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5; // Reduced opacity for better text visibility
+
+    @media (min-width: 768px) {
+      height: 80%; // Match reference: md:h-[80%]
+      object-fit: contain;
+      object-position: bottom;
+    }
+  }
+}
+
+// Text gradient for SplitText animation - deep purple theme
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #351d63 50%, #898989 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: tokens.$breakpoint-lg) {
+  .hero__content {
+    text-align: center;
+  }
+  .hero__text {
+    align-items: center;
+  }
+  .hero__title {
+    text-align: center;
+  }
+  .hero__description {
+    text-align: center;
+  }
+}

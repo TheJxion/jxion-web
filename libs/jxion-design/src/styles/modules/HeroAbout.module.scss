@@ -1,0 +1,108 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.about-hero {
+  top: 80px;
+  width: fit-content;
+  margin: tokens.$spacing-4xl auto;
+  height: auto;
+  border-radius: tokens.$border-radius;
+  position: relative;
+  z-index: 1;
+  &__container {
+    height: 100%;
+    padding: tokens.$spacing-lg;
+    width: fit-content;
+    display: flex;
+    flex: 2;
+    gap: tokens.$spacing-sm;
+    align-items: center;
+    justify-content: center;
+  }
+  &__content {
+    height: 100%;
+    padding: tokens.$spacing-lg;
+    flex-direction: column;
+    gap: tokens.$spacing-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__text-container {
+    color: tokens.$color-text-dark;
+    display: flex;
+    flex-direction: column;
+    gap: tokens.$spacing-lg;
+    pointer-events: none;
+    user-select: none;
+  }
+  &__title {
+    @include typography.heading-title;
+    font-weight: 700;
+  }
+  &__description {
+    @include typography.text-description;
+    color: tokens.$color-text-secondary;
+    padding: tokens.$spacing-sm 0;
+    max-width: 730px;
+  }
+  &__cta-container {
+    width: calc(100% - tokens.$spacing-sm);
+    display: flex;
+    align-items: flex-start;
+    padding: tokens.$spacing-lg 0;
+  }
+  &__cta-button {
+    @include typography.cta-title;
+    text-align: left;
+  }
+  &__image-container {
+    position: relative;
+    width: initial;
+    height: 100%;
+    background: tokens.$test-background;
+    border-radius: tokens.$border-radius;
+    box-shadow: tokens.$effects-test-dropshadow;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: tokens.$spacing-lg;
+  }
+  &__image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  @media (max-width: tokens.$breakpoint-tablet) {
+    &__container {
+      flex-direction: column;
+      height: auto;
+    }
+
+    &__content {
+      order: 2;
+      padding: tokens.$spacing-lg;
+    }
+
+    &__image-container {
+      order: 1;
+      width: 100%;
+      height: 300px;
+      margin-bottom: tokens.$spacing-lg;
+    }
+
+    &__text-container {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: tokens.$breakpoint-mobile) {
+    &__title {
+      font-size: tokens.$font-size-3xl;
+    }
+
+    &__description {
+      font-size: tokens.$font-size-lg;
+    }
+  }
+}

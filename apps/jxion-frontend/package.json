@@ -1,0 +1,27 @@
+{
+  "name": "jxion-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --port 3000",
+    "build": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@trpc/client": "^9.26.1",
+    "api-server": "1.0.0",
+    "vue": "^3.2.37",
+    "vue-query": "^1.25.2",
+    "zod": "^3.17.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "sass": "^1.69.5",
+    "typescript": "~5.4.0",
+    "vite": "^5.4.21",
+    "vue-tsc": "^2.1.0"
+  },
+  "nx": {}
+}

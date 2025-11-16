@@ -1,0 +1,128 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.sidebar {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  justify-content: center;
+  align-self: stretch;
+  border-radius: tokens.$border-radius;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100vh;
+  background: tokens.$test-background-2;
+  background-position: top;
+  backdrop-filter: blur(10px);
+  box-shadow: tokens.$effects-test-dropshadow;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  &__inner {
+    @include typography.text-nav;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: tokens.$spacing-lg;
+    padding: tokens.$spacing-md tokens.$spacing-lg;
+    border-radius: tokens.$border-radius;
+    background: tokens.$test-background-2;
+    background-position: top;
+    backdrop-filter: blur(10px);
+    box-shadow: tokens.$effects-test-dropshadow;
+  }
+  &__header {
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: tokens.$spacing-sm;
+  }
+  &__section {
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__sectionTitle {
+    @include typography.cta-title;
+    color: tokens.$color-primary-orange;
+    text-transform: uppercase;
+    margin: 0 0 tokens.$spacing-sm 0;
+  }
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  &__sublist {
+    list-style: none;
+    padding: 0;
+    margin: tokens.$spacing-xs 0 0 tokens.$spacing-sm;
+  }
+  &__item {
+    margin-bottom: tokens.$spacing-sm;
+    display: block;
+    padding: tokens.$spacing-sm;
+    color: tokens.$color-text-light;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.21);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    &:hover {
+      background: tokens.$color-background-secondary;
+      color: tokens.$color-primary;
+    }
+  }
+  &__link {
+    @include typography.cta-title;
+    display: block;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    color: tokens.$color-text-light;
+    text-decoration: none;
+    border-radius: tokens.$border-radius;
+    transition: background-color 0.2s ease;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    &--active {
+      background-color: rgba(255, 255, 255, 0.2);
+      font-weight: tokens.$font-weight-medium;
+    }
+  }
+  &__button {
+    @include typography.cta-title;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    background: none;
+    border: none;
+    color: tokens.$color-text-light;
+    text-align: left;
+    cursor: pointer;
+    border-radius: tokens.$border-radius;
+    transition: background-color 0.2s ease;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  &__icon {
+    margin-right: tokens.$spacing-xs;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media (max-width: tokens.$breakpoint-tablet) {
+  .sidebar {
+    transform: translateX(-100%);
+    &--open {
+      transform: translateX(0);
+    }
+    &__toggle {
+      display: flex;
+    }
+  }
+}

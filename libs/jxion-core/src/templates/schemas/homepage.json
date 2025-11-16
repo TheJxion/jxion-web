@@ -1,0 +1,57 @@
+{
+  "id": "homepage",
+  "version": "1.0.0",
+  "sections": [
+    {
+      "component": "hero.primary",
+      "localeKey": "home.hero",
+      "props": {
+        "title": "title",
+        "subtitle": "subtitle",
+        "description": "description",
+        "ctaText": "primaryCta",
+        "tagline": "tagline"
+      }
+    },
+    {
+      "component": "section.default",
+      "localeKey": "home.featured",
+      "props": {
+        "title": "title",
+        "subtitle": "subtitle"
+      }
+    },
+    {
+      "component": "whyNoir.default",
+      "localeKey": "home.whyNoir",
+      "props": {
+        "title": "title",
+        "sections": "sections"
+      }
+    },
+    {
+      "component": "motifs.default",
+      "localeKey": "home.motifs",
+      "props": {
+        "title": "title",
+        "subtitle": "subtitle",
+        "items": "items"
+      }
+    },
+    {
+      "component": "newsletter.default",
+      "localeKey": "home.newsletter",
+      "props": {
+        "title": "title",
+        "description": "description",
+        "placeholder": "placeholder",
+        "button": "button"
+      }
+    }
+  ],
+  "metadata": {
+    "title": "Noir Crafted - Luxury Jewelry",
+    "description": "Discover timeless elegance with our luxury jewelry collection",
+    "locale": "tr-TR"
+  }
+}

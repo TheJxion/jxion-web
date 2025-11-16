@@ -1,0 +1,23 @@
+@use "./DesignTokens" as tokens;
+.layout {
+  min-height: 100vh;
+  height: -webkit-fill-available;
+  overflow: auto;
+  background: tokens.$color-gradient-mobile;
+  z-index: 0;
+  position: relative;
+  &__main {
+    position: initial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0rem;
+    margin: 0rem;
+    transition: all 0.3s ease;
+  }
+  &__footer {
+    width: 100%;
+    margin-top: auto;
+  }
+}

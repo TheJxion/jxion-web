@@ -1,0 +1,28 @@
+{
+  "name": "@jxion/styles",
+  "version": "0.1.0",
+  "description": "Jxion Styles - Design tokens and runtime style loader",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@jxion/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@jxion/db",
+  "version": "0.1.0",
+  "description": "Jxion Database - TypeScript types and migration files",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/migrations"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

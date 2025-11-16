@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "title": "Lüks Mücevher Koleksiyonu",
+    "subtitle": "Zamansız Zarafet",
+    "description": "Özenle seçilmiş mücevherlerle stil ve sofistikasyonu keşfedin. Her parça, kalite ve zarafeti yansıtacak şekilde tasarlanmıştır.",
+    "primaryCta": "Koleksiyonu Keşfet",
+    "secondaryCta": "Hakkımızda"
+  },
+  "demo": {
+    "title": "Jxion Stack Demo",
+    "backToHome": "← Ana Sayfaya Dön",
+    "infoTitle": "Demo Bilgileri",
+    "componentId": "Bileşen ID",
+    "framework": "Framework",
+    "translationSource": "Çeviri Kaynağı",
+    "registrySource": "Kayıt Kaynağı",
+    "note": "Bu demo, runtime çeviriler ve kayıt tabanlı bileşenler kavramını gösterir. Phase 1'de bu, @jxion-i18n ve @jxion-core paketleri tarafından desteklenecek.",
+    "implementationNotes": "Uygulama Notları",
+    "phase1Goals": "Phase 1 Hedefleri",
+    "phase2Goals": "Phase 2 Hedefleri",
+    "phase3Goals": "Phase 3 Hedefleri"
+  }
+}

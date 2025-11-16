@@ -1,0 +1,30 @@
+{
+  "name": "jxion-db",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jxion-db/src",
+  "projectType": "library",
+  "tags": [
+    "type:lib",
+    "scope:jxion-db"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/jxion-db",
+        "main": "libs/jxion-db/src/index.ts",
+        "tsConfig": "libs/jxion-db/tsconfig.json",
+        "assets": [
+          "libs/jxion-db/src/migrations/**/*.sql",
+          "libs/jxion-db/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+@use './DesignTokens' as tokens;
+
+.redefine {
+  padding: tokens.$spacing-2xl;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: tokens.$spacing-2xl;
+  }
+
+  &__title {
+    font-size: tokens.$font-size-2xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$color-text-primary;
+    text-align: center;
+  }
+
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: tokens.$spacing-xl;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: center;
+    margin-top: tokens.$spacing-2xl;
+  }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+  padding: tokens.$spacing-lg;
+  background: tokens.$color-background-secondary;
+  border-radius: tokens.$border-radius;
+  box-shadow: tokens.$shadow-card-lg;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: tokens.$effects-test-dropshadow;
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: tokens.$color-background-accent;
+    border-radius: tokens.$border-radius-full;
+  }
+
+  &__title {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$color-text-primary;
+  }
+
+  &__description {
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-text-secondary;
+    line-height: 1.5;
+  }
+}

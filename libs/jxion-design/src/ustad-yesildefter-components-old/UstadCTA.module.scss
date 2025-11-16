@@ -1,0 +1,184 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.cta {
+  position: relative;
+  width: 100%;
+  max-width: tokens.$container-width;
+  margin: 120px auto;
+  padding: 0 24px;
+  overflow: hidden;
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 48px;
+    font-weight: tokens.$font-weight-bold;
+    line-height: 1.2;
+    color: tokens.$color-text-primary;
+  }
+
+  &__button {
+    min-width: 180px;
+  }
+
+  &__decorations {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.title {
+  &__highlight {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &--text {
+      position: relative;
+      z-index: 1;
+      color: tokens.$color-primary;
+    }
+
+    &--decoration {
+      position: absolute;
+      left: -20px;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+.decorations {
+  &__item {
+    position: absolute;
+    opacity: 0.1;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    // Position each decoration
+    &:nth-child(1) {
+      top: -60px;
+      left: 5%;
+      width: 240px;
+      transform: rotate(-15deg);
+    }
+
+    &:nth-child(2) {
+      top: 20%;
+      right: 10%;
+      width: 180px;
+      transform: rotate(10deg);
+    }
+
+    &:nth-child(3) {
+      bottom: -40px;
+      left: 15%;
+      width: 200px;
+      transform: rotate(5deg);
+    }
+
+    &:nth-child(4) {
+      bottom: 10%;
+      right: 5%;
+      width: 160px;
+      transform: rotate(-8deg);
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}
+
+// Apply animations to decorations
+.decorations__item {
+  animation: float 6s ease-in-out infinite;
+
+  &:nth-child(1) {
+    --rotation: -15deg;
+    animation-delay: 0s;
+  }
+  &:nth-child(2) {
+    --rotation: 10deg;
+    animation-delay: -1.5s;
+  }
+  &:nth-child(3) {
+    --rotation: 5deg;
+    animation-delay: -3s;
+  }
+  &:nth-child(4) {
+    --rotation: -8deg;
+    animation-delay: -4.5s;
+  }
+}
+
+// Responsive styles
+@media (max-width: tokens.$breakpoint-tablet) {
+  .cta {
+    margin: 80px auto;
+
+    &__title {
+      font-size: 36px;
+    }
+  }
+
+  .decorations__item {
+    &:nth-child(1) {
+      width: 180px;
+    }
+    &:nth-child(2) {
+      width: 140px;
+    }
+    &:nth-child(3) {
+      width: 160px;
+    }
+    &:nth-child(4) {
+      width: 120px;
+    }
+  }
+}
+
+@media (max-width: tokens.$breakpoint-mobile) {
+  .cta {
+    margin: 60px auto;
+    padding: 0 16px;
+
+    &__title {
+      font-size: 28px;
+    }
+
+    &__button {
+      width: 100%;
+    }
+  }
+}

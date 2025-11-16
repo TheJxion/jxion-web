@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": ["type:lib"]
+              },
+              {
+                "sourceTag": "type:lib",
+                "onlyDependOnLibsWithTags": ["type:lib"]
+              },
+              {
+                "sourceTag": "scope:jxion-core",
+                "onlyDependOnLibsWithTags": ["scope:jxion-shared"]
+              },
+              {
+                "sourceTag": "scope:jxion-design",
+                "onlyDependOnLibsWithTags": [
+                  "scope:jxion-styles",
+                  "scope:jxion-core"
+                ]
+              },
+              {
+                "sourceTag": "scope:jxion-i18n",
+                "onlyDependOnLibsWithTags": [
+                  "scope:jxion-core",
+                  "scope:jxion-shared"
+                ]
+              },
+              {
+                "sourceTag": "scope:jxion-styles",
+                "onlyDependOnLibsWithTags": ["scope:jxion-shared"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    }
+  ]
+}

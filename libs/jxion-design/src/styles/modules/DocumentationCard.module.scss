@@ -1,0 +1,46 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.documentationCard {
+  background-color: tokens.$color-primary-light;
+  border-radius: 16px;
+  padding: tokens.$spacing-xl;
+  margin-bottom: tokens.$spacing-xl;
+  box-shadow: tokens.$effects-cta-box-shadow;
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__icon {
+    color: tokens.$color-primary-green;
+    font-size: 16px;
+    margin-right: tokens.$spacing-sm;
+  }
+  &__title {
+    @include typography.heading-title-serif;
+    gap: tokens.$spacing-sm;
+    padding: tokens.$spacing-md tokens.$spacing-xl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    span {
+      display: inline-block;
+      color: tokens.$color-primary-green;
+      text-shadow: tokens.$effects-text-cta-shadow;
+    }
+  }
+  &__description {
+    @include typography.cta-title;
+    padding: tokens.$spacing-xl;
+    margin: 0;
+  }
+  &__content {
+    color: tokens.$color-text-primary;
+    font-size: 16px;
+    line-height: 1.5;
+    p {
+      margin: 0;
+    }
+  }
+}

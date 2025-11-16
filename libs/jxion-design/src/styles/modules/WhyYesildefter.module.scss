@@ -1,0 +1,167 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+.why {
+  width: 100%;
+  padding: tokens.$spacing-xl 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__container {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #ffffff 100%);
+    border-radius: 32px;
+    padding: tokens.$spacing-xl;
+  }
+  &__header {
+    @include typography.heading-1;
+    color: color;
+    text-align: center;
+    margin-bottom: tokens.$spacing-2xl;
+    @media (max-width: tokens.$breakpoint-md) {
+      margin-bottom: tokens.$spacing-md;
+    }
+  }
+  &__title {
+    gap: tokens.$spacing-1-5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__highlight {
+      color: tokens.$color-primary-green;
+    }
+    margin: 0 0 tokens.$spacing-md 0;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 2rem;
+    }
+    @media (max-width: tokens.$breakpoint-sm) {
+      font-size: 1.75rem;
+    }
+  }
+  &__description {
+    @include typography.paragraph;
+    color: tokens.$color-text-tertiary;
+    flex: 1;
+    opacity: 0.85;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 0.8125rem;
+    }
+  }
+  &__plans {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: tokens.$spacing-xl;
+    margin: 0 0 tokens.$spacing-2xl 0;
+    @media (max-width: tokens.$breakpoint-md) {
+      flex-direction: column;
+      gap: tokens.$spacing-md;
+    }
+  }
+  &__plan {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.04),
+      0 2px 8px 0 rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        tokens.$color-primary-green 0%,
+        #8bc34a 100%
+      );
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (max-width: tokens.$breakpoint-md) {
+      padding: 24px;
+    }
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      border-color: rgba(72, 92, 17, 0.08);
+
+      &::before {
+        transform: scaleX(1);
+      }
+    }
+  }
+  &__plan-title {
+    @include typography.heading-title;
+    color: tokens.$color-text-primary;
+    margin: 0 0 tokens.$spacing-sm 0;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 1.125rem;
+    }
+  }
+  &__plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  &__plan-feature {
+    @include typography.paragraph;
+    color: tokens.$color-text-tertiary;
+    margin: 0 0 tokens.$spacing-sm 0;
+    flex: 1;
+    opacity: 0.85;
+    @media (max-width: tokens.$breakpoint-md) {
+      font-size: 0.8125rem;
+    }
+  }
+  &__plan-feature-icon {
+    color: tokens.$color-primary-green;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: tokens.$color-text-light;
+    font-size: 0.9375rem;
+    font-family: tokens.$font-family-base;
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: tokens.$color-primary-green;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    &:hover {
+      color: white;
+    }
+  }
+}

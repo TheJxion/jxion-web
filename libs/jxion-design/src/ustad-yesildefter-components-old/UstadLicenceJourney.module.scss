@@ -1,0 +1,97 @@
+@use '@styles/UstadDesignTokens.scss' as tokens;
+
+.journey {
+  &__frames {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: tokens.$spacing-xl;
+    padding: tokens.$spacing-2xl;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: tokens.$spacing-md;
+  }
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+
+  &__main {
+    aspect-ratio: 16/9;
+    border-radius: tokens.$radius-lg;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+// Specific frame styles matching index.html structure
+.frame160930,
+.frame161027,
+.frame161188,
+.frame16129 {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    border-radius: tokens.$radius-lg;
+  }
+}
+
+// Sub-frames styling
+.frame159490,
+.frame159491,
+.frame159492,
+.frame159493 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: tokens.$spacing-md;
+}
+
+.subframe__image {
+  aspect-ratio: 1;
+  border-radius: tokens.$radius-md;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s tokens.$transition-base;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.text__title {
+  color: tokens.$color-text-primary;
+  font-size: tokens.$font-size-5xl;
+  font-weight: tokens.$font-weight-bold;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+}
+
+.text__description {
+  color: tokens.$color-text-secondary;
+  font-size: tokens.$font-size-base;
+  line-height: 1.5;
+  letter-spacing: -0.08em;
+}

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@jxion/backend": ["libs/jxion-backend/index.ts"],
+      "@jxion/core": ["libs/jxion-core/src/index.ts"],
+      "@jxion/core/adapters": ["libs/jxion-core/src/adapters/index.ts"],
+      "@jxion/db": ["libs/jxion-db/src/index.ts"],
+      "@jxion/design": ["libs/jxion-design/src/index.ts"],
+      "@jxion/i18n": ["libs/jxion-i18n/src/index.ts"],
+      "@jxion/shared": ["libs/jxion-shared/src/index.ts"],
+      "@jxion/styles": ["libs/jxion-styles/src/index.ts"],
+      "@jxion/validation": ["libs/jxion-validation/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "tmp"]
+}

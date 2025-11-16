@@ -1,0 +1,24 @@
+{
+  "name": "@jxion/validation",
+  "version": "0.1.0",
+  "description": "Jxion Stack — Shared validation schemas using Zod",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "echo 'Validation library - no build needed'"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
+

@@ -1,0 +1,32 @@
+@use './DesignTokens' as tokens;
+.noteCard {
+  background-color: rgba(tokens.$color-primary-orange, 0.3);
+  border-radius: 16px;
+  padding: tokens.$spacing-xl;
+  margin-bottom: tokens.$spacing-xl;
+  box-shadow: tokens.$effects-cta-box-shadow;
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: tokens.$spacing-sm;
+  }
+  &__icon {
+    color: tokens.$color-primary-orange;
+    font-size: 16px;
+    margin-right: tokens.$spacing-sm;
+  }
+  &__title {
+    color: tokens.$color-primary-green;
+    font-size: 16px;
+    font-weight: tokens.$font-weight-medium;
+    margin: 0;
+  }
+  &__content {
+    color: tokens.$color-text-primary;
+    font-size: 16px;
+    line-height: 1.5;
+    p {
+      margin: 0;
+    }
+  }
+}

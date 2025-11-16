@@ -1,0 +1,44 @@
+{
+  "name": "jxion-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/jxion-api",
+  "projectType": "application",
+  "tags": [
+    "type:app",
+    "scope:jxion-api",
+    "runtime:go"
+  ],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd apps/jxion-api && go build -o jxion-api ./cmd/server",
+        "cwd": "{workspaceRoot}"
+      },
+      "outputs": [
+        "{projectRoot}/jxion-api"
+      ]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd apps/jxion-api && go run ./cmd/server",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd apps/jxion-api && go test ./...",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd apps/jxion-api && go run ./cmd/migrate up",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

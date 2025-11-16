@@ -1,0 +1,599 @@
+{
+  "home": {
+    "makeUp": {
+      "message": "Websitemiz güncellendi! Demo talep etmek için lütfen İletişim menüsünü ziyaret edin.",
+      "phoneNumber": "0 (850) 255 82 82",
+      "contactLabel": "İletişim"
+    },
+    "hero": {
+      "title": "NOIR",
+      "tagline": "Elegant. Timeless. Exquisite.",
+      "subtitle": "Zamanın Ötesinde<br />Takı Deneyimi",
+      "description": "Her parça, zarafet ve işçiliğin mükemmel birleşimidir. Ay döngülerinden ilham alan, Virgo burcunun zarafetini yansıtan ve Türk kültürünün simgeleriyle bezenmiş özel tasarımlar.",
+      "primaryCta": "Koleksiyonu Keşfet",
+      "secondaryCta": "Hikayemizi Oku"
+    },
+    "featured": {
+      "title": "Öne Çıkan Koleksiyon",
+      "subtitle": "En sevilen parçalarımızdan bir seçki"
+    },
+    "whyNoir": {
+      "title": "Neden Noir?",
+      "sections": [
+        {
+          "icon": "✨",
+          "title": "Özel Tasarım",
+          "description": "Her parça, kadın gücünü ve zarafetini kutlayan özenle tasarlanmış eserlerdir."
+        },
+        {
+          "icon": "🔨",
+          "title": "Kaliteli İşçilik",
+          "description": "En kaliteli malzemeler ve geleneksel zanaatkarlık ile modern tasarımın buluşması."
+        },
+        {
+          "icon": "💎",
+          "title": "Anlamlı Tasarımlar",
+          "description": "Ay döngüleri, Virgo, lale ve Şahmeran gibi motiflerle örülü hikayeler."
+        }
+      ]
+    },
+    "motifs": {
+      "title": "Tasarım Motifleri",
+      "subtitle": "Her koleksiyonumuz, derin anlamlar taşıyan motiflerle bezenmiştir",
+      "items": [
+        {
+          "name": "Ay Döngüleri",
+          "description": "Zamanın ritmini yansıtan tasarımlar"
+        },
+        {
+          "name": "Virgo",
+          "description": "Zarafet ve mükemmellik arayışı"
+        },
+        {
+          "name": "Lale",
+          "description": "Türk kültürünün simgesi"
+        },
+        {
+          "name": "Şahmeran",
+          "description": "Efsanevi güç ve zarafet"
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "Yeni Koleksiyonlardan Haberdar Olun",
+      "description": "Özel indirimler ve yeni tasarımlar hakkında ilk siz haberdar olun.",
+      "placeholder": "E-posta adresiniz",
+      "button": "Abone Ol"
+    },
+    "keyFeatures": {
+      "title": "Öne Çıkan Özellikler",
+      "subtitle": "İşletmenizin ihtiyaç duyduğu tüm araçlar tek platformda.",
+      "kursiyer_yonetimi_title": "Kursiyer Yönetimi",
+      "kursiyer_yonetimi_desc": "YeşilDefter ile kursiyer başvuru, sınav, aktarma ve belge takibi süreçlerini tek panelden yönetin.",
+      "kursiyer_yonetimi_footnote": "MTSK uyumlu belge kontrolü",
+      "kurs_yonetimi_title": "Kurs Yönetimi",
+      "kurs_yonetimi_desc": "YeşilDefter ile dönem, grup ve şube yönetimi ve otomatik planlama olanağı sağlayın.",
+      "kurs_yonetimi_footnote": "Otomatik ders planı",
+      "sinav_yonetimi_title": "Sınav Yönetimi",
+      "sinav_yonetimi_desc": "YeşilDefter ile teorik ve uygulamalı sınav süreçlerini kolayca yönetin.",
+      "sinav_yonetimi_footnote": "Otomatik sonuç takibi",
+      "finansal_yonetim_title": "Finansal Yönetim",
+      "finansal_yonetim_desc": "YeşilDefter ile ücretlendirme, ödeme planı ve borç takibinizi basitleştirin.",
+      "finansal_yonetim_footnote": "Taksit planı",
+      "belge_yonetimi_title": "Belge Yönetimi",
+      "belge_yonetimi_desc": "YeşilDefter ile belge yükleme, kontrol ve MTSK uyumluluğunu sağlayın.",
+      "belge_yonetimi_footnote": "MTSK uyumlu",
+      "arac_yonetimi_title": "Araç Yönetimi",
+      "arac_yonetimi_desc": "YeşilDefter ile eğitim araçları, simülatör ve bakım takibinizi kolaylaştırın.",
+      "arac_yonetimi_footnote": "Bakım takibi",
+      "common_cta": "Detayları Gör",
+      "common_cta_link": "/documentation"
+    },
+    "integration": {
+      "title": "Ürün Detayları",
+      "subtitle": "İşletmenizi bir daha adım öne taşıyacak özellikler."
+    },
+    "integrationSolutions": {
+      "title": "Ürün Detayları",
+      "subtitle": "İşletmenizi bir daha adım öne taşıyacak özellikler.",
+      "common_cta": "Detayları Gör",
+      "common_cta_link": "/documentation",
+      "items": [
+        {
+          "title": "Kursiyer Yönetimi",
+          "image": "/images/solutions/sinirsiz-kullanici.png",
+          "description": "Kursiyer başvurularını, belgelerini ve ilerlemenizi yönetin.",
+          "features": [
+            "İlerleme takibi panelleri",
+            "Whatsapp modülü ile Eksik belge uyarıları ",
+            "MTSK-uyumlu belge kontrolü",
+            "Kursiyer portalı genel bakışı ve Whatsapp mesajları"
+          ],
+          "comingSoon": false
+        },
+        {
+          "title": "Kurs Yönetimi",
+          "image": "/images/solutions/uzaktan-erisim.png",
+          "description": "Dönem, grup ve şube yönetimi ve otomatik planlama olanağı sağlayın.",
+          "features": [
+            "Otomatik ders planı",
+            "Sınav çakışma kontrolleri",
+            "Kapasite yönetimi ve sonuç takibi"
+          ],
+          "comingSoon": false
+        },
+        {
+          "title": "Finansal Yönetim",
+          "image": "/images/solutions/e-fatura.png",
+          "description": "Ücretlendirme, ödeme planı ve borç takibinizi basitleştirin.",
+          "features": [
+            "Otomatik fatura oluşturma ve ödeme planlama",
+            "Ödeme takibi ve borç takibi",
+            "Finansal raporlama",
+            "E-Fature ile deneyimini geliştirin"
+          ],
+          "comingSoon": false
+        },
+        {
+          "title": "Belge Yönetimi",
+          "image": "/images/solutions/guvenli-yedekleme.png",
+          "description": "Belge yükleme, kontrol ve MTSK uyumluluğunu sağlayın.",
+          "features": [
+            "Belge yükleme",
+            "Belge kontrolü",
+            "MTSK uyumluluğunu sağlayın"
+          ],
+          "comingSoon": false
+        },
+        {
+          "title": "Araç Yönetimi",
+          "image": "/images/solutions/sanal-pos.png",
+          "description": "Eğitim araçları, simülatör ve bakım takibinizi kolaylaştırın.",
+          "features": [
+            "Eğitim araçları takibi",
+            "Öğretmen performans analizi ve bakım takibi"
+          ],
+          "comingSoon": false
+        },
+        {
+          "title": "MTSK Uyumluluğu",
+          "image": "/images/solutions/sms.png",
+          "description": "MTSK sistemine entegre olarak her bildirimi otomatikleştirin.",
+          "features": [
+            "Otomatik veri senkronizasyonu ve MTSK uyumluluğunu sağlayın",
+            "Gerçek zamanlı bildirimler ve MTSK raporlama araçları"
+          ],
+          "comingSoon": false
+        }
+      ]
+    },
+    "features": {
+      "title": "Güçlü Özellikler",
+      "subtitle": "Modern teknolojiler ve kullanıcı odaklı tasarım ile geliştirilen yazılımımız, işletmenizin tüm ihtiyaçlarını karşılar.",
+      "list": [
+        {
+          "title": "Veri Güvenliği",
+          "description": "Verileriniz kurumsal düzeyde güvenlik önlemleriyle korunur."
+        },
+        {
+          "title": "Hızlı Erişim",
+          "description": "Verilerinize her yerden hızlı ve kolay erişim sağlayın."
+        },
+        {
+          "title": "Sınav Takibi",
+          "description": "Sınav ilerlemenizi ve performansınızı zaman içinde takip edin."
+        },
+        {
+          "title": "Sanal POS",
+          "description": "İşlemleriniz için güvenli ödeme işleme sistemi."
+        },
+        {
+          "title": "Sınırsız Kullanıcı",
+          "description": "Ekibinizi sınır olmadan büyütün."
+        },
+        {
+          "title": "Bulut Yedekleme",
+          "description": "Tüm önemli verileriniz için güvenli bulut yedekleme."
+        }
+      ]
+    },
+    "featuresCarousel": {
+      "title": "Modern Teknolojiler",
+      "subtitle": "En güncel teknolojilerle güçlendirilmiş platform",
+      "common_cta": "Daha Fazla",
+      "list": [
+        {
+          "icon": "faShieldAlt",
+          "title": "Veri Güvenliği",
+          "description": "2 adımlı şifreleme ve günlük yedekleme ile verileriniz güvende.",
+          "footnote": "Cloudflare CDN destekli",
+          "variant": "highlighted"
+        },
+        {
+          "icon": "faRocket",
+          "title": "Hızlı Erişim",
+          "description": "Cloud tabanlı altyapı ile her yerden hızlı ve güvenli erişim.",
+          "footnote": "Her cihazdan erişim"
+        },
+        {
+          "icon": "faDatabase",
+          "title": "Veritabanı Optimizasyonu",
+          "description": "SQL Server optimizasyonu ile hızlı sorgu performansı.",
+          "footnote": "Index optimizasyonu ve firma bazlı optimizasyon"
+        },
+        {
+          "icon": "faUsers",
+          "title": "Çoklu Kullanıcı Desteği",
+          "description": "Sınırsız kullanıcı ile ekip yönetimi ve yetki kontrolü.",
+          "footnote": "Rol bazlı yetki kontrolü"
+        },
+        {
+          "icon": "faCloud",
+          "title": "Bulut Yedekleme",
+          "description": "Otomatik yedekleme ve disaster recovery ile veri güvenliği.",
+          "footnote": "Günlük yedekleme ve 7/24 log kayıtları"
+        }
+      ]
+    },
+    "integrationTitle": "Kapsamlı Çözüm Paketi",
+    "integrationSubtitle": "Sürücü kursu işletmenizin ihtiyaç duyduğu tüm araçlar tek platformda. Modern teknoloji ile işlerinizi kolaylaştırın.",
+    "integrationSolutionTitles": [
+      "E-Fatura",
+      "Sanal POS",
+      "SMS Bildirimleri",
+      "Uzaktan Erişim",
+      "Sınırsız Kullanıcı",
+      "Güvenli Yedekleme"
+    ],
+    "integrationSolutionDescriptions": [
+      "Finans süreçlerinizi dijitalleştirin ve kolay yönetin",
+      "Güvenli ve hızlı ödeme çözümleri ile tahsilatınızı kolaylaştırın",
+      "Müşterilerinize otomatik bilgilendirme mesajları gönderin",
+      "İşletmenizi internet bağlantısı olan her yerden yönetin",
+      "Ekip üyelerinizi sınır olmadan sisteme dahil edin",
+      "Verilerinizi her zaman güvende tutan bulut çözümleri"
+    ],
+    "integrationCta": "Dokümantasyonu Keşfedin",
+    "integrationMakeUp": "Yakında daha çok güncelleme ile!",
+    "journey": {
+      "title": "Büyük Resmi Görün",
+      "description": "Gelişmiş analitik platformumuzla kapsamlı içgörüler elde edin ve bilinçli kararlar alın.",
+      "benefits": [
+        "Kapsamlı sınav hazırlık materyalleri",
+        "Gerçek zamanlı ilerleme takibi ve analitik",
+        "Uzman eğitmen desteği ve rehberlik",
+        "Esnek öğrenme programları ve formatları",
+        "Başarı oranı optimizasyon stratejileri",
+        "Sürekli iyileştirme ve güncellemeler"
+      ],
+      "cta": "Daha Fazla Öğrenin"
+    },
+    "whyYesilDefter": {
+      "highlight": "Neden",
+      "title": "YesilDefter?",
+      "description": "YesilDefter, sürücü kursları için özel olarak tasarlanmış kapsamlı bir yönetim sistemidir.",
+      "benefits": [
+        {
+          "name": "Zaman Tasarrufu",
+          "features": [
+            "Otomatik belge düzenleme",
+            "Tek tıkla raporlama",
+            "Entegre iletişim",
+            "Toplu işlemler ve filtreleme"
+          ]
+        },
+        {
+          "name": "Maliyet Kontrolü",
+          "features": [
+            "İnsan kaynakları optimizasyonu",
+            "Arşivleme maliyetlerinde azalma",
+            "Data transfer maliyetlerinde azalma",
+            "Operasyonel verimlilik artışı"
+          ]
+        },
+        {
+          "name": "Güvenlik & Uyumluluk",
+          "features": [
+            "KVKK uyumlu veri koruma",
+            "Cloudflare CDN destekli güvenlik sertifikası",
+            "Otomatik yedekleme sistemi",
+            "Kullanıcı rol bazlı yetki kontrolü"
+          ]
+        }
+      ],
+      "cta": "Ücretsiz Demo İsteyin"
+    },
+    "mobileFeatures": {
+      "title": "Mobil Uygulama Özellikleri",
+      "comingSoon": "Yakında daha çok güncelleme ile!",
+      "subtitle": "iOS ve Android uygulamalarımız ile tüm modüllere erişim\nKursiyer takibi, sınav yönetimi ve finansal raporlama",
+      "qrTitle": "Firma QR Kodu Tarama",
+      "qrDescription": "Firma bilgilerinizi anında tarayarak, mobil cihazlardan erişim",
+      "qrFeatures": ["Anında tanıma", "Yüksek doğruluk", "Hızlı işleme"],
+      "ocrTitle": "Belge OCR Tarama",
+      "ocrDescription": "Belgelerinizi anında tarayarak, mobil cihazlardan erişim",
+      "ocrFeatures": ["Belge tarama", "Metin işleme", "Akıllı tanıma"],
+      "documentHeader": {
+        "title": "Sürücü Belgesi"
+      },
+      "documentFields": ["Ad: John Doe", "Soyad: Doe"]
+    },
+    "whatsourimpact": {
+      "title": {
+        "regular": "YeşilDefter'i ne",
+        "highlight": "farklı",
+        "regularcontiniued": "kılıyor?"
+      },
+      "stats": [
+        {
+          "value": "500+",
+          "label": "Aktif Kurs Deneyimi",
+          "color": "green"
+        },
+        {
+          "value": "95%",
+          "label": "İşletme Verimliliği",
+          "color": "orange"
+        },
+        {
+          "value": "24/7",
+          "label": "Teknik Destek",
+          "color": "red"
+        },
+        {
+          "value": "10K+",
+          "label": "Başarılı Öğrenci",
+          "color": "blue"
+        }
+      ]
+    },
+    "nextSteps": {
+      "title": "İletişim ve Demo Talebi",
+      "subtitle": "Uzman ekibimiz size en uygun çözümü sunmak için hazır",
+      "list": [
+        {
+          "title": "Demo Talep Et",
+          "description": "7 ana modülü ücretsiz deneyin: Kursiyer, Kurs, Sınav, Finans, Belge, Araç ve Personel Yönetimi",
+          "ctaText": "Demo Talep Et",
+          "link": "/demo-request",
+          "color": "green",
+          "icon": "faRocket",
+          "category": "guide",
+          "difficulty": "beginner",
+          "estimatedTime": "30 dk",
+          "tags": ["demo", "ücretsiz"],
+          "featured": true
+        },
+        {
+          "title": "Kullanım Kılavuzu",
+          "description": "Kullanım kılavuzlarımızı inceleyerek, YesilDefter'i daha iyi kullanabilirsiniz.",
+          "ctaText": "Dokümantasyonu İncele",
+          "link": "/documentation",
+          "color": "purple",
+          "icon": "faBook",
+          "category": "reference",
+          "difficulty": "intermediate",
+          "estimatedTime": "45 dk",
+          "tags": ["modül", "detaylar"]
+        },
+        {
+          "title": "Teknik Destek",
+          "description": "7/24 teknik destek ve canlı yardım hizmeti",
+          "ctaText": "Destek Al",
+          "link": "/support",
+          "color": "orange",
+          "icon": "faLightbulb",
+          "category": "guide",
+          "difficulty": "beginner",
+          "estimatedTime": "10 dk",
+          "tags": ["destek", "yardım"]
+        }
+      ]
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "description": "YesilDefter ile ilgili sıkça sorulan sorular ve cevapları",
+      "items": [
+        {
+          "question": "YesilDefter'i nasıl kullanmaya başlayabilirim?",
+          "answer": "Ücretsiz demo hesabı oluşturarak hemen başlayabilirsiniz. Kurulum süreci sadece 5 dakika sürer ve ekibiniz aynı gün sistemi kullanmaya başlayabilir."
+        },
+        {
+          "question": "MTSK entegrasyonu nasıl çalışır?",
+          "answer": "Milli Eğitim Bakanlığı sistemleri ile tam entegrasyon sağlanır. MtskAdayTakip ve MtskAdayTalep tabloları üzerinden öğrenci kayıtları, sınav sonuçları ve belgeler otomatik olarak MEB sistemlerine aktarılır."
+        },
+        {
+          "question": "Kursiyer yönetimi nasıl çalışır?",
+          "answer": "MtskAday ve MtskAdayTalep tabloları ile kursiyer başvuru, belge takibi ve ilerleme durumu yönetimi. Otomatik belge eksikliği uyarısı ve MTSK uyumlu kontrol sistemi."
+        },
+        {
+          "question": "Sınav yönetimi özellikleri nelerdir?",
+          "answer": "MtskSinavETeorik ve MtskSinavUygulama ile teorik ve uygulamalı sınav planlama, çakışma kontrolü, kontenjan yönetimi ve sonuç takibi."
+        },
+        {
+          "question": "Finansal yönetim nasıl sağlanır?",
+          "answer": "OnmHesapFinans ve OnmOdemePlani ile ücretlendirme, otomatik borçlandırma, taksit planı oluşturma ve ödeme takibi."
+        },
+        {
+          "question": "Teknik destek nasıl sağlanır?",
+          "answer": "7/24 teknik destek, canlı chat ve uzaktan erişim ile sorunlarınız anında çözülür. Eğitim ve onboarding süreçleri de dahildir."
+        }
+      ]
+    },
+    "whatCanWeDoForYou": {
+      "title": {
+        "regular": "Sizin Icin",
+        "highlight": "Ne",
+        "regularcontinued": "Yapabiliriz?"
+      },
+      "subtitle": "YesilDefter ile işletmenizi nasıl dönüştürebileceğimizi keşfedin",
+      "featuredBadge": "Öne Çıkan",
+      "metadata": {
+        "duration": "Süre:",
+        "difficulty": "Zorluk:",
+        "rating": "Değerlendirme:",
+        "reviews": "değerlendirme"
+      },
+      "tabs": [
+        {
+          "id": "school",
+          "title": "Sürücü Kursu",
+          "content": {
+            "title": "Sürücü Kursu Yönetimi",
+            "subtitle": "Kapsamlı sürücü kursu çözümleri",
+            "description": "YesilDefter ile sürücü kursu işletmenizi dijitalleştirin ve verimliliğinizi artırın.",
+            "features": [
+              "Kursiyer yönetimi ve takibi",
+              "Ders programı ve planlama",
+              "Sınav yönetimi ve sonuç takibi",
+              "Finansal yönetim araçları",
+              "Öğretmen atama ve yönetimi",
+              "MTSK uyumluluğu ve raporlama"
+            ],
+            "actions": [
+              { "text": "Demo İste", "variant": "primary" },
+              { "text": "Daha Fazla Öğren", "variant": "secondary" }
+            ]
+          }
+        },
+        {
+          "id": "integration",
+          "title": "Entegrasyon",
+          "content": {
+            "title": "Sistem Entegrasyonları",
+            "subtitle": "Mevcut sistemlerinizle uyumlu çalışma",
+            "description": "Mevcut iş süreçlerinizi bozmadan YesilDefter'i entegre edin.",
+            "features": [
+              "MTSK sistemi entegrasyonu",
+              "E-fatura entegrasyonu",
+              "Muhasebe yazılımı entegrasyonu",
+              "SMS ve e-posta entegrasyonu",
+              "API desteği",
+              "Webhook entegrasyonları"
+            ],
+            "actions": [
+              { "text": "Entegrasyon Demo", "variant": "primary" },
+              { "text": "Dokümantasyon", "variant": "outline" }
+            ]
+          }
+        },
+        {
+          "id": "support",
+          "title": "Destek",
+          "content": {
+            "title": "Teknik Destek ve Eğitim",
+            "subtitle": "7/24 profesyonel destek hizmeti",
+            "description": "Uzman ekibimiz her zaman yanınızda, sorularınızı yanıtlamaya hazır.",
+            "features": [
+              "7/24 teknik destek",
+              "Uzaktan erişim desteği",
+              "Video eğitim materyalleri",
+              "Canlı eğitim seansları",
+              "Kullanım kılavuzları",
+              "Topluluk forumu"
+            ],
+            "actions": [
+              { "text": "Destek Al", "variant": "primary" },
+              { "text": "Eğitim Talep Et", "variant": "secondary" }
+            ]
+          }
+        }
+      ]
+    },
+    "trafficSign": {
+      "title": "İşletmenizi Modernleştirin",
+      "descriptions": [
+        "YesilDefter, işletmelerin yönetim süreçlerini kolaylaştıran ve hızlandıran bir platform sunar.",
+        "İşletmenizi modernleştirin, müşterilerinizin ve personelinizin güvenini her zaman koruyun.",
+        "Teknolojik çözümlerle işlerinizi daha hızlı ve doğru yapın, aynı zamanda eskiye dayanan güvenilirlik ve profesyonellik anlayışından ödün vermeyin."
+      ],
+      "icons": ["fa-hand-holding-heart", "fa-shield", "fa-upload"]
+    }
+  },
+  "footer": {
+    "title": "Bizimle İletişime Geçin",
+    "description": "YesilDefter'in verilerinizi güçlü bir avantaja nasıl dönüştürebileceğini öğrenmek için hızlı bir görüşme planlayın.",
+    "cta": "Daha Fazla Öğrenin",
+    "links": [
+      {
+        "label": "Sürücü Kursu",
+        "href": "/surucu-kursu"
+      },
+      {
+        "label": "Ehliyet Sınavı",
+        "href": "/ehliyet-sinavi"
+      },
+      {
+        "label": "Direksiyon Dersi",
+        "href": "/direksiyon-dersi"
+      },
+      {
+        "label": "Trafik Kuralları",
+        "href": "/trafik-kurallari"
+      },
+      {
+        "label": "Sınav Tarihleri",
+        "href": "/sinav-tarihleri"
+      },
+      {
+        "label": "Ehliyet Ücretleri",
+        "href": "/ehliyet-ucretleri"
+      },
+      {
+        "label": "Sıkça Sorulan Sorular",
+        "href": "/sss"
+      },
+      {
+        "label": "İletişim",
+        "href": "/iletisim"
+      }
+    ],
+    "linksSecondary": [
+      { "label": "Hakkımızda", "href": "/about" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "Kariyer", "href": "/kariyer" },
+      { "label": "Gizlilik Politikası", "href": "/gizlilik" },
+      { "label": "Kullanım Koşulları", "href": "/kosullar" },
+      { "label": "KVKK", "href": "/kvkk" },
+      { "label": "Çerez Politikası", "href": "/cerez" },
+      { "label": "Yardım Merkezi", "href": "/yardim" }
+    ]
+  },
+  "navigation": {
+    "home": "Ana Sayfa",
+    "features": "Özellikler",
+    "solutions": "Çözümler",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "login": "Giriş Yap",
+    "documentation": "Dokümantasyon",
+    "announcements": "Duyurular",
+    "eExam": "E-Sınav",
+    "purchase": "Satın Al",
+    "support": "Destek"
+  },
+  "common": {
+    "learnMore": "Daha Fazla Öğrenin",
+    "getStarted": "Hemen Başlayın",
+    "contact": "İletişim",
+    "close": "Kapat",
+    "closeModal": "Modalı kapat",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "download": "İndir",
+    "upload": "Yükle",
+    "search": "Ara",
+    "toggleMenu": "Menüyü aç/kapat",
+    "exit": "Çıkış",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "profile": "Profil"
+  }
+}

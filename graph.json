@@ -1,0 +1,1828 @@
+{
+  "graph": {
+    "nodes": {
+      "jxion-frontend": {
+        "name": "jxion-frontend",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-frontend",
+          "sourceRoot": "apps/jxion-frontend",
+          "name": "jxion-frontend",
+          "projectType": "application",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "start",
+                "build",
+                "preview"
+              ]
+            }
+          },
+          "targets": {
+            "start": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start"
+              },
+              "metadata": {
+                "scriptContent": "vite --port 3000",
+                "runCommand": "npm run start"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "vue-tsc --noEmit && vite build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@jxion/angular": {
+        "name": "@jxion/angular",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-angular",
+          "sourceRoot": "apps/jxion-angular",
+          "name": "@jxion/angular",
+          "projectType": "application",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "preview",
+                "test"
+              ]
+            },
+            "description": "Jxion Angular Components with Signals"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "ng serve --port 3003",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "ng build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "ng serve --port 3003",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "test": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test"
+              },
+              "metadata": {
+                "scriptContent": "ng test",
+                "runCommand": "npm run test"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@jxion/solidjs": {
+        "name": "@jxion/solidjs",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-solidjs",
+          "sourceRoot": "apps/jxion-solidjs",
+          "name": "@jxion/solidjs",
+          "projectType": "application",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "preview"
+              ]
+            },
+            "description": "Jxion SolidJS Components"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "vite build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "jxion-backend": {
+        "name": "jxion-backend",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-backend",
+          "sourceRoot": "libs/jxion-backend",
+          "name": "jxion-backend",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-backend"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "start"
+              ]
+            },
+            "description": "Jxion Backend - tRPC server"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "ts-node-dev --respawn --transpile-only index.ts",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "start": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start"
+              },
+              "metadata": {
+                "scriptContent": "node dist/index.js",
+                "runCommand": "npm run start"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-backend",
+                "main": "libs/jxion-backend/index.ts",
+                "tsConfig": "libs/jxion-backend/tsconfig.json",
+                "assets": [
+                  "libs/jxion-backend/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "@jxion/svelte": {
+        "name": "@jxion/svelte",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-svelte",
+          "sourceRoot": "apps/jxion-svelte",
+          "name": "@jxion/svelte",
+          "projectType": "application",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "preview"
+              ]
+            },
+            "description": "Jxion Svelte Components"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "vite build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "jxion-design": {
+        "name": "jxion-design",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-design",
+          "sourceRoot": "libs/jxion-design/src",
+          "name": "jxion-design",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-design"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Jxion Design System - SCSS modules and design tokens"
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-design",
+                "main": "libs/jxion-design/src/index.ts",
+                "tsConfig": "libs/jxion-design/tsconfig.json",
+                "assets": [
+                  "libs/jxion-design/**/*.scss",
+                  "libs/jxion-design/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "jxion-shared": {
+        "name": "jxion-shared",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-shared",
+          "sourceRoot": "libs/jxion-shared/src",
+          "name": "jxion-shared",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-shared"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion Shared Components - Framework-agnostic components"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rollup -c -w",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-shared",
+                "main": "libs/jxion-shared/src/index.ts",
+                "tsConfig": "libs/jxion-shared/tsconfig.json",
+                "assets": [
+                  "libs/jxion-shared/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "jxion-styles": {
+        "name": "jxion-styles",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-styles",
+          "sourceRoot": "libs/jxion-styles/src",
+          "name": "jxion-styles",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-styles"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion Styles - Design tokens and runtime style loader"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "tsc --watch",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-styles",
+                "main": "libs/jxion-styles/src/index.ts",
+                "tsConfig": "libs/jxion-styles/tsconfig.json",
+                "assets": [
+                  "libs/jxion-styles/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "noir-crafted": {
+        "name": "noir-crafted",
+        "type": "app",
+        "data": {
+          "root": "apps/noir-crafted",
+          "sourceRoot": "apps/noir-crafted/src",
+          "name": "noir-crafted",
+          "projectType": "application",
+          "tags": [
+            "npm:public",
+            "type:app",
+            "framework:svelte"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "check",
+                "check:watch",
+                "format"
+              ]
+            },
+            "description": "Noir Crafted - Luxury Jewelry E-commerce SvelteKit Application"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite dev",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check"
+              },
+              "metadata": {
+                "scriptContent": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+                "runCommand": "npm run check"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:watch": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:watch"
+              },
+              "metadata": {
+                "scriptContent": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+                "runCommand": "npm run check:watch"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "format": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format"
+              },
+              "metadata": {
+                "scriptContent": "prettier --write .",
+                "runCommand": "npm run format"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/vite:build",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "defaultConfiguration": "production",
+              "options": {
+                "outputPath": "dist/apps/noir-crafted"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "executor": "@nx/vite:dev-server",
+              "defaultConfiguration": "development",
+              "options": {
+                "buildTarget": "noir-crafted:build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "preview": {
+              "executor": "@nx/vite:preview",
+              "defaultConfiguration": "production",
+              "options": {
+                "buildTarget": "noir-crafted:build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "jxion-react": {
+        "name": "jxion-react",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-react",
+          "sourceRoot": "apps/jxion-react/src",
+          "name": "jxion-react",
+          "projectType": "application",
+          "tags": [
+            "npm:public",
+            "type:app",
+            "framework:react",
+            "scope:demo"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion React Components"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/vite:build",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "defaultConfiguration": "production",
+              "options": {
+                "outputPath": "dist/apps/jxion-react"
+              },
+              "configurations": {
+                "development": {
+                  "mode": "development"
+                },
+                "production": {
+                  "mode": "production"
+                }
+              },
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "executor": "@nx/vite:dev-server",
+              "defaultConfiguration": "development",
+              "options": {
+                "buildTarget": "jxion-react:build",
+                "port": 3001,
+                "host": true
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "jxion-react:build:development"
+                },
+                "production": {
+                  "buildTarget": "jxion-react:build:production"
+                }
+              },
+              "parallelism": true,
+              "cache": false
+            },
+            "preview": {
+              "executor": "@nx/vite:preview",
+              "defaultConfiguration": "production",
+              "options": {
+                "buildTarget": "jxion-react:build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "options": {
+                "passWithNoTests": true
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "@noir/admin": {
+        "name": "@noir/admin",
+        "type": "app",
+        "data": {
+          "root": "apps/noir-admin",
+          "sourceRoot": "apps/noir-admin",
+          "name": "@noir/admin",
+          "projectType": "application",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "preview"
+              ]
+            },
+            "description": "Noir Admin Dashboard - Luxury Jewellery Store Management System"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "tsc && vite build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "jxion-core": {
+        "name": "jxion-core",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-core",
+          "sourceRoot": "libs/jxion-core/src",
+          "name": "jxion-core",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-core"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion Core - Business logic and tRPC integration"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "tsc --watch",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-core",
+                "main": "libs/jxion-core/src/index.ts",
+                "tsConfig": "libs/jxion-core/tsconfig.json",
+                "assets": [
+                  "libs/jxion-core/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "jxion-i18n": {
+        "name": "jxion-i18n",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-i18n",
+          "sourceRoot": "libs/jxion-i18n/src",
+          "name": "jxion-i18n",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-i18n"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion i18n - Runtime translation manager and hooks"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "tsc --watch",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-i18n",
+                "main": "libs/jxion-i18n/src/index.ts",
+                "tsConfig": "libs/jxion-i18n/tsconfig.json",
+                "assets": [
+                  "libs/jxion-i18n/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/vite:test",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      },
+      "@jxion/cli": {
+        "name": "@jxion/cli",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-cli",
+          "sourceRoot": "libs/jxion-cli",
+          "name": "@jxion/cli",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "npm:cli",
+            "npm:generator",
+            "npm:framework",
+            "npm:vue",
+            "npm:react",
+            "npm:svelte",
+            "npm:nextjs",
+            "npm:nuxt"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "build",
+                "dev",
+                "test",
+                "lint",
+                "publish:all"
+              ]
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rollup -c",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rollup -c -w",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test"
+              },
+              "metadata": {
+                "scriptContent": "vitest",
+                "runCommand": "npm run test"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "lint"
+              },
+              "metadata": {
+                "scriptContent": "eslint src --ext .ts,.js",
+                "runCommand": "npm run lint"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            },
+            "publish:all": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "publish:all"
+              },
+              "metadata": {
+                "scriptContent": "npm run build && npm publish",
+                "runCommand": "npm run publish:all"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@jxion/vue": {
+        "name": "@jxion/vue",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-vue",
+          "sourceRoot": "apps/jxion-vue",
+          "name": "@jxion/vue",
+          "projectType": "application",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "preview"
+              ]
+            },
+            "description": "Jxion Vue Components"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "vue-tsc --noEmit && vite build",
+                "runCommand": "npm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "npm run preview"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "jxion-api": {
+        "name": "jxion-api",
+        "type": "app",
+        "data": {
+          "root": "apps/jxion-api",
+          "name": "jxion-api",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "apps/jxion-api",
+          "projectType": "application",
+          "tags": [
+            "type:app",
+            "scope:jxion-api",
+            "runtime:go"
+          ],
+          "targets": {
+            "build": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "cd apps/jxion-api && go build -o jxion-api ./cmd/server",
+                "cwd": ""
+              },
+              "outputs": [
+                "apps/jxion-api/jxion-api"
+              ],
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "cd apps/jxion-api && go run ./cmd/server",
+                "cwd": ""
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": false
+            },
+            "test": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "cd apps/jxion-api && go test ./...",
+                "cwd": ""
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "migrate": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "cd apps/jxion-api && go run ./cmd/migrate up",
+                "cwd": ""
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "jxion-db": {
+        "name": "jxion-db",
+        "type": "lib",
+        "data": {
+          "root": "libs/jxion-db",
+          "sourceRoot": "libs/jxion-db/src",
+          "name": "jxion-db",
+          "projectType": "library",
+          "tags": [
+            "npm:public",
+            "type:lib",
+            "scope:jxion-db"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev"
+              ]
+            },
+            "description": "Jxion Database - TypeScript types and migration files"
+          },
+          "targets": {
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "tsc --watch",
+                "runCommand": "npm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/jxion-db",
+                "main": "libs/jxion-db/src/index.ts",
+                "tsConfig": "libs/jxion-db/tsconfig.json",
+                "assets": [
+                  "libs/jxion-db/src/migrations/**/*.sql",
+                  "libs/jxion-db/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "jxion-frontend": [],
+      "@jxion/angular": [
+        {
+          "source": "@jxion/angular",
+          "target": "jxion-shared",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/angular",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/angular",
+          "target": "jxion-core",
+          "type": "static"
+        }
+      ],
+      "@jxion/solidjs": [
+        {
+          "source": "@jxion/solidjs",
+          "target": "jxion-core",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/solidjs",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/solidjs",
+          "target": "jxion-shared",
+          "type": "static"
+        }
+      ],
+      "jxion-backend": [],
+      "@jxion/svelte": [
+        {
+          "source": "@jxion/svelte",
+          "target": "jxion-core",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/svelte",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/svelte",
+          "target": "jxion-shared",
+          "type": "static"
+        }
+      ],
+      "jxion-design": [
+        {
+          "source": "jxion-design",
+          "target": "jxion-i18n",
+          "type": "static"
+        }
+      ],
+      "jxion-shared": [
+        {
+          "source": "jxion-shared",
+          "target": "jxion-core",
+          "type": "static"
+        }
+      ],
+      "jxion-styles": [
+        {
+          "source": "jxion-styles",
+          "target": "jxion-shared",
+          "type": "static"
+        }
+      ],
+      "noir-crafted": [
+        {
+          "source": "noir-crafted",
+          "target": "jxion-core",
+          "type": "static"
+        },
+        {
+          "source": "noir-crafted",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "noir-crafted",
+          "target": "jxion-shared",
+          "type": "static"
+        },
+        {
+          "source": "noir-crafted",
+          "target": "jxion-i18n",
+          "type": "static"
+        },
+        {
+          "source": "noir-crafted",
+          "target": "jxion-styles",
+          "type": "static"
+        }
+      ],
+      "jxion-react": [
+        {
+          "source": "jxion-react",
+          "target": "jxion-shared",
+          "type": "static"
+        },
+        {
+          "source": "jxion-react",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "jxion-react",
+          "target": "jxion-core",
+          "type": "static"
+        },
+        {
+          "source": "jxion-react",
+          "target": "jxion-i18n",
+          "type": "static"
+        },
+        {
+          "source": "jxion-react",
+          "target": "jxion-styles",
+          "type": "static"
+        }
+      ],
+      "@noir/admin": [
+        {
+          "source": "@noir/admin",
+          "target": "jxion-i18n",
+          "type": "static"
+        },
+        {
+          "source": "@noir/admin",
+          "target": "jxion-core",
+          "type": "static"
+        }
+      ],
+      "jxion-core": [
+        {
+          "source": "jxion-core",
+          "target": "jxion-backend",
+          "type": "static"
+        },
+        {
+          "source": "jxion-core",
+          "target": "jxion-i18n",
+          "type": "static"
+        },
+        {
+          "source": "jxion-core",
+          "target": "jxion-shared",
+          "type": "static"
+        }
+      ],
+      "jxion-i18n": [
+        {
+          "source": "jxion-i18n",
+          "target": "jxion-core",
+          "type": "static"
+        },
+        {
+          "source": "jxion-i18n",
+          "target": "jxion-shared",
+          "type": "static"
+        },
+        {
+          "source": "jxion-i18n",
+          "target": "jxion-backend",
+          "type": "static"
+        }
+      ],
+      "@jxion/cli": [
+        {
+          "source": "@jxion/cli",
+          "target": "jxion-core",
+          "type": "static"
+        }
+      ],
+      "@jxion/vue": [
+        {
+          "source": "@jxion/vue",
+          "target": "jxion-shared",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/vue",
+          "target": "jxion-design",
+          "type": "static"
+        },
+        {
+          "source": "@jxion/vue",
+          "target": "jxion-core",
+          "type": "static"
+        }
+      ],
+      "jxion-api": [],
+      "jxion-db": []
+    }
+  }
+}

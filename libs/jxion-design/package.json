@@ -1,0 +1,29 @@
+{
+  "name": "@jxion/design",
+  "version": "0.1.0",
+  "description": "Jxion Design System - SCSS modules and design tokens",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/components/*": "./src/components/*",
+    "./src/tokens/*": "./src/tokens/*"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "echo 'Design system - no build needed'"
+  },
+  "dependencies": {
+    "sass": "^1.69.5",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
+}

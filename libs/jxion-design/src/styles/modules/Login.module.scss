@@ -1,0 +1,113 @@
+@use './DesignTokens' as tokens;
+@use './Typography' as typography;
+
+.login__hero {
+  height: 100%;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.login__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login__title {
+  z-index: 1;
+  position: relative;
+  @include typography.heading-hero;
+  color: tokens.$color-text-primary;
+  margin: 0 0 tokens.$spacing-md 0;
+}
+
+.login__subtitle {
+  z-index: 1;
+  position: relative;
+  color: tokens.$color-primary-green;
+  font-family: tokens.$font-family-logo;
+  font-size: tokens.$font-size-5xl;
+  font-weight: 800;
+  line-height: 1.64;
+  letter-spacing: tokens.$letter-spacing-heading-hero;
+}
+
+.login__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.login__card {
+  background: tokens.$gradient-linear-primary;
+  border-radius: tokens.$border-radius-lg;
+  padding: tokens.$spacing-2xl tokens.$spacing-24;
+  margin: tokens.$spacing-lg 0;
+  border: 1px solid tokens.$color-border-primary;
+  box-shadow: tokens.$shadow-card;
+}
+
+.login__field {
+  @include typography.heading-title;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-semibold;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+  color: tokens.$color-text-primary;
+  margin-bottom: tokens.$spacing-md;
+}
+.login__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: right;
+  margin: tokens.$spacing-2xl 0;
+  gap: tokens.$spacing-sm;
+}
+.login__links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: tokens.$spacing-md 0;
+}
+
+.login__error {
+  color: tokens.$color-error;
+}
+.login__info {
+  color: tokens.$color-info;
+}
+.login__link {
+  background: none;
+  border: none;
+  color: tokens.$color-primary-green;
+  cursor: pointer;
+}
+
+.login__socials {
+  margin-top: tokens.$spacing-20;
+  text-align: center;
+  a {
+    color: tokens.$color-primary-green;
+    text-decoration: none;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-medium;
+    line-height: tokens.$line-height-normal;
+    letter-spacing: tokens.$letter-spacing-normal;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.login__socials-text {
+  color: tokens.$color-text-tertiary;
+}
+.login__socials-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}

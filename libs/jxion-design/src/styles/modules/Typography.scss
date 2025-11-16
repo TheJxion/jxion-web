@@ -1,0 +1,219 @@
+@use "./DesignTokens.scss" as tokens;
+
+// Font Families
+$font-family-base: tokens.$font-family-base;
+$font-family-secondary: tokens.$font-family-secondary;
+$font-family-tertiary: tokens.$font-family-tertiary;
+
+// Typography Mixins
+@mixin text-cta {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-2xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-nav {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-lg;
+  line-height: tokens.$line-height-normal;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-nav-bold {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-lg;
+  line-height: tokens.$line-height-normal;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-1 {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-heading-1;
+  font-size: tokens.$font-size-heading-1;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-1-bold {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-1;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-3 {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-3;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-hero {
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-hero;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-title {
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-title;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin heading-title-serif {
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-heading-title-serif;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-heading-title-serif;
+}
+
+@mixin cta-title {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-cta-title;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin paragraph {
+  font-family: $font-family-base;
+  font-weight: 400;
+  font-size: tokens.$font-size-paragraph;
+  line-height: tokens.$line-height-paragraph;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin paragraph-serif {
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-paragraph;
+  line-height: tokens.$line-height-paragraph;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-section-title {
+  font-family: $font-family-secondary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-5xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-description {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-semibold;
+  font-size: tokens.$font-size-2xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-feature-title {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-lg;
+  line-height: tokens.$line-height-snug;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-yesildefter-title {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-5xl;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+@mixin text-body {
+  font-family: $font-family-base;
+  font-weight: tokens.$font-weight-normal;
+  font-size: tokens.$font-size-base;
+  line-height: tokens.$line-height-tight;
+  letter-spacing: tokens.$letter-spacing-tight;
+}
+
+// Typography System
+.header-cta {
+  @include text-cta;
+}
+
+.header-nav {
+  @include text-nav;
+}
+
+.header-nav-bold {
+  @include text-nav-bold;
+}
+
+.heading-1 {
+  @include heading-1;
+}
+
+.heading-1-bold {
+  @include heading-1-bold;
+}
+
+.heading-title {
+  @include heading-title;
+}
+
+.heading-title-serif {
+  @include heading-title-serif;
+}
+
+.cta-title {
+  @include cta-title;
+}
+
+.paragraph {
+  @include paragraph;
+}
+
+.section-title {
+  @include text-section-title;
+}
+
+.description {
+  @include text-description;
+}
+
+.feature-title {
+  @include text-feature-title;
+}
+
+.yesiLdefter-title {
+  @include text-yesildefter-title;
+}
+
+.body {
+  @include text-body;
+}
+
+// Legacy Typography Classes (for backward compatibility)
+.typography {
+  &-cta {
+    @include text-cta;
+  }
+
+  &-nav {
+    @include text-nav;
+  }
+
+  &-title-main {
+    @include text-section-title;
+  }
+
+  &-description-bold {
+    @include text-description;
+  }
+}

@@ -1,0 +1,82 @@
+# Digital Ocean App Platform Configuration
+# Phase 4: Deployment configuration for Jxion Stack
+# Date: 2025-11-13
+
+name: jxion-stack
+region: nyc
+
+# Backend for Frontend (BFF) - Node.js/tRPC
+services:
+  - name: jxion-backend
+    source_dir: libs/jxion-backend
+    github:
+      repo: your-org/jxion-web
+      branch: main
+      deploy_on_push: true
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 3005
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+        scope: RUN_TIME
+      - key: PORT
+        value: "3005"
+        scope: RUN_TIME
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${jxion-db.CONNECTION_POOL}
+      - key: REDIS_URL
+        scope: RUN_TIME
+        value: ${jxion-redis.CONNECTION_STRING}
+      - key: API_BASE_URL
+        scope: RUN_TIME
+        value: ${jxion-api.PUBLIC_URL}
+
+  # Go API Service - Core database and cache operations
+  - name: jxion-api
+    source_dir: apps/jxion-api
+    github:
+      repo: your-org/jxion-web
+      branch: main
+      deploy_on_push: true
+    run_command: ./jxion-api
+    environment_slug: go
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 8080
+    routes:
+      - path: /api
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${jxion-db.CONNECTION_POOL}
+      - key: REDIS_URL
+        scope: RUN_TIME
+        value: ${jxion-redis.CONNECTION_STRING}
+      - key: PORT
+        value: "8080"
+        scope: RUN_TIME
+
+# Managed PostgreSQL Database
+databases:
+  - name: jxion-db
+    engine: PG
+    version: "15"
+    production: false
+    cluster_name: jxion-db-cluster
+    db_name: jxion
+    db_user: jxion_user
+
+# Managed Redis Cache
+databases:
+  - name: jxion-redis
+    engine: REDIS
+    version: "7"
+    production: false
+    cluster_name: jxion-redis-cluster
+

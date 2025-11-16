@@ -1,0 +1,137 @@
+@use './DesignTokens' as tokens;
+.background {
+  height: -webkit-fill-available;
+  background: linear-gradient(-180deg, #e0eadf 25%, #eff2ef 64%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  overflow: hidden;
+}
+.background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  pointer-events: none;
+}
+.background--figma {
+  background: linear-gradient(-180deg, #e0eadf 25%, #eff2ef 64%);
+  .background__shapes {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .background__shape {
+    position: absolute;
+    filter: blur(120px);
+    transition: transform 0.6s ease;
+    width: 174.109px;
+    height: 190.665px;
+    &:hover {
+      transform: scale(1.05);
+    }
+    &--green {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 324px;
+      height: 345px;
+      background-color: tokens.$color-primary-green;
+      transform: rotate(-158.848deg);
+      transform: rotate(-21deg);
+      position: absolute;
+      top: 32px;
+      left: 53.558px;
+    }
+    &--orange {
+      width: 27.8785rem;
+      height: 9.82794rem;
+      background-color: tokens.$color-primary-orange;
+      transform: rotate(-125deg);
+      position: absolute;
+      right: 9.17188rem;
+      bottom: 66.45581rem;
+    }
+    &--purple {
+      background-color: tokens.$color-palette-1;
+      width: 10.88181rem;
+      height: 11.91656rem;
+      position: absolute;
+      right: 0.46306rem;
+      bottom: 17.29263rem;
+    }
+    &--beige {
+      background: url('/images/illustrations/test-background-2.png') lightgray
+          50% / cover no-repeat,
+        rgba(196, 207, 195, 0.96);
+      background-blend-mode: overlay, normal;
+      border-radius: 50%;
+      opacity: 0.96;
+      width: 14.25538rem;
+      height: 11.37875rem;
+      position: absolute;
+      top: 1355px;
+      left: 221px;
+    }
+    &--blue {
+      top: 765px;
+      left: 1214px;
+      background-color: tokens.$color-palette-2;
+      width: 14.97219rem;
+      height: 12.44925rem;
+    }
+    &--red {
+      top: 2585px;
+      left: 172px;
+      background-color: #f21b3f;
+      width: 11.64425rem;
+      height: 10.38738rem;
+      transform: rotate(74.762deg);
+      position: absolute;
+    }
+  }
+}
+.background--animated {
+  background-size: 400% 400%;
+  animation: float 15s ease infinite;
+  .background__shapes > * {
+    transition: transform 0.6s ease;
+    position: relative;
+    z-index: 1;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .background__shapes {
+    width: 100vw;
+    height: -webkit-fill-available;
+    overflow: hidden;
+    &--1 {
+      top: -32vh;
+      left: 5vw;
+      filter: blur(80px);
+    }
+    &--2 {
+      top: 64vh;
+      left: 48vw;
+      filter: blur(80px);
+    }
+    &--3 {
+      top: 228vh;
+    }
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}

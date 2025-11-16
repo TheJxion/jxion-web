@@ -1,5 +1,0 @@
-{
-	"buildCommand": "npm run build",
-	"framework": "sveltekit",
-	"installCommand": "npm install --legacy-peer-deps"
-}

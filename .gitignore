@@ -115,3 +115,13 @@ packages/jxion-angular/node_modules/
 .cursor/
 .nx/cache
 .nx/workspace-data
+
+# Video files (too large for git)
+*.mov
+*.mp4
+*.avi
+*.mkv
+
+# Build outputs
+.vercel/
+.svelte-kit/

@@ -1,1 +1,0 @@
-import{w as m}from"./DeJx0g96.js";function u(){const{subscribe:c,set:i,update:e}=m([]);return{subscribe:c,add:(s,o="success",t=3e3)=>{const r=`toast_${Date.now()}_${Math.random()}`,n={id:r,message:s,type:o,duration:t};e(a=>[...a,n]),setTimeout(()=>{e(a=>a.filter(d=>d.id!==r))},t)},remove:s=>{e(o=>o.filter(t=>t.id!==s))},clear:()=>{i([])}}}const l=u();export{l as t};

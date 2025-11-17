@@ -5,6 +5,104 @@
  * Edit this file to change content across the entire application.
  */
 
+import trTranslations from '../../../../../libs/jxion-i18n/src/dictionary/tr-TR.json';
+
+const dictionary = trTranslations as Record<string, any>;
+const homeDict = dictionary.home ?? {};
+const footerDict = dictionary.footer ?? {};
+const navDict = dictionary.navigation ?? {};
+
+const defaultFeaturedProducts = [
+  {
+    title: 'Ay Döngüsü Kolye',
+    description:
+      'Ayın evrelerinden ilham alan zarif kolye. Gümüş kaplama ile özenle işlenmiş.',
+    price: '₺1.299,00',
+    imageUrl: 'https://placehold.co/400x400/222/FFF?text=KOLYE',
+  },
+  {
+    title: 'Başak Burcu Yüzük',
+    description:
+      'Virgo burcunun zarafetini yansıtan özel tasarım yüzük. Altın kaplama ile muhteşem kombinasyon.',
+    price: '₺899,00',
+    imageUrl: 'https://placehold.co/400x400/333/FFF?text=YUZUK',
+  },
+  {
+    title: 'Lale Motifli Bilezik',
+    description:
+      'Türk kültürünün simgesi lale motifleriyle bezeli zarif bilezik. Her detayı özenle işlenmiş.',
+    price: '₺1.599,00',
+    imageUrl: 'https://placehold.co/400x400/444/FFF?text=BILEZIK',
+  },
+  {
+    title: 'Şahmeran Koleksiyonu Küpe',
+    description:
+      "Efsanevi Şahmeran'dan ilham alan muhteşem küpe tasarımı. Güçlü ve zarif bir ifade.",
+    price: '₺1.199,00',
+    imageUrl: 'https://placehold.co/400x400/555/FFF?text=KUPE',
+  },
+  {
+    title: 'Zarif Toka Seti',
+    description:
+      'Yetişkin kadınlar için özel tasarlanmış zarif toka seti. Günlük kullanım için ideal.',
+    price: '₺599,00',
+    imageUrl: 'https://placehold.co/400x400/666/FFF?text=TOKA',
+  },
+  {
+    title: 'İpek Fular - Özel Tasarım',
+    description:
+      'Lüks ipekten üretilmiş özel tasarım fular. Her mevsim için şık bir aksesuar.',
+    price: '₺799,00',
+    imageUrl: 'https://placehold.co/400x400/777/FFF?text=FULAR',
+  },
+];
+
+const buildKeyFeatures = () => {
+  const key = homeDict.keyFeatures ?? {};
+  const items = [
+    {
+      title: key.kursiyer_yonetimi_title,
+      description: key.kursiyer_yonetimi_desc,
+      footnote: key.kursiyer_yonetimi_footnote,
+    },
+    {
+      title: key.kurs_yonetimi_title,
+      description: key.kurs_yonetimi_desc,
+      footnote: key.kurs_yonetimi_footnote,
+    },
+    {
+      title: key.sinav_yonetimi_title,
+      description: key.sinav_yonetimi_desc,
+      footnote: key.sinav_yonetimi_footnote,
+    },
+    {
+      title: key.finansal_yonetim_title,
+      description: key.finansal_yonetim_desc,
+      footnote: key.finansal_yonetim_footnote,
+    },
+    {
+      title: key.belge_yonetimi_title,
+      description: key.belge_yonetimi_desc,
+      footnote: key.belge_yonetimi_footnote,
+    },
+    {
+      title: key.arac_yonetimi_title,
+      description: key.arac_yonetimi_desc,
+      footnote: key.arac_yonetimi_footnote,
+    },
+  ].filter((item) => item.title);
+
+  return {
+    title: key.title ?? 'Öne Çıkan Özellikler',
+    subtitle:
+      key.subtitle ??
+      'İşletmenizin ihtiyaç duyduğu tüm araçlar tek platformda.',
+    items,
+  };
+};
+
+const keyFeaturesBlock = buildKeyFeatures();
+
 export const content = {
   // Site metadata
   site: {
@@ -16,7 +114,7 @@ export const content = {
 
   // Navigation
   nav: {
-    home: 'Ana Sayfa',
+    home: navDict.home ?? 'Ana Sayfa',
     kolye: 'Kolye',
     bilezik: 'Bilezik',
     yuzuk: 'Yüzük',
@@ -24,26 +122,31 @@ export const content = {
     sahmeran: 'Şahmeran',
     tokalar: 'Yetişkin Tokaları',
     fular: 'Fular',
+    primary: navDict,
   },
 
   // Home page
   home: {
     hero: {
-      title: 'NOIR',
-      tagline: 'Elegant. Timeless. Exquisite.',
-      subtitle: 'Zamanın Ötesinde<br />Takı Deneyimi',
+      title: homeDict.hero?.title ?? 'NOIR',
+      tagline: homeDict.hero?.tagline ?? 'Elegant. Timeless. Exquisite.',
+      subtitle:
+        homeDict.hero?.subtitle ?? 'Zamanın Ötesinde<br />Takı Deneyimi',
       description:
+        homeDict.hero?.description ??
         'Her parça, zarafet ve işçiliğin mükemmel birleşimidir. Ay döngülerinden ilham alan, Virgo burcunun zarafetini yansıtan ve Türk kültürünün simgeleriyle bezenmiş özel tasarımlar.',
-      primaryCta: 'Koleksiyonu Keşfet',
-      secondaryCta: 'Hikayemizi Oku',
+      primaryCta: homeDict.hero?.primaryCta ?? 'Koleksiyonu Keşfet',
+      secondaryCta: homeDict.hero?.secondaryCta ?? 'Hikayemizi Oku',
     },
     featured: {
-      title: 'Öne Çıkan Koleksiyon',
-      subtitle: 'En sevilen parçalarımızdan bir seçki',
+      title: homeDict.featured?.title ?? 'Öne Çıkan Koleksiyon',
+      subtitle:
+        homeDict.featured?.subtitle ?? 'En sevilen parçalarımızdan bir seçki',
+      products: homeDict.featured?.products ?? defaultFeaturedProducts,
     },
     whyNoir: {
-      title: 'Neden Noir?',
-      sections: [
+      title: homeDict.whyNoir?.title ?? 'Neden Noir?',
+      sections: homeDict.whyNoir?.sections ?? [
         {
           icon: '✨',
           title: 'Özel Tasarım',
@@ -65,10 +168,11 @@ export const content = {
       ],
     },
     motifs: {
-      title: 'Tasarım Motifleri',
+      title: homeDict.motifs?.title ?? 'Tasarım Motifleri',
       subtitle:
+        homeDict.motifs?.subtitle ??
         'Her koleksiyonumuz, derin anlamlar taşıyan motiflerle bezenmiştir',
-      items: [
+      items: homeDict.motifs?.items ?? [
         {
           name: 'Ay Döngüleri',
           description: 'Zamanın ritmini yansıtan tasarımlar',
@@ -88,12 +192,30 @@ export const content = {
       ],
     },
     newsletter: {
-      title: 'Yeni Koleksiyonlardan Haberdar Olun',
+      title:
+        homeDict.newsletter?.title ?? 'Yeni Koleksiyonlardan Haberdar Olun',
       description:
+        homeDict.newsletter?.description ??
         'Özel indirimler ve yeni tasarımlar hakkında ilk siz haberdar olun.',
-      placeholder: 'E-posta adresiniz',
-      button: 'Abone Ol',
+      placeholder: homeDict.newsletter?.placeholder ?? 'E-posta adresiniz',
+      button: homeDict.newsletter?.button ?? 'Abone Ol',
     },
+    keyFeatures: keyFeaturesBlock,
+    integrationSolutions: homeDict.integrationSolutions ?? { items: [] },
+    integrationTitle: homeDict.integrationTitle ?? '',
+    integrationSubtitle: homeDict.integrationSubtitle ?? '',
+    integrationSolutionTitles: homeDict.integrationSolutionTitles ?? [],
+    integrationSolutionDescriptions:
+      homeDict.integrationSolutionDescriptions ?? [],
+    integrationCta: homeDict.integrationCta ?? '',
+    integrationMakeUp: homeDict.integrationMakeUp ?? '',
+    featuresCarousel: homeDict.featuresCarousel ?? null,
+    journey: homeDict.journey ?? null,
+    nextSteps: homeDict.nextSteps ?? null,
+    whatsourimpact: homeDict.whatsourimpact ?? null,
+    whatCanWeDoForYou: homeDict.whatCanWeDoForYou ?? null,
+    mobileFeatures: homeDict.mobileFeatures ?? null,
+    trafficSign: homeDict.trafficSign ?? null,
   },
 
   // About page
@@ -118,7 +240,7 @@ export const content = {
   },
 
   // FAQ page
-  faq: {
+  faq: homeDict.faq ?? {
     title: 'Sık Sorulan Sorular',
     subtitle: 'Merak Ettikleriniz',
     items: [
@@ -207,7 +329,9 @@ export const content = {
 
   // Footer
   footer: {
-    description: 'Zamanın ötesinde takı deneyimi.',
+    title: footerDict.title ?? 'Bizimle İletişime Geçin',
+    description: footerDict.description ?? 'Zamanın ötesinde takı deneyimi.',
+    cta: footerDict.cta ?? 'Daha Fazla Öğrenin',
     sections: {
       corporate: {
         title: 'Kurumsal',
@@ -234,7 +358,9 @@ export const content = {
         ],
       },
     },
-    copyright: 'Tüm hakları saklıdır.',
+    contactLinks: footerDict.links ?? [],
+    secondaryLinks: footerDict.linksSecondary ?? [],
+    copyright: footerDict.copyright ?? 'Tüm hakları saklıdır.',
   },
 
   // Common UI

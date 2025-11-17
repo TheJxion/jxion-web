@@ -1,12 +1,13 @@
 /**
  * Content Loader Utility
- * 
+ *
  * Reusable helper for loading content from ContentManager with fallback
  * Used across all noir-crafted pages for consistent content loading
  */
 
-import { getContentManager, type ContentUpdate } from '@jxion/core';
+import { type ContentUpdate } from '@jxion/core';
 import type { Locale } from '@jxion/i18n';
+import { createNoirContentManager } from '$lib/utils/noir-content-manager';
 
 export interface ContentLoaderOptions {
   contentPath: string;
@@ -30,7 +31,9 @@ export interface ContentLoaderResult {
  * Initialize content loader for a page
  * Returns reactive state and helper functions
  */
-export function createContentLoader(options: ContentLoaderOptions): ContentLoaderResult {
+export function createContentLoader(
+  options: ContentLoaderOptions,
+): ContentLoaderResult {
   const {
     contentPath,
     lang = 'tr-TR',
@@ -46,7 +49,9 @@ export function createContentLoader(options: ContentLoaderOptions): ContentLoade
   let contentManager: any = null;
 
   async function loadContent() {
-    console.log(`[ContentLoader] 📂 Loading content from ContentManager: ${contentPath}`);
+    console.log(
+      `[ContentLoader] 📂 Loading content from ContentManager: ${contentPath}`,
+    );
     loading = true;
     error = null;
 
@@ -64,21 +69,29 @@ export function createContentLoader(options: ContentLoaderOptions): ContentLoade
         contentKeys: Object.keys(content || {}),
       });
     } catch (err) {
-      console.warn(`[ContentLoader] ⚠️ ContentManager API not available, using fallback content`);
-      
+      console.warn(
+        `[ContentLoader] ⚠️ ContentManager API not available, using fallback content`,
+      );
+
       // Fallback: Import local content file
       try {
         const { content: localContent } = await import('$lib/i18n/content');
         content = localContent;
         lastUpdate = Date.now();
         loading = false;
-        
-        console.log(`[ContentLoader] ✅ Using fallback content from $lib/i18n/content.ts:`, {
-          path: contentPath,
-          size: JSON.stringify(content).length,
-        });
+
+        console.log(
+          `[ContentLoader] ✅ Using fallback content from $lib/i18n/content.ts:`,
+          {
+            path: contentPath,
+            size: JSON.stringify(content).length,
+          },
+        );
       } catch (fallbackErr) {
-        console.error(`[ContentLoader] ❌ Error loading fallback content:`, fallbackErr);
+        console.error(
+          `[ContentLoader] ❌ Error loading fallback content:`,
+          fallbackErr,
+        );
         error = 'Failed to load content from both ContentManager and fallback';
         loading = false;
       }
@@ -91,13 +104,15 @@ export function createContentLoader(options: ContentLoaderOptions): ContentLoade
       path: update.path,
       timestamp: update.timestamp,
     });
-    
+
     if (update.path === contentPath) {
       content = update.content;
       lastUpdate = update.timestamp;
-      console.log(`[ContentLoader] ✅ Content updated in UI - components will re-render`);
+      console.log(
+        `[ContentLoader] ✅ Content updated in UI - components will re-render`,
+      );
     }
-    
+
     // Call custom onUpdate handler if provided
     if (onUpdate) {
       onUpdate(update);
@@ -105,8 +120,7 @@ export function createContentLoader(options: ContentLoaderOptions): ContentLoade
   }
 
   // Initialize content manager
-  contentManager = getContentManager({
-    baseUrl: '/api/content',
+  contentManager = createNoirContentManager({
     enableLiveUpdates,
     updateInterval,
     onUpdate: handleContentUpdate,
@@ -122,4 +136,3 @@ export function createContentLoader(options: ContentLoaderOptions): ContentLoade
     handleContentUpdate,
   };
 }
-

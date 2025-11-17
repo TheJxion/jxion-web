@@ -1,19 +1,19 @@
 <script lang="ts">
   /**
-   * Hero Component - Svelte Implementation
+   * @title Noir-Crafted Hero Component Wrapper
    * 
-   * Uses:
-   * - HTML template from @jxion-core (heroTemplate.html)
-   * - SCSS styles from @jxion-design
+   * - HTML template = @jxion-core (heroTemplate.html)
+   * - SCSS styles from @jxion-design (hero.modules.scss)
    * - Types from @jxion/shared
-   * 
-   * This component renders the actual HTML template from @jxion-core
-   * converted to Svelte template syntax.
+    
+   * @params
    */
 
-  import styles from '@jxion/design/styles/modules/hero.module.scss';
+  import styles from '@jxion/design/styles/modules/Hero.module.scss';
   import { heroTemplate, SvelteRenderer } from '@jxion/core';
   import type { HeroProps } from '@jxion/shared';
+
+  //TODO(janberk-feature(these values should also work with the useDictionary libaries and hooks too and gets a custom values from the noir-admin as a dependency.)
 
   export let title: string;
   export let subtitle: string = "";

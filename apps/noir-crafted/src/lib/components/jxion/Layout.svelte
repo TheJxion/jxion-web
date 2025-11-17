@@ -1,5 +1,5 @@
 <script lang="ts">
-  import styles from "@jxion/design/styles/modules/layout.module.scss";
+  import styles from "@jxion/design/styles/modules/Layout.module.scss";
   
   export let params: { lang?: string; theme?: string } = { lang: 'tr-TR', theme: 'light' };
 </script>
@@ -9,5 +9,5 @@
 </div>
 
 <style>
-  @import "@jxion/design/styles/modules/layout.module.scss";
+  @import "@jxion/design/styles/modules/Layout.module.scss";
 </style>

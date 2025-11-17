@@ -13,6 +13,7 @@
     "outDir": "./dist",
     "verbatimModuleSyntax": false,
     "composite": true,
+    "downlevelIteration": true,
     "baseUrl": "../../",
     "paths": {
       "@jxion/i18n": ["libs/jxion-i18n/src/index.ts"],

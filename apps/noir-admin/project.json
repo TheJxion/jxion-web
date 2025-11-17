@@ -1,0 +1,67 @@
+{
+  "name": "noir-admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/noir-admin/src",
+  "projectType": "application",
+  "tags": [
+    "type:app",
+    "framework:react"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/noir-admin"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "noir-admin:build",
+        "port": 3002,
+        "host": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "noir-admin:build:development"
+        },
+        "production": {
+          "buildTarget": "noir-admin:build:production"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "noir-admin:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}
+

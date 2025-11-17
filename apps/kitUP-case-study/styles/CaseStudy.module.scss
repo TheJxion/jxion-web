@@ -1,0 +1,141 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--color-noir-background-primary);
+  color: var(--color-noir-text);
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--color-noir-border);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-noir-secondary);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--color-noir-text-muted);
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: 1rem;
+  border: 1px solid var(--color-noir-border);
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-noir-primary);
+  margin-bottom: 1rem;
+}
+
+.sectionText {
+  font-size: 1.125rem;
+  color: var(--color-noir-text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.architecture {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.archItem {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-noir-background-primary);
+  border: 1px solid var(--color-noir-border);
+}
+
+.archItem h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-noir-text);
+  margin-bottom: 0.5rem;
+}
+
+.archItem p {
+  font-size: 0.9rem;
+  color: var(--color-noir-text-muted);
+  line-height: 1.6;
+}
+
+.achievements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.achievements li {
+  font-size: 1.125rem;
+  color: var(--color-noir-text);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-noir-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.diagram {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: var(--color-noir-background-primary);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-noir-border);
+}
+
+.codeBlock {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: var(--color-noir-text);
+  white-space: pre-wrap;
+  margin: 0;
+  line-height: 1.6;
+  background-color: var(--color-noir-background-primary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-noir-border);
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.rendererDemo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.rendererOutput {
+  padding: 1.5rem;
+  background-color: var(--color-noir-background-primary);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-noir-border);
+}
+
+.rendererTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-noir-primary);
+  margin-bottom: 1rem;
+}

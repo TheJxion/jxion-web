@@ -16,19 +16,21 @@ export interface BackendConfig {
 }
 
 const getEnvVar = (key: string): string | undefined => {
-  if (typeof window !== "undefined") {
-    return (window as any).__ENV__?.[key];
+  if (typeof window !== 'undefined') {
+    const env = (window as any).__ENV__;
+    if (env?.[key]) return env[key];
   }
-  return typeof process !== "undefined"
+  return typeof process !== 'undefined'
     ? (process as any).env?.[key]
     : undefined;
 };
 
 const DEFAULT_CONFIG: BackendConfig = {
   baseUrl:
-    getEnvVar("NEXT_PUBLIC_API_BASE") ||
-    getEnvVar("VITE_API_BASE") ||
-    "http://localhost:3005",
+    getEnvVar('NEXT_PUBLIC_API_BASE') ||
+    getEnvVar('VITE_API_BASE') ||
+    getEnvVar('VITE_API_URL') ||
+    'http://localhost:8080',
   enabled: true,
 };
 
@@ -39,7 +41,7 @@ let config: BackendConfig = { ...DEFAULT_CONFIG };
  */
 export function configureBackend(newConfig: Partial<BackendConfig>): void {
   config = { ...config, ...newConfig };
-  console.log("[Jxion-i18n] Backend configured:", config);
+  console.log('[Jxion-i18n] Backend configured:', config);
 }
 
 /**
@@ -55,9 +57,9 @@ export async function fetchTranslationFromBackend(
 
   try {
     const response = await fetch(`${config.baseUrl}/trpc/getTranslation`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         key,
@@ -93,9 +95,9 @@ export async function fetchTranslationsFromBackend(
 
   try {
     const response = await fetch(`${config.baseUrl}/trpc/getTranslations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         keys,
@@ -132,9 +134,9 @@ export async function updateTranslationInBackend(
 
   try {
     const response = await fetch(`${config.baseUrl}/trpc/updateTranslation`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         key,
@@ -167,9 +169,9 @@ export async function updateTranslationsInBackend(
 
   try {
     const response = await fetch(`${config.baseUrl}/trpc/updateTranslations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         translations,
@@ -200,9 +202,9 @@ export async function clearCacheInBackend(locale?: string): Promise<boolean> {
     const response = await fetch(
       `${config.baseUrl}/trpc/clearTranslationCache`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           locale,

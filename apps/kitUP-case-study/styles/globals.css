@@ -1,0 +1,64 @@
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* NOIR Design Tokens - Mürdüm Purple Theme */
+:root {
+  /* Primary Colors */
+  --color-noir-primary: #4c1c3d; /* Mürdüm Purple */
+  --color-noir-secondary: #ffd700; /* Gold */
+  --color-noir-murdum: #4c1c3d;
+  --color-noir-murdum-soft: #6a2a53;
+  --color-noir-murdum-dark: #3a152d;
+  --color-noir-murdum-accent: #8d3c72;
+
+  /* Background Colors */
+  --color-noir-background-primary: #000000; /* Black */
+  --color-noir-background-secondary: #1a1a1a;
+  --color-noir-dark-gray: #1f2937;
+  --color-noir-medium-gray: #4b5563;
+
+  /* Text Colors */
+  --color-noir-text: #ffffff;
+  --color-noir-text-primary: #f8f8f8;
+  --color-noir-text-secondary: #e2e2e2;
+  --color-noir-text-muted: #999999;
+
+  /* Border Colors */
+  --color-noir-border: #333333;
+
+  /* Gold Accent */
+  --color-noir-gold: #ffd700;
+  --color-noir-gold-glow: rgba(255, 215, 0, 0.25);
+
+  /* Font Families */
+  --font-family-serif: 'Playfair Display', Georgia, serif;
+  --font-family-sans: 'Inter', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-noir-background-primary);
+  color: var(--color-noir-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

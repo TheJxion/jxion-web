@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { computed } from 'svelte';
 	import { heroTemplate, TemplateRenderer } from '@jxion/core';
-	import styles from '@jxion/design/src/components/hero.module.scss';
+	import styles from '@jxion/design/components/hero.module.scss';
 	import type { HeroProps } from '$types';
 
 	export let title: HeroProps['title'];

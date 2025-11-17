@@ -34,7 +34,7 @@ export function useSSE(options: UseSSEOptions = {}) {
   const eventSourceRef = useRef<EventSource | null>(null);
   const callbacksRef = useRef<UseSSEOptions>({});
   const {
-    apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005',
+    apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080',
     enabled = true,
   } = options;
 

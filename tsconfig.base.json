@@ -24,6 +24,7 @@
       "@jxion/i18n": ["libs/jxion-i18n/src/index.ts"],
       "@jxion/shared": ["libs/jxion-shared/src/index.ts"],
       "@jxion/styles": ["libs/jxion-styles/src/index.ts"],
+      "@jxion/ui": ["libs/jxion-ui/src/index.ts"],
       "@jxion/validation": ["libs/jxion-validation/src/index.ts"]
     }
   },

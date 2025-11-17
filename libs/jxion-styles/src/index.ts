@@ -5,7 +5,7 @@
  * MIGRATED FROM: ustad-web/shared/src/styles/
  */
 
-import tokensData from "./tokens.json";
+import tokensData from './tokens.json';
 
 export interface DesignTokens {
   colors: Record<string, Record<string, string>>;
@@ -20,7 +20,7 @@ export interface DesignTokens {
   breakpoints: Record<string, string>;
 }
 
-export type Theme = "light" | "dark" | "custom";
+export type Theme = 'light' | 'dark' | 'custom';
 
 // Design tokens (Phase 2: Implemented)
 export const designTokens: DesignTokens = tokensData as DesignTokens;
@@ -33,13 +33,14 @@ const STYLE_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
  * Get environment variable (works in browser and Node.js)
  */
 const getEnvVar = (key: string): string | undefined => {
-  if (typeof window !== "undefined") {
-    return (window as any).__ENV__?.[key];
+  if (typeof window !== 'undefined') {
+    const env = (window as any).__ENV__;
+    if (env?.[key]) return env[key];
   }
   // Check for Node.js process.env (with type safety)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globalProcess =
-    typeof globalThis !== "undefined" ? (globalThis as any).process : undefined;
+    typeof globalThis !== 'undefined' ? (globalThis as any).process : undefined;
   if (globalProcess && globalProcess.env) {
     return globalProcess.env[key];
   }
@@ -53,18 +54,19 @@ const getEnvVar = (key: string): string | undefined => {
 async function fetchStylesFromBackend(
   componentId: string,
   variant?: string,
-  theme: Theme = "light"
+  theme: Theme = 'light'
 ): Promise<string | null> {
   const backendUrl =
-    getEnvVar("NEXT_PUBLIC_API_BASE") ||
-    getEnvVar("VITE_API_BASE") ||
-    "http://localhost:3005";
+    getEnvVar('NEXT_PUBLIC_API_BASE') ||
+    getEnvVar('VITE_API_BASE') ||
+    getEnvVar('VITE_API_URL') ||
+    'http://localhost:8080';
 
   try {
     const response = await fetch(`${backendUrl}/api/styles/${componentId}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         variant,
@@ -94,11 +96,11 @@ async function fetchStylesFromBackend(
 function generateStylesFromTokens(
   componentId: string,
   variant?: string,
-  theme: Theme = "light"
+  theme: Theme = 'light'
 ): string {
   console.log(
     `[Jxion-Styles] Generating styles for ${componentId} (variant: ${
-      variant || "default"
+      variant || 'default'
     }, theme: ${theme})`
   );
 
@@ -132,9 +134,9 @@ function generateStylesFromTokens(
 export const loadStyles = async (
   componentId: string,
   variant?: string,
-  theme: Theme = "light"
+  theme: Theme = 'light'
 ): Promise<string> => {
-  const cacheKey = `${componentId}:${variant || "default"}:${theme}`;
+  const cacheKey = `${componentId}:${variant || 'default'}:${theme}`;
   const now = Date.now();
 
   // Check cache
@@ -197,18 +199,18 @@ export const clearStyleCache = (componentId?: string): void => {
  * @returns Token value or undefined
  */
 export const getToken = (path: string): string | undefined => {
-  const parts = path.split(".");
+  const parts = path.split('.');
   let current: any = designTokens;
 
   for (const part of parts) {
-    if (current && typeof current === "object") {
+    if (current && typeof current === 'object') {
       current = current[part];
     } else {
       return undefined;
     }
   }
 
-  return typeof current === "string" ? current : undefined;
+  return typeof current === 'string' ? current : undefined;
 };
 
 /**
@@ -226,35 +228,35 @@ export const applyTheme = (theme: Theme): DesignTokens => {
 
   // Apply theme-specific overrides
   switch (theme) {
-    case "dark": {
+    case 'dark': {
       // Dark theme overrides
       themedTokens.colors.primary = {
         ...themedTokens.colors.primary,
-        "500": "#f59e0b", // Keep primary accent
-        "600": "#d97706",
+        '500': '#f59e0b', // Keep primary accent
+        '600': '#d97706',
       };
       themedTokens.colors.neutral = {
-        "50": "#171717", // Inverted: dark becomes light
-        "100": "#262626",
-        "200": "#404040",
-        "300": "#525252",
-        "400": "#737373",
-        "500": "#a3a3a3",
-        "600": "#d4d4d4",
-        "700": "#e5e5e5",
-        "800": "#f5f5f5",
-        "900": "#fafafa",
+        '50': '#171717', // Inverted: dark becomes light
+        '100': '#262626',
+        '200': '#404040',
+        '300': '#525252',
+        '400': '#737373',
+        '500': '#a3a3a3',
+        '600': '#d4d4d4',
+        '700': '#e5e5e5',
+        '800': '#f5f5f5',
+        '900': '#fafafa',
       };
       console.log(`[Jxion-Styles] Dark theme applied`);
       break;
     }
-    case "custom": {
+    case 'custom': {
       // Custom theme - can be extended with custom overrides
       // For now, return base tokens
       console.log(`[Jxion-Styles] Custom theme (using base tokens)`);
       break;
     }
-    case "light":
+    case 'light':
     default: {
       // Light theme is the default
       console.log(`[Jxion-Styles] Light theme (default)`);
@@ -266,7 +268,7 @@ export const applyTheme = (theme: Theme): DesignTokens => {
 };
 
 // Export design tokens as default export for convenience
-export { default as designTokensDefault } from "./tokens.json";
+export { default as designTokensDefault } from './tokens.json';
 
 // Note: SCSS modules are imported directly in components (matching ustad pattern):
 // import styles from '@jxion/styles/modules/Hero.module.scss';

@@ -146,7 +146,7 @@ export default Component;`;
 
     try {
       // Call AI API (using free tier LLM)
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
       const response = await fetch(`${apiUrl}/api/ai/generate-component`, {
         method: 'POST',
         headers: {

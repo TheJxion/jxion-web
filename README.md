@@ -2,6 +2,16 @@
 
 A comprehensive monorepo framework supporting multiple frontend technologies with a unified design system and tRPC backend integration.
 
+## 📚 For AI Agents & Developers
+
+**🚀 Start Here:** Read [`MASTER_PROMPT.md`](./MASTER_PROMPT.md) for complete project context, brand guidelines, architecture details, and workflow instructions.
+
+**Quick Reference:** See [`QUICK_REFERENCE.md`](./QUICK_REFERENCE.md) for a condensed overview.
+
+**Usage Guide:** See [`PROMPT_USAGE_GUIDE.md`](./PROMPT_USAGE_GUIDE.md) for instructions on using the master prompt with different AI agents.
+
+**Case Study:** See [`REACT_DEVELOPER_CASE_STUDY_SUBMISSION_COMPREHENSIVE.md`](./REACT_DEVELOPER_CASE_STUDY_SUBMISSION_COMPREHENSIVE.md) for the complete React Developer Case Study submission.
+
 ## 🚀 Overview
 
 Jxion Framework is a modern, scalable solution for building web applications across multiple frontend frameworks. It provides:

@@ -110,15 +110,77 @@ export class TemplateRenderer {
               )
               .join('');
           } else if (key === 'items') {
-            // Render motifs items
+            // Render motifs items with images (like old version)
             stringValue = value
               .map(
                 (item: any) => `
-              <div class="motifs__item">
-                <h3 class="motifs__item-name">${item.name || ''}</h3>
-                <p class="motifs__item-description">${
-                  item.description || ''
+              <a href="${item.href || '#'}" class="noir-motifs__item">
+                <div class="noir-motifs__image-wrapper">
+                  <img src="${item.image || ''}" alt="${
+                  item.name || ''
+                }" class="noir-motifs__image" loading="lazy" />
+                  <div class="noir-motifs__overlay"></div>
+                </div>
+                <div class="noir-motifs__content">
+                  <div class="noir-motifs__icon">${item.icon || ''}</div>
+                  <h3 class="noir-motifs__item-name">${item.name || ''}</h3>
+                  <p class="noir-motifs__item-description">${
+                    item.description || ''
+                  }</p>
+                </div>
+              </a>
+            `
+              )
+              .join('');
+          } else if (key === 'products') {
+            // Render product cards
+            stringValue = value
+              .map(
+                (product: any) => `
+              <div class="noir-collection__product-card" style="background-color: var(--color-noir-background-secondary); border: 1px solid var(--color-noir-border); border-radius: 1rem; padding: 1.5rem; transition: transform 0.3s ease;">
+                <img src="${product.image || ''}" alt="${
+                  product.name || ''
+                }" class="noir-collection__product-image" style="width: 100%; height: 300px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;" />
+                <h3 class="noir-collection__product-name" style="font-size: 1.25rem; font-weight: 700; color: var(--color-noir-text); margin-bottom: 0.5rem;">${
+                  product.name || ''
+                }</h3>
+                <p class="noir-collection__product-description" style="font-size: 0.9rem; color: var(--color-noir-text-muted); margin-bottom: 1rem; line-height: 1.6;">${
+                  product.description || ''
                 }</p>
+                <div class="noir-collection__product-price" style="font-size: 1.5rem; font-weight: 700; color: var(--color-noir-secondary); margin-bottom: 1rem;">${
+                  product.price || 0
+                } ₺</div>
+                <button class="noir-collection__product-button" style="width: 100%; padding: 0.75rem; background-color: var(--color-noir-primary); color: var(--color-noir-text); border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">${
+                  product.buttonText || 'Sepete Ekle'
+                }</button>
+              </div>
+            `
+              )
+              .join('');
+          } else if (key === 'footerSections') {
+            // Render footer sections
+            stringValue = value
+              .map(
+                (section: any) => `
+              <div class="noir-footer__section">
+                <h4 class="noir-footer__section-title" style="font-size: 1rem; font-weight: 700; color: var(--color-noir-text); margin-bottom: 1rem;">${
+                  section.title || ''
+                }</h4>
+                <ul class="noir-footer__links" style="list-style: none; padding: 0; margin: 0;">
+                  ${(section.links || [])
+                    .map(
+                      (link: any) => `
+                    <li style="margin-bottom: 0.5rem;">
+                      <a href="${
+                        link.href || '#'
+                      }" class="noir-footer__link" style="color: var(--color-noir-text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">${
+                        link.text || ''
+                      }</a>
+                    </li>
+                  `
+                    )
+                    .join('')}
+                </ul>
               </div>
             `
               )

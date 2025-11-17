@@ -1,0 +1,61 @@
+/* NOIR Design Tokens - Mürdüm Purple Theme */
+:root {
+  /* Primary Colors */
+  --color-noir-primary: #4C1C3D; /* Mürdüm Purple */
+  --color-noir-secondary: #FFD700; /* Gold */
+  --color-noir-murdum: #4C1C3D;
+  --color-noir-murdum-soft: #6A2A53;
+  --color-noir-murdum-dark: #3A152D;
+  
+  /* Background Colors */
+  --color-noir-background-primary: #000000; /* Black */
+  --color-noir-background-secondary: #1a1a1a;
+  
+  /* Text Colors */
+  --color-noir-text: #FFFFFF;
+  --color-noir-text-primary: #FFFFFF;
+  --color-noir-text-secondary: #CCCCCC;
+  --color-noir-text-muted: #999999;
+  
+  /* Border Colors */
+  --color-noir-border: #333333;
+  
+  /* Gold Accent */
+  --color-noir-gold: #FFD700;
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-noir-background-primary);
+  color: var(--color-noir-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-noir-background-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}

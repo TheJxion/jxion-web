@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
         '@jxion/core': path.resolve(__dirname, '../../libs/jxion-core/src'),
         '@jxion/design': path.resolve(__dirname, '../../libs/jxion-design/src'),
         '@jxion/shared': path.resolve(__dirname, '../../libs/jxion-shared/src'),
+        '@jxion/ui': path.resolve(__dirname, '../../libs/jxion-ui/src'),
         // Stub framework-specific modules that aren't available in SvelteKit
         'next/link': path.resolve(__dirname, './src/lib/stubs/next-link.ts'),
         'next/image': path.resolve(__dirname, './src/lib/stubs/next-image.ts'),
@@ -41,6 +42,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       host: true,
+      strictPort: true, // Fail if port is already in use instead of trying next port
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(

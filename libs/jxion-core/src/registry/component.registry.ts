@@ -280,6 +280,195 @@ export const componentRegistry: ComponentRegistry = {
     ],
     frameworks: ['react', 'svelte', 'vue'],
   },
+  jxionProductGrid: {
+    name: 'JxionProductGrid',
+    version: '1.0.0',
+    category: 'E-commerce',
+    description:
+      'Flagship demonstration component featuring draggable grid layout with inner card carousels. Combines Palmer-like draggable grid (x,y drag) with Instagram-style inner carousel (per card swipe). Showcases Jxion multi-framework architecture and GSAP integration.',
+    props: {
+      products: 'Product[] (optional)',
+    },
+    examples: [
+      {
+        title: 'JxionProductGrid in SvelteKit',
+        description:
+          'React JxionProductGrid component used in SvelteKit via LocalReactWrapper. Demonstrates complex GSAP animations in multi-framework architecture.',
+        code: `<LocalReactWrapper
+  componentModule={jxionProductGridModule}
+  componentName="JxionProductGrid"
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'JxionProductGrid in React',
+        description: 'Direct usage in React application',
+        code: `<JxionProductGrid />`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
+  jxionHero: {
+    name: 'JxionHero',
+    version: '1.0.0',
+    category: 'Layout',
+    description:
+      'Hero section with GSAP ScrollTrigger pinning and fade-out animation. Content fades out and scales down on scroll, transitioning smoothly to content below. Showcases Jxion architecture with NOIR brand styling.',
+    props: {},
+    examples: [
+      {
+        title: 'JxionHero in SvelteKit',
+        description:
+          'React JxionHero component used in SvelteKit via LocalReactWrapper. Demonstrates GSAP ScrollTrigger integration.',
+        code: `<LocalReactWrapper
+  componentModule={jxionHeroModule}
+  componentName="JxionHero"
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'JxionHero in React',
+        description: 'Direct usage in React application',
+        code: `<JxionHero />`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
+  aiContentFetcher: {
+    name: 'AIContentFetcher',
+    version: '1.0.0',
+    category: 'AI Integration',
+    description:
+      'AI Content Fetcher component demonstrating server-state management, caching, latency handling, and graceful error fallbacks. Simulates BFF pattern with Redis-like caching (2.5s fresh, 0.5s cached) and 20% error rate for fallback demonstration.',
+    props: {
+      initialAutoFetch: 'boolean (optional)',
+    },
+    examples: [
+      {
+        title: 'AIContentFetcher in SvelteKit',
+        description:
+          'React AIContentFetcher component used in SvelteKit via LocalReactWrapper. Demonstrates server-state management and caching patterns.',
+        code: `<LocalReactWrapper
+  componentModule={aiContentFetcherModule}
+  componentName="AIContentFetcher"
+  props={{
+    initialAutoFetch: false
+  }}
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'AIContentFetcher in React',
+        description: 'Direct usage in React application',
+        code: `<AIContentFetcher initialAutoFetch={false} />`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
+  jxionInput: {
+    name: 'JxionInput',
+    version: '1.0.0',
+    category: 'Form',
+    description:
+      'Standardized input field with Mürdüm purple theme, error handling, and validation. Features focus states, error messages, and required field indicators.',
+    props: {
+      label: 'string (required)',
+      type: 'string (optional, default: "text")',
+      placeholder: 'string (optional)',
+      value: 'string (required)',
+      onChange: 'function (required)',
+      error: 'string (optional)',
+      required: 'boolean (optional, default: false)',
+      disabled: 'boolean (optional, default: false)',
+      className: 'string (optional)',
+    },
+    examples: [
+      {
+        title: 'JxionInput in SvelteKit',
+        description:
+          'React JxionInput component used in SvelteKit via LocalReactWrapper. Demonstrates form input with validation.',
+        code: `<LocalReactWrapper
+  componentModule={{ JxionInput }}
+  componentName="JxionInput"
+  props={{
+    label: 'Email',
+    type: 'email',
+    value: email,
+    onChange: (val: string) => { email = val; },
+    error: errors.email,
+    required: true,
+  }}
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'JxionInput in React',
+        description: 'Direct usage in React application',
+        code: `<JxionInput
+  label="Email"
+  type="email"
+  value={email}
+  onChange={setEmail}
+  error={errors.email}
+  required
+/>`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
+  jxionButton: {
+    name: 'JxionButton',
+    version: '1.0.0',
+    category: 'Interaction',
+    description:
+      'Multi-variant button component with primary (Mürdüm purple), secondary (Gold), and danger variants. Supports full-width, disabled states, and loading states.',
+    props: {
+      children: 'ReactNode (required)',
+      variant: 'string (optional, default: "primary")',
+      onClick: 'function (optional)',
+      type: 'string (optional, default: "button")',
+      disabled: 'boolean (optional, default: false)',
+      fullWidth: 'boolean (optional, default: false)',
+      className: 'string (optional)',
+    },
+    examples: [
+      {
+        title: 'JxionButton in SvelteKit',
+        description:
+          'React JxionButton component used in SvelteKit via LocalReactWrapper. Demonstrates button variants and states.',
+        code: `<LocalReactWrapper
+  componentModule={{ JxionButton }}
+  componentName="JxionButton"
+  props={{
+    variant: 'primary',
+    type: 'submit',
+    disabled: isSubmitting,
+    fullWidth: true,
+    children: 'Submit',
+  }}
+/>`,
+        framework: 'svelte',
+      },
+      {
+        title: 'JxionButton in React',
+        description: 'Direct usage in React application',
+        code: `<JxionButton
+  variant="primary"
+  onClick={handleSubmit}
+  disabled={isLoading}
+  fullWidth
+>
+  Submit
+</JxionButton>`,
+        framework: 'react',
+      },
+    ],
+    frameworks: ['react', 'svelte', 'vue'],
+  },
 };
 
 /**

@@ -1,4 +1,4 @@
-@import '@jxion/design/styles/_noir-variables.scss';
+@use '@jxion/design/styles/_noir-variables.scss' as *;
 
 .heroContainer {
   width: 100%;

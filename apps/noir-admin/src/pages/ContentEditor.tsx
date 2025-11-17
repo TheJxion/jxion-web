@@ -123,7 +123,7 @@ export default function ContentEditor() {
             // Try to load from API first (database), then fallback to template loader
             try {
               const apiUrl =
-                import.meta.env.VITE_API_URL || 'http://localhost:3005';
+                import.meta.env.VITE_API_URL || 'http://localhost:8080';
               const response = await fetch(`${apiUrl}/api/content/${path}`);
               if (response.ok) {
                 const apiContent = await response.json();
@@ -271,7 +271,7 @@ export default function ContentEditor() {
 
     try {
       // Save to API (which persists to database)
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
       const response = await fetch(`${apiUrl}/api/content/${selectedFile}`, {
         method: 'PUT',
         headers: {

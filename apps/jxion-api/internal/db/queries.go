@@ -22,6 +22,10 @@ import (
 
 // GetTranslation retrieves a single translation from the database
 func GetTranslation(key, locale string, namespace *string) (*models.Translation, error) {
+	if DB == nil {
+		return nil, fmt.Errorf("database not initialized")
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -65,6 +69,10 @@ func GetTranslation(key, locale string, namespace *string) (*models.Translation,
 
 // GetTranslations retrieves multiple translations from the database
 func GetTranslations(keys []string, locale string, namespace *string) (map[string]string, error) {
+	if DB == nil {
+		return nil, fmt.Errorf("database not initialized")
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -109,6 +117,10 @@ func GetTranslations(keys []string, locale string, namespace *string) (map[strin
 
 // UpsertTranslation creates or updates a translation
 func UpsertTranslation(t *models.Translation, userID *string) error {
+	if DB == nil {
+		return fmt.Errorf("database not initialized")
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -153,6 +165,10 @@ func UpsertTranslation(t *models.Translation, userID *string) error {
 
 // UpsertTranslations creates or updates multiple translations
 func UpsertTranslations(translations []models.Translation, userID *string) error {
+	if DB == nil {
+		return fmt.Errorf("database not initialized")
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 

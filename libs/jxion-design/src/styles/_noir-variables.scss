@@ -24,8 +24,16 @@ $color-noir-black: #000000; // Primary background, sophistication, luxury
 $color-noir-gold: #ffd700; // Gold accent - elegance, premium quality, warmth
 $color-noir-white: #ffffff; // Purity, clarity, contrast
 
+// Mürdüm Purple System (Primary)
+$color-noir-murdum: #4c1c3d; // Base Mürdüm
+$color-noir-murdum-dark: #3a0f2a; // Dark variant
+$color-noir-murdum-soft: #6a2a53; // Soft variant
+$color-noir-murdum-accent: #8d3c72; // Accent variant
+
 // Depth/Gradient Colors
 $color-noir-graphite: #434343; // Gradient base for depth
+$color-noir-dark-gray: #1f2937; // Dark gray for backgrounds
+$color-noir-medium-gray: #4b5563; // Medium gray for borders
 
 // Gold Variations (RGBA)
 $color-noir-gold-glow: rgba(255, 215, 0, 0.25); // Soft gold glow
@@ -38,8 +46,19 @@ $color-noir-text-secondary: #e2e2e2; // Secondary text/Body
 // Depth/Gradient Colors (for mesh gradients)
 $color-depth-gray: #434343; // Graphite for gradient blobs
 
+// Semantic Mappings
+$color-noir-primary: $color-noir-murdum;
+$color-noir-secondary: $color-noir-gold;
+$color-noir-cta: $color-noir-murdum-accent;
+$color-noir-background-primary: $color-noir-black;
+$color-noir-background-secondary: $color-noir-dark-gray;
+$color-noir-text: $color-noir-white;
+$color-noir-text-muted: $color-noir-medium-gray;
+$color-noir-border: $color-noir-medium-gray;
+
 // CSS Variables (for runtime theming)
 :root {
+  // Base Colors
   --color-noir-black: #{$color-noir-black};
   --color-noir-gold: #{$color-noir-gold};
   --color-noir-white: #{$color-noir-white};
@@ -50,6 +69,27 @@ $color-depth-gray: #434343; // Graphite for gradient blobs
   --color-noir-text-secondary: #{$color-noir-text-secondary};
   --color-depth-gray: #{$color-depth-gray};
   --color-primary-black: #{$color-noir-black};
+
+  // Mürdüm Purple System
+  --color-noir-murdum: #{$color-noir-murdum};
+  --color-noir-murdum-dark: #{$color-noir-murdum-dark};
+  --color-noir-murdum-soft: #{$color-noir-murdum-soft};
+  --color-noir-murdum-accent: #{$color-noir-murdum-accent};
+
+  // Semantic Colors
+  --color-noir-primary: #{$color-noir-primary};
+  --color-noir-secondary: #{$color-noir-secondary};
+  --color-noir-cta: #{$color-noir-cta};
+  --color-noir-background-primary: #{$color-noir-background-primary};
+  --color-noir-background-secondary: #{$color-noir-background-secondary};
+  --color-noir-text: #{$color-noir-text};
+  --color-noir-text-muted: #{$color-noir-text-muted};
+  --color-noir-border: #{$color-noir-border};
+
+  // Legacy aliases for backward compatibility
+  --color-noir-1: var(--color-noir-background-primary);
+  --color-noir-2: var(--color-noir-background-secondary);
+  --color-noir-input: var(--color-noir-background-secondary);
 
   // Gradient Variables
   --gradient-canvas: radial-gradient(

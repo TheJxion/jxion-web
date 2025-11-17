@@ -20,8 +20,8 @@
 @import '@jxion/design/styles/modules/whyNoir.module.scss';
 @import '@jxion/design/styles/modules/motifs.module.scss';
 @import '@jxion/design/styles/modules/newsletter.module.scss';
-@import '@jxion/design/styles/_noir-variables.scss';
 @import './lib/components/organisms/ContentEditor.module.scss';
+@use '@jxion/design/styles/_noir-variables.scss' as *;
 
 /* ImmersiveHero Styles - Canvas-Driven Background */
 :root {

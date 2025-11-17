@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Head from 'next/head';
 import { TemplateRenderer, JSXRenderer, SvelteRenderer } from '@jxion/core';
+import { JxionButton, JxionInput } from '@jxion/ui';
 import styles from '../styles/CaseStudy.module.scss';
 import {
   createGSAPContext,
@@ -34,6 +35,12 @@ export default function CaseStudyPage() {
     jsx: string;
     svelte: string;
   } | null>(null);
+  const [activeTab, setActiveTab] = useState<
+    'demo' | 'architecture' | 'testing' | 'reflection' | 'renderer'
+  >('demo');
+  const [demoName, setDemoName] = useState('');
+  const [demoEmail, setDemoEmail] = useState('');
+  const [formSuccess, setFormSuccess] = useState(false);
 
   // GSAP animations
   useEffect(() => {
@@ -77,6 +84,126 @@ export default function CaseStudyPage() {
 
     return () => ctx.revert();
   }, []);
+
+  const handleDemoSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (!demoName || !demoEmail) {
+        return;
+      }
+      setFormSuccess(true);
+    },
+    [demoEmail, demoName],
+  );
+
+  useEffect(() => {
+    if (!formSuccess) {
+      return;
+    }
+    const timer = setTimeout(() => setFormSuccess(false), 3500);
+    return () => clearTimeout(timer);
+  }, [formSuccess]);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'demo':
+        return (
+          <div>
+            <p className={styles.tabPanelText}>
+              kitUP consumes the exact same <code>@jxion/ui</code> components
+              that power noir-crafted and noir-admin. The toolkit is theme-aware
+              via CSS variables, so buttons, inputs, and layout primitives stay
+              consistent while products maintain their personality.
+            </p>
+            <ul className={styles.tabPanelList}>
+              <li>Direct imports from the shared UI workspace</li>
+              <li>Runtime theming through Noir design tokens</li>
+              <li>GSAP motion hooks for every Shell surface</li>
+              <li>Template-driven surfaces stay portable</li>
+            </ul>
+          </div>
+        );
+      case 'architecture':
+        return (
+          <div>
+            <p className={styles.tabPanelText}>
+              The shell keeps product surfaces independent but enforces the same
+              render pipeline (Template → Renderer → Framework). kitUP
+              orchestrates iframe experiences, template-driven pages, and admin
+              previews without duplicating layout code.
+            </p>
+            <p className={styles.tabPanelText}>
+              Noir-crafted stays on SvelteKit, Primary runs template-driven
+              React, and admin tooling lives in noir-admin—yet every experience
+              maps back to the same renderer primitives inside{' '}
+              <code>@jxion/core</code>.
+            </p>
+          </div>
+        );
+      case 'testing':
+        return (
+          <div>
+            <p className={styles.tabPanelText}>
+              Component smoke tests live with <code>@jxion/ui</code>, renderer
+              contracts are validated through TemplateRenderer snapshots, and
+              kitUP performs integration checks when iframes mount.
+            </p>
+            <ul className={styles.tabPanelList}>
+              <li>Visual regression on shell layouts</li>
+              <li>Renderer pipeline snapshots per template</li>
+              <li>GSAP hook unit tests (ScrollTrigger config)</li>
+              <li>Manual route verification for iframe fallbacks</li>
+            </ul>
+          </div>
+        );
+      case 'reflection':
+        return (
+          <div>
+            <p className={styles.tabPanelText}>
+              Consolidating noir-nextjs into kitUP removed an entire app while
+              preserving the story: all demos now live in one Next.js code path
+              and inherit the same theming, linting, and deployment target.
+            </p>
+            <p className={styles.tabPanelText}>
+              The refactor keeps template-driven thinking front-and-center—the
+              React demo now sits next to the renderer showcase and points back
+              to noir-crafted for the fully bespoke experience.
+            </p>
+          </div>
+        );
+      case 'renderer':
+        if (!rendererDemo) {
+          return (
+            <p className={styles.tabPanelText}>
+              Renderer output is compiling—switch tabs or refresh to view the
+              HTML/JSX/Svelte breakdown.
+            </p>
+          );
+        }
+        return (
+          <div className={styles.rendererGrid}>
+            <div>
+              <h4 className={styles.rendererTitle}>TemplateRenderer (HTML)</h4>
+              <pre className={styles.codeBlock}>
+                {rendererDemo.html.substring(0, 400)}...
+              </pre>
+            </div>
+            <div>
+              <h4 className={styles.rendererTitle}>JSXRenderer (React)</h4>
+              <pre className={styles.codeBlock}>{rendererDemo.jsx}</pre>
+            </div>
+            <div>
+              <h4 className={styles.rendererTitle}>SvelteRenderer (Svelte)</h4>
+              <pre className={styles.codeBlock}>
+                {rendererDemo.svelte.substring(0, 400)}...
+              </pre>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     // Demo variables for renderer pipeline (using primary product content)
@@ -148,6 +275,122 @@ export const Hero: React.FC = () => {
             Multi-Product Shell Architecture with Shared Component Library
           </p>
         </header>
+
+        <section className={`${styles.section} ${styles.componentSection}`}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              Shared Component Library Showcase
+            </h2>
+            <p className={styles.sectionText}>
+              Directly reuse the Noir-themed <code>@jxion/ui</code> primitives.
+              The same buttons and form fields power noir-crafted, noir-admin,
+              and this Next.js shell—no style drift, no bespoke overrides.
+            </p>
+          </div>
+
+          <div className={styles.componentGrid}>
+            <div className={styles.componentCard}>
+              <h3>Button Variants</h3>
+              <p>Exact palette + motion exported from @jxion/design tokens.</p>
+              <div className={styles.buttonStack}>
+                <JxionButton
+                  variant="primary"
+                  onClick={() => alert('Primary clicked!')}
+                >
+                  Primary (Mürdüm)
+                </JxionButton>
+                <JxionButton
+                  variant="secondary"
+                  onClick={() => alert('Secondary clicked!')}
+                >
+                  Secondary (Gold)
+                </JxionButton>
+                <JxionButton
+                  variant="danger"
+                  onClick={() => alert('Danger clicked!')}
+                >
+                  Danger
+                </JxionButton>
+              </div>
+              <ul className={styles.componentList}>
+                <li>Token-aware background + text colors</li>
+                <li>Hover/active states built into component</li>
+                <li>Full-width toggle for CTA bars</li>
+              </ul>
+            </div>
+
+            <div className={styles.componentCard}>
+              <h3>Form Inputs</h3>
+              <p>Live state mirrors what noir-admin surfaces in production.</p>
+              <form className={styles.demoForm} onSubmit={handleDemoSubmit}>
+                <JxionInput
+                  label="Name"
+                  value={demoName}
+                  onChange={setDemoName}
+                  placeholder="Enter your name"
+                  required
+                />
+                <JxionInput
+                  label="Email"
+                  type="email"
+                  value={demoEmail}
+                  onChange={setDemoEmail}
+                  placeholder="Enter your email"
+                  required
+                />
+                <JxionButton type="submit" fullWidth>
+                  Generate Component Preview
+                </JxionButton>
+                {formSuccess && (
+                  <p className={styles.successMessage}>
+                    Component request queued — check the Renderer tab for output.
+                  </p>
+                )}
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section className={`${styles.section} ${styles.tabSection}`}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Case Study Overview</h2>
+            <p className={styles.sectionText}>
+              These tabs summarize the same narrative that previously lived
+              inside <code>@noir-nextjs</code>, now consolidated within the
+              kitUP shell.
+            </p>
+          </div>
+          <div className={styles.tabNav}>
+            {['demo', 'architecture', 'testing', 'reflection', 'renderer'].map(
+              (tab) => (
+                <button
+                  key={tab}
+                  type="button"
+                  className={`${styles.tabButton} ${
+                    activeTab === tab ? styles.tabButtonActive : ''
+                  }`}
+                  onClick={() =>
+                    setActiveTab(
+                      tab as
+                        | 'demo'
+                        | 'architecture'
+                        | 'testing'
+                        | 'reflection'
+                        | 'renderer',
+                    )
+                  }
+                >
+                  {tab === 'demo' && 'Demo'}
+                  {tab === 'architecture' && 'Architecture'}
+                  {tab === 'testing' && 'Testing'}
+                  {tab === 'reflection' && 'Reflection'}
+                  {tab === 'renderer' && 'Renderer'}
+                </button>
+              ),
+            )}
+          </div>
+          <div className={styles.tabPanel}>{renderTabContent()}</div>
+        </section>
 
         <main className={styles.content}>
           <section className={styles.section}>

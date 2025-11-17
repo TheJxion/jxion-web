@@ -5,7 +5,7 @@
  */
 
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 // Register plugins
 if (typeof window !== 'undefined') {
@@ -234,4 +234,3 @@ export const animateSections = (container: Element) => {
 };
 
 export { gsap, ScrollTrigger };
-

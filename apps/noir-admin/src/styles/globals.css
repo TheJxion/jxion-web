@@ -1,0 +1,45 @@
+/* Jxion Design Tokens - CSS Variables are defined in SCSS modules */
+/* The :root variables from _noir-variables.scss are available via SCSS modules */
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-noir-background-primary);
+  color: var(--color-noir-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-serif);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-noir-background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-noir-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-noir-text-muted);
+}

@@ -1,0 +1,93 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.navbar {
+  background-color: var(--color-noir-white);
+  border-bottom: 1px solid var(--color-noir-border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+}
+
+.menuButton {
+  padding: tokens.$spacing-sm;
+  color: var(--color-noir-black);
+  background-color: transparent;
+  border: none;
+  border-radius: tokens.$radius-lg;
+  cursor: pointer;
+  transition: background-color tokens.$transition-fast;
+
+  &:hover {
+    background-color: var(--color-noir-background-secondary);
+  }
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    display: none;
+  }
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-md;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--color-noir-background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userName {
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: var(--color-noir-text-muted);
+
+  @media (max-width: tokens.$breakpoint-md) {
+    display: none;
+  }
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  color: var(--color-noir-black);
+  border: none;
+  border-radius: tokens.$radius-lg;
+  cursor: pointer;
+  transition: all tokens.$transition-normal;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+
+  &:hover {
+    background-color: var(--color-noir-border);
+  }
+}

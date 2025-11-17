@@ -1,21 +1,22 @@
-import { useState } from "react";
-import { Edit, Plus, X } from "lucide-react";
-import { products as initialProducts, Product } from "../data";
-import { formatCurrency } from "../utils/format";
-import { content } from "../lib/content";
+import { useState } from 'react';
+import { Edit, Plus, X } from 'lucide-react';
+import { products as initialProducts, Product } from '../data';
+import { formatCurrency } from '../utils/format';
+import { content } from '../lib/content';
+import styles from './Products.module.scss';
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [formData, setFormData] = useState({
-    name: "",
-    category: "Kolye" as Product["category"],
-    metal: "Altın Kaplama" as Product["metal"],
-    price: "",
-    stock: "",
-    status: "Active" as Product["status"],
-    description: "",
+    name: '',
+    category: 'Kolye' as Product['category'],
+    metal: 'Altın Kaplama' as Product['metal'],
+    price: '',
+    stock: '',
+    status: 'Active' as Product['status'],
+    description: '',
   });
 
   const handleOpenModal = (product?: Product) => {
@@ -28,18 +29,18 @@ export default function Products() {
         price: product.price.toString(),
         stock: product.stock.toString(),
         status: product.status,
-        description: product.description || "",
+        description: product.description || '',
       });
     } else {
       setEditingProduct(null);
       setFormData({
-        name: "",
-        category: "Kolye",
-        metal: "Altın Kaplama",
-        price: "",
-        stock: "",
-        status: "Active",
-        description: "",
+        name: '',
+        category: 'Kolye',
+        metal: 'Altın Kaplama',
+        price: '',
+        stock: '',
+        status: 'Active',
+        description: '',
       });
     }
     setIsModalOpen(true);
@@ -82,7 +83,7 @@ export default function Products() {
         stock: parseInt(formData.stock),
         status: formData.status,
         image:
-          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400",
+          'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400',
         description: formData.description,
       };
       setProducts([...products, newProduct]);
@@ -92,100 +93,102 @@ export default function Products() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className={styles.page}>
+      <div className={styles.header}>
         <div>
-          <h1 className="text-3xl font-serif font-bold text-noir-black mb-2">
+          <h1 className={styles.headerContentTitle}>
             {content.products.title}
           </h1>
-          <p className="text-noir-gray-600 font-sans">
+          <p className={styles.headerContentSubtitle}>
             {content.products.subtitle}
           </p>
         </div>
-        <button
-          onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 px-6 py-3 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all duration-200 shadow-lg shadow-noir-gold/30"
-        >
+        <button onClick={() => handleOpenModal()} className={styles.addButton}>
           <Plus size={20} />
           {content.products.addNew}
         </button>
       </div>
 
       {/* Products Table */}
-      <div className="bg-white rounded-lg shadow-md border border-noir-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-noir-gray-50">
+      <div className={styles.tableContainer}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead className={styles.tableHeader}>
               <tr>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Image
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Product Name
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Category
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Metal Type
-                </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Image</th>
+                <th className={styles.tableHeaderCell}>Product Name</th>
+                <th className={styles.tableHeaderCell}>Category</th>
+                <th className={styles.tableHeaderCell}>Metal Type</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Price
                 </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Stock
                 </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Status
-                </th>
-                <th className="text-center py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Status</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--center']}`}
+                >
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr
-                  key={product.id}
-                  className="border-b border-noir-gray-100 hover:bg-noir-gray-50 transition-colors"
-                >
-                  <td className="py-4 px-6">
+                <tr key={product.id} className={styles.tableRow}>
+                  <td className={styles.tableCell}>
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg"
+                      className={styles.productImage}
                     />
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--bold']}`}
+                  >
                     {product.name}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-gray-600">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--muted']}`}
+                  >
                     {product.category}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-gray-600">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--muted']}`}
+                  >
                     {product.metal}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black text-right">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']} ${styles['tableCell--bold']}`}
+                  >
                     {formatCurrency(product.price)}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-black text-right">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']}`}
+                  >
                     {product.stock}
                   </td>
-                  <td className="py-4 px-6">
+                  <td className={styles.tableCell}>
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-sans font-medium ${
-                        product.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-700"
+                      className={`${styles.statusBadge} ${
+                        product.status === 'Active'
+                          ? styles['statusBadge--active']
+                          : styles['statusBadge--hidden']
                       }`}
                     >
                       {product.status}
                     </span>
                   </td>
-                  <td className="py-4 px-6 text-center">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--center']}`}
+                  >
                     <button
                       onClick={() => handleOpenModal(product)}
-                      className="p-2 text-noir-gray-600 hover:text-noir-gold hover:bg-noir-gold/10 rounded-lg transition-all duration-200"
+                      className={styles.actionButton}
                       aria-label="Edit product"
                     >
                       <Edit size={18} />
@@ -200,26 +203,24 @@ export default function Products() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-noir-gray-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-2xl font-serif font-bold text-noir-black">
-                {editingProduct ? "Edit Product" : "Yeni Ürün Ekle"}
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>
+                {editingProduct ? 'Edit Product' : 'Yeni Ürün Ekle'}
               </h2>
               <button
                 onClick={handleCloseModal}
-                className="p-2 text-noir-gray-400 hover:text-noir-black transition-colors"
+                className={styles.modalCloseButton}
                 aria-label="Close modal"
               >
                 <X size={24} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                  Product Name
-                </label>
+            <form onSubmit={handleSubmit} className={styles.modalForm}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Product Name</label>
                 <input
                   type="text"
                   required
@@ -227,24 +228,22 @@ export default function Products() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                  className={styles.formInput}
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                    Category
-                  </label>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Category</label>
                   <select
                     value={formData.category}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        category: e.target.value as Product["category"],
+                        category: e.target.value as Product['category'],
                       })
                     }
-                    className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                    className={styles.formSelect}
                   >
                     <option value="Kolye">Kolye</option>
                     <option value="Bileklik">Bileklik</option>
@@ -253,19 +252,17 @@ export default function Products() {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                    Metal Type
-                  </label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Metal Type</label>
                   <select
                     value={formData.metal}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        metal: e.target.value as Product["metal"],
+                        metal: e.target.value as Product['metal'],
                       })
                     }
-                    className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                    className={styles.formSelect}
                   >
                     <option value="Altın Kaplama">Altın Kaplama</option>
                     <option value="Gümüş">Gümüş</option>
@@ -273,11 +270,9 @@ export default function Products() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                    Price (₺)
-                  </label>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Price (₺)</label>
                   <input
                     type="number"
                     required
@@ -287,14 +282,12 @@ export default function Products() {
                     onChange={(e) =>
                       setFormData({ ...formData, price: e.target.value })
                     }
-                    className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                    className={styles.formInput}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                    Stock
-                  </label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Stock</label>
                   <input
                     type="number"
                     required
@@ -303,67 +296,58 @@ export default function Products() {
                     onChange={(e) =>
                       setFormData({ ...formData, stock: e.target.value })
                     }
-                    className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                    className={styles.formInput}
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                  Status
-                </label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Status</label>
                 <select
                   value={formData.status}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      status: e.target.value as Product["status"],
+                      status: e.target.value as Product['status'],
                     })
                   }
-                  className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                  className={styles.formSelect}
                 >
                   <option value="Active">Active</option>
                   <option value="Hidden">Hidden</option>
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                  Description
-                </label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
                   rows={4}
-                  className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                  className={styles.formTextarea}
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
-                  Upload Image (Mock)
-                </label>
-                <div className="border-2 border-dashed border-noir-gray-300 rounded-lg p-8 text-center">
-                  <p className="text-noir-gray-500 font-sans text-sm">
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Upload Image (Mock)</label>
+                <div className={styles.uploadArea}>
+                  <p className={styles.uploadText}>
                     Image upload functionality would be implemented here
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className={styles.formActions}>
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-6 py-3 border border-noir-gray-300 text-noir-black rounded-lg font-sans font-semibold hover:bg-noir-gray-50 transition-colors"
+                  className={styles.cancelButton}
                 >
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-6 py-3 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all duration-200 shadow-lg shadow-noir-gold/30"
-                >
+                <button type="submit" className={styles.submitButton}>
                   Kaydet
                 </button>
               </div>

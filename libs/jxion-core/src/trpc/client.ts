@@ -11,10 +11,12 @@ const getApiUrl = (): string => {
   }
   // Check for process.env (Node.js/CommonJS environments)
   if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_URL) return `${process.env.VITE_API_URL}/trpc`;
-    if (process.env.VITE_API_BASE) return `${process.env.VITE_API_BASE}/trpc`;
-    if (process.env.NEXT_PUBLIC_API_BASE)
-      return `${process.env.NEXT_PUBLIC_API_BASE}/trpc`;
+    if (process.env['VITE_API_URL'])
+      return `${process.env['VITE_API_URL']}/trpc`;
+    if (process.env['VITE_API_BASE'])
+      return `${process.env['VITE_API_BASE']}/trpc`;
+    if (process.env['NEXT_PUBLIC_API_BASE'])
+      return `${process.env['NEXT_PUBLIC_API_BASE']}/trpc`;
   }
   return 'http://localhost:8080/trpc';
 };

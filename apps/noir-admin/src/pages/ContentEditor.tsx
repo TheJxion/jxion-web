@@ -24,6 +24,7 @@ import {
   Layout,
 } from 'lucide-react';
 import { useSSE } from '../hooks/useSSE';
+import styles from './ContentEditor.module.scss';
 
 interface ContentFile {
   path: string;
@@ -371,21 +372,21 @@ export default function ContentEditor() {
     !!selectedFileData && !!editedContent && !jsonError && hasChanges;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className={styles.page}>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className={styles.header}>
         <div>
-          <h1 className="text-3xl font-serif font-bold text-noir-black mb-2 flex items-center gap-3">
-            <FileText className="text-noir-gold" size={32} />
+          <h1 className={styles.headerContentTitle}>
+            <FileText size={32} />
             Content Editor
           </h1>
-          <p className="text-noir-gray-600 font-sans">
+          <p className={styles.headerContentSubtitle}>
             Edit content files for @noir-crafted. Changes are saved to the
             database and will be available immediately.
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2 cursor-pointer">
+        <div className={styles.headerActions}>
+          <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
               checked={liveUpdatesEnabled}
@@ -397,28 +398,28 @@ export default function ContentEditor() {
                   } Live updates ${e.target.checked ? 'enabled' : 'disabled'}`
                 );
               }}
-              className="w-4 h-4"
+              className={styles.checkbox}
             />
-            <span className="text-sm font-sans text-noir-gray-700">
+            <span className={styles.checkboxText}>
               Live Updates
             </span>
           </label>
           <button
             onClick={() => loadContentFiles(true)}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-noir-gray-100 hover:bg-noir-gray-200 text-noir-black rounded-lg font-sans font-semibold transition-colors disabled:opacity-50"
+            className={styles.reloadButton}
           >
-            <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
+            <RefreshCw size={18} className={loading ? styles.loadingSpinner : ''} />
             Reload
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !canSave}
-            className="flex items-center gap-2 px-6 py-2 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all shadow-lg shadow-noir-gold/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={styles.saveButton}
           >
             {saving ? (
               <>
-                <RefreshCw size={18} className="animate-spin" />
+                <RefreshCw size={18} className={styles.loadingSpinner} />
                 Saving...
               </>
             ) : (
@@ -432,52 +433,40 @@ export default function ContentEditor() {
       </div>
 
       {/* Mode Selector */}
-      <div className="flex gap-2 border-b border-noir-gray-200">
+      <div className={styles.modeSelector}>
         <button
           onClick={() => handleModeChange('content')}
-          className={`px-4 py-2 font-sans font-semibold transition-colors ${
-            currentMode === 'content'
-              ? 'text-noir-gold border-b-2 border-noir-gold'
-              : 'text-noir-gray-600 hover:text-noir-black'
-          }`}
+          className={`${styles.modeButton} ${currentMode === 'content' ? styles['modeButton--active'] : ''}`}
         >
-          <Code size={18} className="inline mr-2" />
+          <Code size={18} className={styles.modeIcon} />
           Content
         </button>
         <button
           onClick={() => handleModeChange('style')}
-          className={`px-4 py-2 font-sans font-semibold transition-colors ${
-            currentMode === 'style'
-              ? 'text-noir-gold border-b-2 border-noir-gold'
-              : 'text-noir-gray-600 hover:text-noir-black'
-          }`}
+          className={`${styles.modeButton} ${currentMode === 'style' ? styles['modeButton--active'] : ''}`}
         >
-          <Palette size={18} className="inline mr-2" />
+          <Palette size={18} className={styles.modeIcon} />
           Styles
         </button>
         <button
           onClick={() => handleModeChange('template')}
-          className={`px-4 py-2 font-sans font-semibold transition-colors ${
-            currentMode === 'template'
-              ? 'text-noir-gold border-b-2 border-noir-gold'
-              : 'text-noir-gray-600 hover:text-noir-black'
-          }`}
+          className={`${styles.modeButton} ${currentMode === 'template' ? styles['modeButton--active'] : ''}`}
         >
-          <Layout size={18} className="inline mr-2" />
+          <Layout size={18} className={styles.modeIcon} />
           Templates
         </button>
       </div>
 
       {/* Save Status */}
       {saveStatus === 'success' && (
-        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-center gap-3 mb-2">
-            <CheckCircle2 className="text-yellow-600" size={20} />
-            <span className="text-yellow-800 font-sans font-semibold">
+        <div className={`${styles.statusMessage} ${styles['statusMessage--success']}`}>
+          <div className={styles.statusContent}>
+            <CheckCircle2 size={20} />
+            <span className={styles.statusTitle}>
               Content updated locally
             </span>
           </div>
-          <p className="text-yellow-700 font-sans text-sm ml-8">
+          <p className={styles.statusText}>
             Note: Source files (TypeScript/JSON) cannot be modified via API.
             Changes are stored locally in the editor only. To persist changes,
             you'll need to manually update the source files in the codebase.
@@ -486,9 +475,9 @@ export default function ContentEditor() {
       )}
 
       {saveStatus === 'error' && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-          <AlertCircle className="text-red-600" size={20} />
-          <span className="text-red-800 font-sans font-semibold">
+        <div className={`${styles.statusMessage} ${styles['statusMessage--error']}`}>
+          <AlertCircle size={20} />
+          <span className={styles.statusErrorText}>
             Error updating content. Please try again.
           </span>
         </div>
@@ -496,27 +485,27 @@ export default function ContentEditor() {
 
       {/* File Selector & Editor */}
       {loading ? (
-        <div className="flex items-center justify-center py-24">
-          <div className="text-center">
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingContent}>
             <RefreshCw
-              className="animate-spin text-noir-gold mx-auto mb-4"
+              className={`${styles.loadingSpinner} ${styles.loadingSpinner}`}
               size={32}
             />
-            <p className="text-noir-gray-600 font-sans">
+            <p className={styles.loadingText}>
               Loading content files...
             </p>
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-12 gap-6">
+        <div className={styles.editorGrid}>
           {/* File List */}
-          <div className="col-span-3 bg-white rounded-lg shadow-md p-4 border border-noir-gray-200">
-            <h2 className="text-lg font-serif font-semibold text-noir-black mb-4">
+          <div className={styles.fileList}>
+            <h2 className={styles.fileListTitle}>
               Files
             </h2>
-            <div className="space-y-2">
+            <div className={styles.fileListContent}>
               {visibleFiles.length === 0 ? (
-                <div className="text-sm text-noir-gray-500">
+                <div className={styles.emptyMessage}>
                   No files available for this mode yet.
                 </div>
               ) : (
@@ -524,17 +513,13 @@ export default function ContentEditor() {
                   <button
                     key={file.path}
                     onClick={() => handleFileSelect(file.path)}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                      selectedFile === file.path
-                        ? 'bg-noir-gold text-noir-black font-semibold'
-                        : 'bg-noir-gray-50 hover:bg-noir-gray-100 text-noir-gray-700'
-                    }`}
+                    className={`${styles.fileButton} ${selectedFile === file.path ? styles['fileButton--active'] : ''}`}
                   >
-                    <div className="text-sm font-serif">{file.label}</div>
-                    <div className="text-xs text-noir-gray-500 font-mono truncate">
+                    <div className={styles.fileLabel}>{file.label}</div>
+                    <div className={styles.filePath}>
                       {file.path}
                     </div>
-                    <div className="text-[11px] text-noir-gray-400 mt-1">
+                    <div className={styles.fileTime}>
                       {new Date(file.lastModified).toLocaleTimeString()}
                     </div>
                   </button>
@@ -544,18 +529,20 @@ export default function ContentEditor() {
           </div>
 
           {/* Editor */}
-          <div className="col-span-9 bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
+          <div className={styles.editorArea}>
             {selectedFile && selectedFileData ? (
               <>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-serif font-semibold text-noir-black">
-                    {selectedFileData.label}
-                    <span className="block text-sm font-mono text-noir-gray-500 font-normal">
+                <div className={styles.editorHeader}>
+                  <div>
+                    <h2 className={styles.editorTitle}>
+                      {selectedFileData.label}
+                    </h2>
+                    <span className={styles.editorPath}>
                       {selectedFile}
                     </span>
-                  </h2>
+                  </div>
                   {hasChanges && (
-                    <span className="text-sm text-yellow-600 font-sans font-semibold flex items-center gap-2">
+                    <span className={styles.editorWarning}>
                       <AlertCircle size={16} />
                       Unsaved changes
                     </span>
@@ -564,18 +551,18 @@ export default function ContentEditor() {
                 <textarea
                   value={editorText}
                   onChange={(e) => handleContentChange(e.target.value)}
-                  className="w-full h-[600px] px-4 py-3 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-mono text-sm"
+                  className={styles.editorTextarea}
                   spellCheck={false}
                   disabled={!selectedFileData}
                   aria-invalid={Boolean(jsonError)}
                 />
                 {jsonError && (
-                  <p className="mt-2 text-sm text-red-600">{jsonError}</p>
+                  <p className={styles.editorError}>{jsonError}</p>
                 )}
               </>
             ) : (
-              <div className="flex items-center justify-center h-[600px] text-noir-gray-500">
-                <p className="font-sans">Select a file to edit</p>
+              <div className={styles.emptyEditor}>
+                <p className={styles.emptyEditorText}>Select a file to edit</p>
               </div>
             )}
           </div>
@@ -583,38 +570,38 @@ export default function ContentEditor() {
       )}
 
       {/* Info Panel */}
-      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
-        <h3 className="text-lg font-serif font-semibold text-noir-black mb-3 flex items-center gap-2">
-          <ExternalLink size={20} className="text-blue-600" />
+      <div className={styles.infoPanel}>
+        <h3 className={styles.infoTitle}>
+          <ExternalLink size={20} className={styles.infoIcon} />
           How It Works
         </h3>
-        <ul className="space-y-2 text-sm text-noir-gray-700 font-sans">
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+        <ul className={styles.infoList}>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
               Content files are loaded from{' '}
-              <code className="bg-white px-2 py-1 rounded">@noir-crafted</code>{' '}
+              <code className={styles.infoCode}>@noir-crafted</code>{' '}
               and can be edited here
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
               Changes are saved via{' '}
-              <code className="bg-white px-2 py-1 rounded">@jxion-core</code>{' '}
+              <code className={styles.infoCode}>@jxion-core</code>{' '}
               ContentManager API
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
               Live updates automatically sync changes to{' '}
-              <code className="bg-white px-2 py-1 rounded">@noir-crafted</code>{' '}
+              <code className={styles.infoCode}>@noir-crafted</code>{' '}
               demo app
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
               Check the browser console for detailed logs of content loading,
               saving, and live updates

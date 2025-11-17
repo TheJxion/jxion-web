@@ -12,7 +12,7 @@
  * - Styles required
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Layout,
   Search,
@@ -24,9 +24,10 @@ import {
   FileText,
   ChevronRight,
   ChevronDown,
-} from "lucide-react";
-import { loadTemplateSchema, type TemplateSchema } from "@jxion/core";
-import { getComponent } from "@jxion/core";
+} from 'lucide-react';
+import { loadTemplateSchema, type TemplateSchema } from '@jxion/core';
+import { getComponent } from '@jxion/core';
+import styles from './TemplatesEditor.module.scss';
 
 interface TemplateFile {
   id: string;
@@ -38,20 +39,20 @@ export default function TemplatesEditor() {
   const [templates, setTemplates] = useState<TemplateFile[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [expandedSections, setExpandedSections] = useState<Set<number>>(
     new Set()
   );
 
   // Available templates (from schemas directory)
-  const templateIds = ["homepage"]; // Add more as they're created
+  const templateIds = ['homepage']; // Add more as they're created
 
   useEffect(() => {
     loadTemplates();
   }, []);
 
   const loadTemplates = async () => {
-    console.log("[Jxion-Admin] 📂 Loading templates...");
+    console.log('[Jxion-Admin] 📂 Loading templates...');
     setLoading(true);
     try {
       const loadedTemplates: TemplateFile[] = [];
@@ -82,7 +83,7 @@ export default function TemplatesEditor() {
         setSelectedTemplate(loadedTemplates[0].id);
       }
     } catch (error) {
-      console.error("[Jxion-Admin] ❌ Error loading templates:", error);
+      console.error('[Jxion-Admin] ❌ Error loading templates:', error);
     } finally {
       setLoading(false);
     }
@@ -121,7 +122,7 @@ export default function TemplatesEditor() {
     if (!schema) return [];
     const componentIds = new Set<string>();
     schema.sections?.forEach((section) => {
-      const [componentId] = section.component?.split(".") || [];
+      const [componentId] = section.component?.split('.') || [];
       if (componentId) {
         componentIds.add(componentId);
       }
@@ -134,15 +135,15 @@ export default function TemplatesEditor() {
   );
 
   return (
-    <div className="p-6 space-y-6">
+    <div className={styles.page}>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className={styles.header}>
         <div>
-          <h1 className="text-3xl font-serif font-bold text-noir-black mb-2 flex items-center gap-3">
-            <Layout className="text-noir-gold" size={32} />
+          <h1 className={styles.headerContentTitle}>
+            <Layout size={32} />
             Templates Explorer
           </h1>
-          <p className="text-noir-gray-600 font-sans">
+          <p className={styles.headerContentSubtitle}>
             Explore template schemas, sections, component bindings, and required
             translations. Templates are read-only.
           </p>
@@ -150,95 +151,84 @@ export default function TemplatesEditor() {
       </div>
 
       {loading ? (
-        <div className="p-12 text-center">
-          <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-noir-gray-200 rounded w-1/2 mx-auto"></div>
-            <p className="text-noir-gray-600 font-mono text-sm">
-              Loading templates...
-            </p>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingContent}>
+            <div className={styles.loadingSpinner}></div>
+            <p className={styles.loadingText}>Loading templates...</p>
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={styles.templateGrid}>
           {/* Left Sidebar: Template List */}
-          <div className="lg:col-span-1 space-y-4">
-            <div className="bg-white border border-noir-gray-200 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Search size={20} className="text-noir-gray-600" />
-                <input
-                  type="text"
-                  placeholder="Search templates..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-3 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                {filteredTemplates.map((template) => (
-                  <button
-                    key={template.id}
-                    onClick={() => setSelectedTemplate(template.id)}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                      selectedTemplate === template.id
-                        ? "bg-noir-gold text-noir-black font-semibold"
-                        : "bg-noir-gray-50 text-noir-black hover:bg-noir-gray-100"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <FileText size={16} />
-                      <span className="font-sans font-medium">
-                        {template.id}
-                      </span>
+          <div className={styles.templateList}>
+            <div className={styles.searchBox}>
+              <Search size={20} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search templates..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <h2 className={styles.templateListTitle}>Templates</h2>
+            <div className={styles.templateListContent}>
+              {filteredTemplates.map((template) => (
+                <button
+                  key={template.id}
+                  onClick={() => setSelectedTemplate(template.id)}
+                  className={`${styles.templateButton} ${
+                    selectedTemplate === template.id
+                      ? styles['templateButton--active']
+                      : ''
+                  }`}
+                >
+                  <div className={styles.templateButtonContent}>
+                    <FileText size={16} />
+                    <span>{template.id}</span>
+                  </div>
+                  {template.schema && (
+                    <div className={styles.templateButtonMeta}>
+                      {template.schema.sections?.length || 0} sections
                     </div>
-                    {template.schema && (
-                      <div className="text-xs text-noir-gray-600 mt-1 ml-6">
-                        {template.schema.sections?.length || 0} sections
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Right Content: Template Details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className={styles.templateViewer}>
             {selectedTemplateData ? (
               selectedTemplateData.schema ? (
                 <>
                   {/* Template Metadata */}
-                  <div className="bg-white border border-noir-gray-200 rounded-lg p-6">
-                    <h2 className="text-xl font-serif font-bold text-noir-black mb-4">
+                  <div className={styles.card}>
+                    <h2 className={styles.viewerTitle}>
                       Template: {selectedTemplateData.id}
                     </h2>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className={styles.metadataGrid}>
                       <div>
-                        <span className="font-semibold text-noir-gray-700">
-                          Version:
-                        </span>{" "}
-                        {selectedTemplateData.schema.version || "N/A"}
+                        <span className={styles.metadataLabel}>Version:</span>{' '}
+                        {selectedTemplateData.schema.version || 'N/A'}
                       </div>
                       <div>
-                        <span className="font-semibold text-noir-gray-700">
-                          Sections:
-                        </span>{" "}
+                        <span className={styles.metadataLabel}>Sections:</span>{' '}
                         {selectedTemplateData.schema.sections?.length || 0}
                       </div>
                       {selectedTemplateData.schema.metadata && (
                         <>
                           <div>
-                            <span className="font-semibold text-noir-gray-700">
-                              Title:
-                            </span>{" "}
+                            <span className={styles.metadataLabel}>Title:</span>{' '}
                             {selectedTemplateData.schema.metadata.title ||
-                              "N/A"}
+                              'N/A'}
                           </div>
                           <div>
-                            <span className="font-semibold text-noir-gray-700">
+                            <span className={styles.metadataLabel}>
                               Locale:
-                            </span>{" "}
+                            </span>{' '}
                             {selectedTemplateData.schema.metadata.locale ||
-                              "N/A"}
+                              'N/A'}
                           </div>
                         </>
                       )}
@@ -246,88 +236,85 @@ export default function TemplatesEditor() {
                   </div>
 
                   {/* Sections Tree */}
-                  <div className="bg-white border border-noir-gray-200 rounded-lg p-6">
-                    <h2 className="text-xl font-serif font-bold text-noir-black mb-4 flex items-center gap-2">
+                  <div className={styles.card}>
+                    <h2 className={styles.viewerTitle}>
                       <Layers size={20} />
                       Sections
                     </h2>
-                    <div className="space-y-2">
+                    <div className={styles.sectionTree}>
                       {selectedTemplateData.schema.sections?.map(
                         (section, index) => {
                           const [componentId, variant] =
-                            section.component?.split(".") || [];
+                            section.component?.split('.') || [];
                           const isExpanded = expandedSections.has(index);
                           const componentMetadata = componentId
                             ? getComponent(componentId)
                             : null;
 
                           return (
-                            <div
-                              key={index}
-                              className="border border-noir-gray-200 rounded-lg"
-                            >
+                            <div key={index} className={styles.sectionItem}>
                               <button
                                 onClick={() => toggleSection(index)}
-                                className="w-full px-4 py-3 flex items-center justify-between hover:bg-noir-gray-50 transition-colors"
+                                className={styles.sectionHeader}
                               >
-                                <div className="flex items-center gap-3">
+                                <div className={styles.sectionTitle}>
                                   {isExpanded ? (
                                     <ChevronDown size={16} />
                                   ) : (
                                     <ChevronRight size={16} />
                                   )}
-                                  <span className="font-sans font-medium">
+                                  <span>
                                     Section {index + 1}: {section.component}
                                   </span>
                                 </div>
                               </button>
                               {isExpanded && (
-                                <div className="px-4 pb-4 space-y-3 border-t border-noir-gray-200">
+                                <div className={styles.sectionContent}>
                                   <div>
-                                    <span className="text-sm font-semibold text-noir-gray-700">
+                                    <span className={styles.sectionLabel}>
                                       Component:
-                                    </span>{" "}
-                                    <span className="text-sm font-mono">
+                                    </span>{' '}
+                                    <span className={styles.sectionMono}>
                                       {componentId}
                                     </span>
                                     {variant && (
                                       <>
-                                        {" "}
-                                        <span className="text-noir-gray-500">
+                                        {' '}
+                                        <span className={styles.sectionVariant}>
                                           (variant: {variant})
                                         </span>
                                       </>
                                     )}
                                   </div>
                                   {componentMetadata && (
-                                    <div className="text-xs text-noir-gray-600">
+                                    <div className={styles.sectionMeta}>
                                       <div>
                                         Category: {componentMetadata.category}
                                       </div>
                                       <div>
-                                        Frameworks:{" "}
+                                        Frameworks:{' '}
                                         {componentMetadata.frameworks.join(
-                                          ", "
+                                          ', '
                                         )}
                                       </div>
                                     </div>
                                   )}
                                   {section.localeKey && (
                                     <div>
-                                      <span className="text-sm font-semibold text-noir-gray-700 flex items-center gap-2">
+                                      <span className={styles.sectionLabel}>
                                         <Languages size={14} />
                                         Translation Key:
-                                      </span>{" "}
-                                      <span className="text-sm font-mono">
+                                      </span>{' '}
+                                      <span className={styles.sectionMono}>
                                         {section.localeKey}
                                       </span>
                                     </div>
                                   )}
                                   <div>
-                                    <span className="text-sm font-semibold text-noir-gray-700">
+                                    <span className={styles.sectionLabel}>
                                       Props:
                                     </span>
-                                    <pre className="mt-2 p-3 bg-noir-gray-50 rounded text-xs font-mono overflow-x-auto">
+                                    <pre className={styles.sectionProps}>
                                       {JSON.stringify(section.props, null, 2)}
                                     </pre>
                                   </div>
@@ -341,25 +328,22 @@ export default function TemplatesEditor() {
                   </div>
 
                   {/* Translation Keys Required */}
-                  <div className="bg-white border border-noir-gray-200 rounded-lg p-6">
-                    <h2 className="text-xl font-serif font-bold text-noir-black mb-4 flex items-center gap-2">
+                  <div className={styles.card}>
+                    <h2 className={styles.viewerTitle}>
                       <Languages size={20} />
                       Translation Keys Required
                     </h2>
-                    <div className="space-y-2">
+                    <div className={styles.keysList}>
                       {getTranslationKeys(selectedTemplateData.schema).map(
                         (key, index) => (
-                          <div
-                            key={index}
-                            className="px-3 py-2 bg-noir-gray-50 rounded font-mono text-sm"
-                          >
+                          <div key={index} className={styles.keyItem}>
                             {key}
                           </div>
                         )
                       )}
                       {getTranslationKeys(selectedTemplateData.schema)
                         .length === 0 && (
-                        <p className="text-noir-gray-600 text-sm">
+                        <p className={styles.emptyMessage}>
                           No translation keys required
                         </p>
                       )}
@@ -367,26 +351,23 @@ export default function TemplatesEditor() {
                   </div>
 
                   {/* Components Used */}
-                  <div className="bg-white border border-noir-gray-200 rounded-lg p-6">
-                    <h2 className="text-xl font-serif font-bold text-noir-black mb-4 flex items-center gap-2">
+                  <div className={styles.card}>
+                    <h2 className={styles.viewerTitle}>
                       <Link2 size={20} />
                       Components Used
                     </h2>
-                    <div className="space-y-2">
+                    <div className={styles.componentsList}>
                       {getComponentIds(selectedTemplateData.schema).map(
                         (componentId, index) => {
                           const metadata = getComponent(componentId);
                           return (
-                            <div
-                              key={index}
-                              className="px-3 py-2 bg-noir-gray-50 rounded"
-                            >
-                              <div className="font-mono text-sm font-semibold">
+                            <div key={index} className={styles.componentItem}>
+                              <div className={styles.componentName}>
                                 {componentId}
                               </div>
                               {metadata && (
-                                <div className="text-xs text-noir-gray-600 mt-1">
-                                  {metadata.category} • Version{" "}
+                                <div className={styles.componentMeta}>
+                                  {metadata.category} • Version{' '}
                                   {metadata.version}
                                 </div>
                               )}
@@ -398,29 +379,27 @@ export default function TemplatesEditor() {
                   </div>
 
                   {/* Raw JSON */}
-                  <div className="bg-white border border-noir-gray-200 rounded-lg p-6">
-                    <h2 className="text-xl font-serif font-bold text-noir-black mb-4 flex items-center gap-2">
+                  <div className={styles.card}>
+                    <h2 className={styles.viewerTitle}>
                       <Code size={20} />
                       Raw JSON
                     </h2>
-                    <pre className="p-4 bg-noir-gray-50 rounded-lg overflow-x-auto text-xs font-mono">
+                    <pre className={styles.jsonCode}>
                       {JSON.stringify(selectedTemplateData.schema, null, 2)}
                     </pre>
                   </div>
                 </>
               ) : (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                  <h2 className="text-xl font-serif font-bold text-red-800 mb-2">
-                    Template Load Error
-                  </h2>
-                  <p className="text-red-600 font-sans">
-                    {selectedTemplateData.error || "Unknown error"}
+                <div className={styles.errorCard}>
+                  <h2 className={styles.errorTitle}>Template Load Error</h2>
+                  <p className={styles.errorMessage}>
+                    {selectedTemplateData.error || 'Unknown error'}
                   </p>
                 </div>
               )
             ) : (
-              <div className="bg-noir-gray-50 border border-noir-gray-200 rounded-lg p-12 text-center">
-                <p className="text-noir-gray-600 font-sans">
+              <div className={styles.emptyState}>
+                <p className={styles.emptyMessage}>
                   Select a template to view details
                 </p>
               </div>

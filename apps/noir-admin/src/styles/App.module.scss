@@ -1,0 +1,23 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.app {
+  min-height: 100vh;
+  background-color: var(--color-noir-background-primary);
+  display: flex;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    margin-left: 16rem; // 64 * 4 = 256px (sidebar width)
+  }
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+}

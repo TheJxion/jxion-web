@@ -29,6 +29,7 @@ import {
   type TargetFramework,
   type ConversionResult,
 } from '@jxion/core';
+import scssStyles from './ComponentGenerator.module.scss';
 
 interface GeneratedComponent {
   code: string;
@@ -261,15 +262,15 @@ export default Component;`;
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className={scssStyles.page}>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className={scssStyles.header}>
         <div>
-          <h1 className="text-3xl font-serif font-bold text-noir-black mb-2 flex items-center gap-3">
-            <Sparkles className="text-noir-gold" size={32} />
+          <h1 className={scssStyles.headerTitle}>
+            <Sparkles className={scssStyles.headerIcon} size={32} />
             AI Component Generator
           </h1>
-          <p className="text-noir-gray-600 font-sans">
+          <p className={scssStyles.headerSubtitle}>
             Convert components between frameworks or generate new ones with AI
             assistance
           </p>
@@ -278,46 +279,48 @@ export default Component;`;
 
       {/* Success/Error Messages */}
       {success && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-          <CheckCircle2 className="text-green-600" size={20} />
-          <span className="text-green-800 font-sans font-semibold">
+        <div className={`${scssStyles.statusMessage} ${scssStyles['statusMessage--success']}`}>
+          <CheckCircle2 size={20} />
+          <span className={`${scssStyles.statusText} ${scssStyles['statusText--success']}`}>
             {success}
           </span>
         </div>
       )}
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-          <AlertCircle className="text-red-600" size={20} />
-          <span className="text-red-800 font-sans font-semibold">{error}</span>
+        <div className={`${scssStyles.statusMessage} ${scssStyles['statusMessage--error']}`}>
+          <AlertCircle size={20} />
+          <span className={`${scssStyles.statusText} ${scssStyles['statusText--error']}`}>
+            {error}
+          </span>
         </div>
       )}
 
       {/* AI Generation Section */}
-      <div className="bg-gradient-to-br from-purple-50 to-blue-100 rounded-lg p-6 border border-purple-200">
-        <h2 className="text-xl font-serif font-semibold text-noir-black mb-4 flex items-center gap-2">
-          <Zap className="text-purple-600" size={24} />
+      <div className={scssStyles.aiPanel}>
+        <h2 className={scssStyles.aiTitle}>
+          <Zap className={scssStyles.aiIcon} size={24} />
           AI-Assisted Generation
         </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-sans font-semibold text-noir-gray-700 mb-2">
+        <div className={scssStyles.aiForm}>
+          <div className={scssStyles.formGroup}>
+            <label className={scssStyles.formLabel}>
               Describe your component
             </label>
             <textarea
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g., A hero section with title, subtitle, description, and a call-to-action button"
-              className="w-full h-24 px-4 py-3 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans text-sm"
+              className={scssStyles.aiTextarea}
             />
           </div>
-          <div className="flex gap-4">
+          <div className={scssStyles.actionButtons}>
             <select
               value={sourceFramework}
               onChange={(e) =>
                 setSourceFramework(e.target.value as SourceFramework)
               }
-              className="px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold font-sans"
+              className={scssStyles.formSelect}
             >
               <option value="react">React</option>
               <option value="svelte">Svelte</option>
@@ -328,16 +331,16 @@ export default Component;`;
               value={componentName}
               onChange={(e) => setComponentName(e.target.value)}
               placeholder="Component Name"
-              className="px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold font-sans"
+              className={scssStyles.formInput}
             />
             <button
               onClick={handleAIGenerate}
               disabled={aiGenerating || !aiPrompt.trim()}
-              className="flex items-center gap-2 px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-sans font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className={scssStyles.aiButton}
             >
               {aiGenerating ? (
                 <>
-                  <RefreshCw size={18} className="animate-spin" />
+                  <RefreshCw size={18} className={scssStyles.loadingSpinner} />
                   Generating...
                 </>
               ) : (
@@ -352,155 +355,154 @@ export default Component;`;
       </div>
 
       {/* Conversion Section */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className={scssStyles.generatorGrid}>
         {/* Source Code Editor */}
-        <div className="col-span-6 bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-serif font-semibold text-noir-black flex items-center gap-2">
-              <FileCode size={20} />
-              Source Code
-            </h2>
-            <select
-              value={sourceFramework}
-              onChange={(e) =>
-                setSourceFramework(e.target.value as SourceFramework)
-              }
-              className="px-3 py-1 border border-noir-gray-300 rounded-lg text-sm font-sans"
-            >
-              <option value="react">React</option>
-              <option value="svelte">Svelte</option>
-              <option value="vue">Vue</option>
-            </select>
-          </div>
-          <textarea
-            value={sourceCode}
-            onChange={(e) => setSourceCode(e.target.value)}
-            className="w-full h-[600px] px-4 py-3 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-mono text-sm"
-            spellCheck={false}
-          />
-          <div className="mt-4 flex gap-2">
-            <button
-              onClick={handleConvert}
-              disabled={loading || !sourceCode.trim()}
-              className="flex items-center gap-2 px-4 py-2 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-colors disabled:opacity-50"
-            >
-              {loading ? (
-                <>
-                  <RefreshCw size={18} className="animate-spin" />
-                  Converting...
-                </>
-              ) : (
-                <>
-                  <Code size={18} />
-                  Convert
-                </>
-              )}
-            </button>
-            <select
-              value={targetFramework}
-              onChange={(e) =>
-                setTargetFramework(e.target.value as TargetFramework)
-              }
-              className="px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold font-sans"
-            >
-              <option value="svelte">Svelte</option>
-              <option value="vue">Vue</option>
-              <option value="react">React</option>
-              <option value="solidjs">SolidJS</option>
-            </select>
+        <div className={scssStyles.inputPanel}>
+          <div className={scssStyles.card}>
+            <div className={scssStyles.cardHeader}>
+              <h2 className={scssStyles.cardTitle}>
+                <FileCode size={20} />
+                Source Code
+              </h2>
+              <select
+                value={sourceFramework}
+                onChange={(e) =>
+                  setSourceFramework(e.target.value as SourceFramework)
+                }
+                className={scssStyles.formSelect}
+              >
+                <option value="react">React</option>
+                <option value="svelte">Svelte</option>
+                <option value="vue">Vue</option>
+              </select>
+            </div>
+            <textarea
+              value={sourceCode}
+              onChange={(e) => setSourceCode(e.target.value)}
+              className={scssStyles.formTextarea}
+              spellCheck={false}
+            />
+            <div className={scssStyles.actionButtons}>
+              <button
+                onClick={handleConvert}
+                disabled={loading || !sourceCode.trim()}
+                className={`${scssStyles.button} ${scssStyles['button--primary']}`}
+              >
+                {loading ? (
+                  <>
+                    <RefreshCw size={18} className={scssStyles.loadingSpinner} />
+                    Converting...
+                  </>
+                ) : (
+                  <>
+                    <Code size={18} />
+                    Convert
+                  </>
+                )}
+              </button>
+              <select
+                value={targetFramework}
+                onChange={(e) =>
+                  setTargetFramework(e.target.value as TargetFramework)
+                }
+                className={scssStyles.formSelect}
+              >
+                <option value="svelte">Svelte</option>
+                <option value="vue">Vue</option>
+                <option value="react">React</option>
+                <option value="solidjs">SolidJS</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Generated Components */}
-        <div className="col-span-6 bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <h2 className="text-xl font-serif font-semibold text-noir-black mb-4 flex items-center gap-2">
-            <Code size={20} />
-            Generated Components
-          </h2>
-          {generatedComponents.length === 0 ? (
-            <div className="flex items-center justify-center h-[600px] text-noir-gray-500">
-              <p className="font-sans">No components generated yet</p>
-            </div>
-          ) : (
-            <div className="space-y-4 max-h-[600px] overflow-y-auto">
-              {generatedComponents.map((comp, idx) => (
-                <div
-                  key={idx}
-                  className="border border-noir-gray-200 rounded-lg p-4"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <span className="text-sm font-sans font-semibold text-noir-black">
-                        {comp.metadata.componentName}
-                      </span>
-                      <span className="ml-2 text-xs text-noir-gray-500">
-                        ({comp.framework})
-                      </span>
+        <div className={scssStyles.outputPanel}>
+          <div className={scssStyles.card}>
+            <h2 className={scssStyles.cardTitle}>
+              <Code size={20} />
+              Generated Components
+            </h2>
+            {generatedComponents.length === 0 ? (
+              <div className={scssStyles.emptyState}>
+                <p className={scssStyles.emptyMessage}>No components generated yet</p>
+              </div>
+            ) : (
+              <div className={scssStyles.generatedList}>
+                {generatedComponents.map((comp, idx) => (
+                  <div key={idx} className={scssStyles.generatedItem}>
+                    <div className={scssStyles.itemHeader}>
+                      <div className={scssStyles.itemTitle}>
+                        <span>{comp.metadata.componentName}</span>
+                        <span className={scssStyles.itemFramework}>
+                          ({comp.framework})
+                        </span>
+                      </div>
+                      <div className={scssStyles.itemActions}>
+                        <button
+                          onClick={() => handleCopy(comp.code)}
+                          className={scssStyles.iconButton}
+                          title="Copy"
+                        >
+                          <Copy size={16} />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDownload(
+                              comp.code,
+                              comp.framework,
+                              comp.metadata.componentName
+                            )
+                          }
+                          className={scssStyles.iconButton}
+                          title="Download"
+                        >
+                          <Download size={16} />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleCopy(comp.code)}
-                        className="p-1 hover:bg-noir-gray-100 rounded"
-                        title="Copy"
-                      >
-                        <Copy size={16} />
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDownload(
-                            comp.code,
-                            comp.framework,
-                            comp.metadata.componentName
-                          )
-                        }
-                        className="p-1 hover:bg-noir-gray-100 rounded"
-                        title="Download"
-                      >
-                        <Download size={16} />
-                      </button>
-                    </div>
+                    <pre className={scssStyles.itemCode}>
+                      {comp.code.substring(0, 500)}
+                      {comp.code.length > 500 && '...'}
+                    </pre>
                   </div>
-                  <pre className="text-xs font-mono bg-noir-gray-50 p-2 rounded overflow-x-auto max-h-48">
-                    {comp.code.substring(0, 500)}
-                    {comp.code.length > 500 && '...'}
-                  </pre>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Info Panel */}
-      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
-        <h3 className="text-lg font-serif font-semibold text-noir-black mb-3 flex items-center gap-2">
-          <Code size={20} className="text-blue-600" />
+      <div className={scssStyles.infoPanel}>
+        <h3 className={scssStyles.infoTitle}>
+          <Code size={20} className={scssStyles.infoIcon} />
           How It Works
         </h3>
-        <ul className="space-y-2 text-sm text-noir-gray-700 font-sans">
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+        <ul className={scssStyles.infoList}>
+          <li className={scssStyles.infoItem}>
+            <span className={scssStyles.infoBullet}>•</span>
             <span>
               <strong>AI Generation:</strong> Describe your component and let AI
               generate the code
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={scssStyles.infoItem}>
+            <span className={scssStyles.infoBullet}>•</span>
             <span>
               <strong>Framework Conversion:</strong> Convert React components to
               Svelte, Vue, or other frameworks
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={scssStyles.infoItem}>
+            <span className={scssStyles.infoBullet}>•</span>
             <span>
               <strong>Component Registry:</strong> Generated components are
               compatible with the Jxion component registry
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={scssStyles.infoItem}>
+            <span className={scssStyles.infoBullet}>•</span>
             <span>
               <strong>Export & Use:</strong> Download or copy generated code to
               use in your project

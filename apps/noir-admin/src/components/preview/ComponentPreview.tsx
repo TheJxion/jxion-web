@@ -11,6 +11,7 @@ import React, { useMemo, useEffect, useRef } from "react";
 import { getComponent } from "@jxion/core";
 import type { ComponentMetadata } from "@jxion/core";
 import { PreviewErrorBoundary } from "./ErrorBoundary";
+import styles from "./ComponentPreview.module.scss";
 
 // Import all available components from @jxion/design
 import {
@@ -175,11 +176,11 @@ export function ComponentPreview({
   // If component not found, show error
   if (!Component) {
     return (
-      <div className="p-8 text-center text-noir-gray-600">
-        <p className="font-sans">
+      <div className={styles.preview}>
+        <p className={styles.previewText}>
           Component &quot;{componentId}&quot; not found in preview registry.
         </p>
-        <p className="text-sm mt-2 font-mono">
+        <p className={styles.previewCode}>
           Available: {Object.keys(COMPONENT_MAP).join(", ")}
         </p>
       </div>

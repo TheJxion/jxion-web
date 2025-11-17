@@ -1,0 +1,86 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    display: none;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  inset-y: 0;
+  left: 0;
+  z-index: 50;
+  width: 16rem; // 64 * 4 = 256px
+  background-color: var(--color-noir-black);
+  color: var(--color-noir-text);
+  transform: translateX(-100%);
+  transition: transform tokens.$transition-normal;
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    position: fixed;
+    transform: translateX(0);
+  }
+
+  &--open {
+    transform: translateX(0);
+  }
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (min-width: tokens.$breakpoint-lg) {
+    height: 100vh;
+  }
+}
+
+.logo {
+  padding: tokens.$spacing-lg;
+  border-bottom: 1px solid var(--color-noir-border);
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-secondary);
+}
+
+.nav {
+  flex: 1;
+  padding: tokens.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  text-decoration: none;
+  transition: all tokens.$transition-normal;
+  font-family: var(--font-family-sans);
+  color: var(--color-noir-text-muted);
+
+  &:hover {
+    background-color: var(--color-noir-background-secondary);
+    color: var(--color-noir-text);
+  }
+
+  &--active {
+    background-color: var(--color-noir-secondary);
+    color: var(--color-noir-black);
+    font-weight: tokens.$font-weight-semibold;
+  }
+}

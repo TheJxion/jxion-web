@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Eye, X } from "lucide-react";
-import { orders as initialOrders, Order } from "../data";
-import { formatCurrency, formatDate } from "../utils/format";
-import { content } from "../lib/content";
+import { useState } from 'react';
+import { Eye, X } from 'lucide-react';
+import { orders as initialOrders, Order } from '../data';
+import { formatCurrency, formatDate } from '../utils/format';
+import { content } from '../lib/content';
+import styles from './Orders.module.scss';
 
 export default function Orders() {
   const [orders, setOrders] = useState<Order[]>(initialOrders);
@@ -19,92 +20,91 @@ export default function Orders() {
   const handleMarkAsDelivered = (orderId: number) => {
     setOrders(
       orders.map((o) =>
-        o.id === orderId ? { ...o, status: "Delivered" as const } : o
+        o.id === orderId ? { ...o, status: 'Delivered' as const } : o
       )
     );
     if (selectedOrder?.id === orderId) {
-      setSelectedOrder({ ...selectedOrder, status: "Delivered" as const });
+      setSelectedOrder({ ...selectedOrder, status: 'Delivered' as const });
     }
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-serif font-bold text-noir-black mb-2">
-          {content.orders.title}
-        </h1>
-        <p className="text-noir-gray-600 font-sans">
-          {content.orders.subtitle}
-        </p>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.headerTitle}>{content.orders.title}</h1>
+        <p className={styles.headerSubtitle}>{content.orders.subtitle}</p>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow-md border border-noir-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-noir-gray-50">
+      <div className={styles.tableContainer}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead className={styles.tableHeader}>
               <tr>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Order ID
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Customer Name
-                </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Order ID</th>
+                <th className={styles.tableHeaderCell}>Customer Name</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Product Count
                 </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Total
                 </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Payment Status
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Date
-                </th>
-                <th className="text-center py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Payment Status</th>
+                <th className={styles.tableHeaderCell}>Date</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--center']}`}
+                >
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr
-                  key={order.id}
-                  className="border-b border-noir-gray-100 hover:bg-noir-gray-50 transition-colors"
-                >
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black">
+                <tr key={order.id} className={styles.tableRow}>
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--bold']}`}
+                  >
                     #{order.id}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-black">
-                    {order.customer}
-                  </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-black text-right">
+                  <td className={styles.tableCell}>{order.customer}</td>
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']}`}
+                  >
                     {order.items}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black text-right">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']} ${styles['tableCell--bold']}`}
+                  >
                     {formatCurrency(order.total)}
                   </td>
-                  <td className="py-4 px-6">
+                  <td className={styles.tableCell}>
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-sans font-medium ${
-                        order.status === "Paid"
-                          ? "bg-green-100 text-green-700"
-                          : order.status === "Delivered"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-yellow-100 text-yellow-700"
+                      className={`${styles.statusBadge} ${
+                        order.status === 'Paid'
+                          ? styles['statusBadge--paid']
+                          : order.status === 'Delivered'
+                          ? styles['statusBadge--delivered']
+                          : styles['statusBadge--pending']
                       }`}
                     >
                       {order.status}
                     </span>
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-gray-600">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--muted']}`}
+                  >
                     {order.date}
                   </td>
-                  <td className="py-4 px-6 text-center">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--center']}`}
+                  >
                     <button
                       onClick={() => handleViewDetails(order)}
-                      className="p-2 text-noir-gray-600 hover:text-noir-gold hover:bg-noir-gold/10 rounded-lg transition-all duration-200"
+                      className={styles.actionButton}
                       aria-label="View order details"
                     >
                       <Eye size={18} />
@@ -119,49 +119,41 @@ export default function Orders() {
 
       {/* Order Detail Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-noir-gray-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-2xl font-serif font-bold text-noir-black">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>
                 Order #{selectedOrder.id} Details
               </h2>
               <button
                 onClick={handleCloseModal}
-                className="p-2 text-noir-gray-400 hover:text-noir-black transition-colors"
+                className={styles.modalCloseButton}
                 aria-label="Close modal"
               >
                 <X size={24} />
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className={styles.modalContent}>
               {/* Customer Info */}
               <div>
-                <h3 className="text-lg font-serif font-semibold text-noir-black mb-4">
-                  Customer Information
-                </h3>
-                <div className="bg-noir-gray-50 rounded-lg p-4 space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Name:
-                    </span>
-                    <span className="font-sans text-sm font-semibold text-noir-black">
+                <h3 className={styles.sectionTitle}>Customer Information</h3>
+                <div className={styles.infoCard}>
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Name:</span>
+                    <span className={styles.infoRowValue}>
                       {selectedOrder.customer}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Email:
-                    </span>
-                    <span className="font-sans text-sm text-noir-black">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Email:</span>
+                    <span className={styles.infoRowValue}>
                       {selectedOrder.customerEmail}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Date:
-                    </span>
-                    <span className="font-sans text-sm text-noir-black">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Date:</span>
+                    <span className={styles.infoRowValue}>
                       {formatDate(selectedOrder.date)}
                     </span>
                   </div>
@@ -170,24 +162,17 @@ export default function Orders() {
 
               {/* Products List */}
               <div>
-                <h3 className="text-lg font-serif font-semibold text-noir-black mb-4">
-                  Products
-                </h3>
-                <div className="space-y-3">
+                <h3 className={styles.sectionTitle}>Products</h3>
+                <div className={styles.productList}>
                   {selectedOrder.products.map((product, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-4 bg-noir-gray-50 rounded-lg"
-                    >
+                    <div key={index} className={styles.productItem}>
                       <div>
-                        <p className="font-sans text-sm font-semibold text-noir-black">
-                          {product.name}
-                        </p>
-                        <p className="font-sans text-xs text-noir-gray-600">
+                        <p className={styles.productInfoName}>{product.name}</p>
+                        <p className={styles.productInfoMeta}>
                           Quantity: {product.quantity}
                         </p>
                       </div>
-                      <p className="font-sans text-sm font-semibold text-noir-black">
+                      <p className={styles.productPrice}>
                         {formatCurrency(product.price * product.quantity)}
                       </p>
                     </div>
@@ -196,53 +181,45 @@ export default function Orders() {
               </div>
 
               {/* Order Summary */}
-              <div className="border-t border-noir-gray-200 pt-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="font-sans text-base text-noir-gray-700">
-                      Subtotal:
-                    </span>
-                    <span className="font-sans text-base text-noir-black">
-                      {formatCurrency(selectedOrder.total)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="font-sans text-base text-noir-gray-700">
-                      Status:
-                    </span>
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-sans font-medium ${
-                        selectedOrder.status === "Paid"
-                          ? "bg-green-100 text-green-700"
-                          : selectedOrder.status === "Delivered"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {selectedOrder.status}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center pt-2 border-t border-noir-gray-200">
-                    <span className="font-sans text-lg font-bold text-noir-black">
-                      Total:
-                    </span>
-                    <span className="font-serif text-xl font-bold text-noir-black">
-                      {formatCurrency(selectedOrder.total)}
-                    </span>
-                  </div>
+              <div className={styles.summary}>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryRowLabel}>Subtotal:</span>
+                  <span className={styles.summaryRowValue}>
+                    {formatCurrency(selectedOrder.total)}
+                  </span>
+                </div>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryRowLabel}>Status:</span>
+                  <span
+                    className={`${styles.statusBadge} ${
+                      selectedOrder.status === 'Paid'
+                        ? styles['statusBadge--paid']
+                        : selectedOrder.status === 'Delivered'
+                        ? styles['statusBadge--delivered']
+                        : styles['statusBadge--pending']
+                    }`}
+                  >
+                    {selectedOrder.status}
+                  </span>
+                </div>
+                <div
+                  className={`${styles.summaryRow} ${styles['summaryRow--total']}`}
+                >
+                  <span className={styles.summaryRowLabel}>Total:</span>
+                  <span className={styles.summaryRowValue}>
+                    {formatCurrency(selectedOrder.total)}
+                  </span>
                 </div>
               </div>
 
               {/* Actions */}
-              {selectedOrder.status !== "Delivered" && (
-                <div className="pt-4">
-                  <button
-                    onClick={() => handleMarkAsDelivered(selectedOrder.id)}
-                    className="w-full px-6 py-3 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all duration-200 shadow-lg shadow-noir-gold/30"
-                  >
-                    Teslim Edildi
-                  </button>
-                </div>
+              {selectedOrder.status !== 'Delivered' && (
+                <button
+                  onClick={() => handleMarkAsDelivered(selectedOrder.id)}
+                  className={styles.actionButtonFull}
+                >
+                  Teslim Edildi
+                </button>
               )}
             </div>
           </div>

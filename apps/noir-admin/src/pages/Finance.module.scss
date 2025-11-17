@@ -1,0 +1,220 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.page {
+  padding: tokens.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  @media (max-width: tokens.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: tokens.$spacing-md;
+  }
+}
+
+.headerContent {
+  &Title {
+    font-size: tokens.$font-size-display-3;
+    font-family: var(--font-family-serif);
+    font-weight: tokens.$font-weight-bold;
+    color: var(--color-noir-black);
+    margin-bottom: tokens.$spacing-sm;
+  }
+  
+  &Subtitle {
+    color: var(--color-noir-text-muted);
+    font-family: var(--font-family-sans);
+  }
+}
+
+.viewToggle {
+  display: flex;
+  gap: tokens.$spacing-sm;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-xs;
+}
+
+.toggleButton {
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-normal;
+  border: none;
+  background-color: transparent;
+  color: var(--color-noir-text-muted);
+  cursor: pointer;
+  
+  &--active {
+    background-color: var(--color-noir-secondary);
+    color: var(--color-noir-black);
+    box-shadow: tokens.$shadow-md;
+  }
+  
+  &:hover:not(&--active) {
+    color: var(--color-noir-black);
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: tokens.$spacing-lg;
+  
+  @media (min-width: tokens.$breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  font-family: var(--font-family-sans);
+  color: var(--color-noir-text-muted);
+  margin-bottom: tokens.$spacing-sm;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-black);
+  
+  &--positive {
+    color: #16a34a;
+  }
+  
+  &--negative {
+    color: #ef4444;
+  }
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: tokens.$spacing-lg;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chartCard {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+}
+
+.chartTitle {
+  font-size: 1.25rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 300px;
+}
+
+.tableCard {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+}
+
+.tableTitle {
+  font-size: 1.25rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  border-bottom: 1px solid var(--color-noir-border);
+}
+
+.tableHeaderCell {
+  text-align: left;
+  padding: tokens.$spacing-md tokens.$spacing-md;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-text-muted);
+  
+  &--right {
+    text-align: right;
+  }
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--color-noir-border);
+  transition: background-color tokens.$transition-fast;
+  
+  &:hover {
+    background-color: var(--color-noir-background-secondary);
+  }
+}
+
+.tableCell {
+  padding: tokens.$spacing-md tokens.$spacing-md;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: var(--color-noir-black);
+  
+  &--right {
+    text-align: right;
+  }
+  
+  &--muted {
+    color: var(--color-noir-text-muted);
+  }
+  
+  &--bold {
+    font-weight: tokens.$font-weight-semibold;
+  }
+  
+  &--positive {
+    color: #16a34a;
+  }
+  
+  &--negative {
+    color: #ef4444;
+  }
+}
+

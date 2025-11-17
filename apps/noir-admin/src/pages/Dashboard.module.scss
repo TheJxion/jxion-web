@@ -1,0 +1,201 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.dashboard {
+  padding: tokens.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.header {
+  &Title {
+    font-size: tokens.$font-size-display-3;
+    font-family: var(--font-family-serif);
+    font-weight: tokens.$font-weight-bold;
+    color: var(--color-noir-black);
+    margin-bottom: tokens.$spacing-sm;
+  }
+  
+  &Subtitle {
+    color: var(--color-noir-text-muted);
+    font-family: var(--font-family-sans);
+  }
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: tokens.$spacing-lg;
+  
+  @media (min-width: tokens.$breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.kpiCard {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+}
+
+.kpiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: tokens.$spacing-md;
+}
+
+.kpiIcon {
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  
+  &--gold {
+    background-color: rgba(255, 215, 0, 0.1);
+    color: var(--color-noir-secondary);
+  }
+  
+  &--blue {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+  }
+  
+  &--green {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+  }
+  
+  &--red {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+}
+
+.kpiTitle {
+  font-size: 0.875rem;
+  font-family: var(--font-family-sans);
+  color: var(--color-noir-text-muted);
+  margin-bottom: tokens.$spacing-xs;
+}
+
+.kpiValue {
+  font-size: 1.5rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-black);
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: tokens.$spacing-lg;
+  
+  @media (min-width: tokens.$breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  border-bottom: 1px solid var(--color-noir-border);
+}
+
+.tableHeaderCell {
+  text-align: left;
+  padding: tokens.$spacing-md tokens.$spacing-sm;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-text-muted);
+  
+  &--right {
+    text-align: right;
+  }
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--color-noir-border);
+  transition: background-color tokens.$transition-fast;
+  
+  &:hover {
+    background-color: var(--color-noir-background-secondary);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.tableCell {
+  padding: tokens.$spacing-md tokens.$spacing-sm;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: var(--color-noir-black);
+  
+  &--right {
+    text-align: right;
+  }
+  
+  &--muted {
+    color: var(--color-noir-text-muted);
+  }
+  
+  &--bold {
+    font-weight: tokens.$font-weight-semibold;
+  }
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: tokens.$spacing-xs tokens.$spacing-md;
+  border-radius: tokens.$radius-full;
+  font-size: 0.75rem;
+  font-family: var(--font-family-sans);
+  font-weight: tokens.$font-weight-medium;
+  
+  &--paid {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+  
+  &--delivered {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+  }
+  
+  &--pending {
+    background-color: rgba(234, 179, 8, 0.1);
+    color: #ca8a04;
+  }
+}
+
+.chartContainer {
+  width: 100%;
+  height: 300px;
+}
+

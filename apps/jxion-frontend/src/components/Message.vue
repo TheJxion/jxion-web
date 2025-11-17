@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ChatMessage } from "api-server/router/app";
+import { ChatMessage } from "../types";
 
 defineProps<{ chatMessage: ChatMessage }>();
 </script>

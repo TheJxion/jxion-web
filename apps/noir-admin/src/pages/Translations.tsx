@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Languages,
   Save,
@@ -6,27 +6,28 @@ import {
   ExternalLink,
   CheckCircle2,
   AlertCircle,
-} from "lucide-react";
-import { getTranslations, updateTranslations, type Locale } from "@jxion/i18n";
-import { useSSE } from "../hooks/useSSE";
+} from 'lucide-react';
+import { getTranslations, updateTranslations, type Locale } from '@jxion/i18n';
+import { useSSE } from '../hooks/useSSE';
+import styles from './Translations.module.scss';
 
 interface TranslationData {
   [key: string]: string | TranslationData;
 }
 
 export default function Translations() {
-  const [currentLocale, setCurrentLocale] = useState<Locale>("tr-TR");
+  const [currentLocale, setCurrentLocale] = useState<Locale>('tr-TR');
   const [translations, setTranslations] = useState<TranslationData>({});
   const [editedTranslations, setEditedTranslations] = useState<TranslationData>(
     {}
   );
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">(
-    "idle"
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>(
+    'idle'
   );
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(
-    new Set(["hero", "demo"])
+    new Set(['hero', 'demo'])
   );
 
   // Load translations on mount and locale change
@@ -38,7 +39,9 @@ export default function Translations() {
   useSSE({
     onTranslationUpdate: async (key: string, locale: string) => {
       if (locale === currentLocale) {
-        console.log(`[Jxion-Admin] 🔄 Translation updated via SSE: ${key}, reloading...`);
+        console.log(
+          `[Jxion-Admin] 🔄 Translation updated via SSE: ${key}, reloading...`
+        );
         await loadTranslations();
       }
     },
@@ -46,12 +49,12 @@ export default function Translations() {
   });
 
   // Helper function to flatten nested object to get all keys
-  const getAllKeys = (obj: any, prefix: string = ""): string[] => {
+  const getAllKeys = (obj: any, prefix: string = ''): string[] => {
     const keys: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
       const fullKey = prefix ? `${prefix}.${key}` : key;
       if (
-        typeof value === "object" &&
+        typeof value === 'object' &&
         value !== null &&
         !Array.isArray(value)
       ) {
@@ -67,10 +70,10 @@ export default function Translations() {
   const loadFullDictionary = async (): Promise<Record<string, any>> => {
     try {
       // getDictionary is exported from @jxion/i18n main package
-      const { getDictionary } = await import("@jxion/i18n");
+      const { getDictionary } = await import('@jxion/i18n');
       return (await getDictionary(currentLocale)) as Record<string, any>;
     } catch (error) {
-      console.error("❌ [ADMIN] Error loading dictionary:", error);
+      console.error('❌ [ADMIN] Error loading dictionary:', error);
       return {};
     }
   };
@@ -87,14 +90,14 @@ export default function Translations() {
 
       // Load translations using getTranslations (which handles backend fallback)
       const loadedTranslations = await getTranslations(allKeys, currentLocale);
-      console.log("✅ [ADMIN] Translations loaded:", loadedTranslations);
+      console.log('✅ [ADMIN] Translations loaded:', loadedTranslations);
 
       // Convert flat keys to nested structure for editing
       // Filter out non-string values (arrays, objects) - they can't be edited as simple translations
       const nested: TranslationData = {};
       for (const [key, value] of Object.entries(loadedTranslations)) {
         // Skip if value is not a string (arrays/objects need special handling)
-        if (typeof value !== "string") {
+        if (typeof value !== 'string') {
           continue;
         }
 
@@ -103,7 +106,7 @@ export default function Translations() {
           continue;
         }
 
-        const parts = key.split(".");
+        const parts = key.split('.');
         let current = nested;
         for (let i = 0; i < parts.length - 1; i++) {
           if (!current[parts[i]]) {
@@ -118,13 +121,13 @@ export default function Translations() {
       setEditedTranslations(JSON.parse(JSON.stringify(nested))); // Deep copy
       setLoading(false);
     } catch (error) {
-      console.error("❌ [ADMIN] Error loading translations:", error);
+      console.error('❌ [ADMIN] Error loading translations:', error);
       setLoading(false);
     }
   };
 
   const handleTranslationChange = (path: string[], value: string) => {
-    console.log(`✏️ [ADMIN] Editing translation: ${path.join(".")} = ${value}`);
+    console.log(`✏️ [ADMIN] Editing translation: ${path.join('.')} = ${value}`);
     const newEdited = JSON.parse(JSON.stringify(editedTranslations));
     let current = newEdited;
     for (let i = 0; i < path.length - 1; i++) {
@@ -135,9 +138,9 @@ export default function Translations() {
   };
 
   const handleSave = async () => {
-    console.log("💾 [ADMIN] Saving translations via backend API...");
+    console.log('💾 [ADMIN] Saving translations via backend API...');
     setSaving(true);
-    setSaveStatus("idle");
+    setSaveStatus('idle');
 
     try {
       // Convert nested structure back to flat array for backend
@@ -154,7 +157,7 @@ export default function Translations() {
       const flatten = (
         edited: TranslationData,
         original: TranslationData,
-        prefix: string = ""
+        prefix: string = ''
       ) => {
         for (const [key, editedValue] of Object.entries(edited)) {
           const fullKey = prefix ? `${prefix}.${key}` : key;
@@ -164,7 +167,7 @@ export default function Translations() {
             continue; // Skip arrays - they need special handling
           }
 
-          if (typeof editedValue === "string") {
+          if (typeof editedValue === 'string') {
             // Get original value (must also be a string)
             // When recursing, 'original' is already the nested object, so we need to get the value from it
             // But we're comparing against the full path, so we need to get from the root
@@ -172,14 +175,14 @@ export default function Translations() {
             // So we should get the value directly from 'original' using just the current key
             // But wait - we need the full path for comparison. Let me think...
             // Actually, 'original' at the recursive level IS the nested object, so we should get from root
-            const pathParts = fullKey.split(".");
+            const pathParts = fullKey.split('.');
             const originalValue = getNestedValueByPath(
               rootTranslations, // Always use root translations for comparison
               pathParts
             );
 
             // Debug logging for troubleshooting
-            if (fullKey.includes("hero.title")) {
+            if (fullKey.includes('hero.title')) {
               console.log(`[ADMIN] 🔍 Comparing ${fullKey}:`, {
                 originalValue,
                 editedValue,
@@ -195,12 +198,12 @@ export default function Translations() {
             // 4. Value is not empty
             const isModified =
               originalValue !== undefined &&
-              typeof originalValue === "string" &&
+              typeof originalValue === 'string' &&
               originalValue !== editedValue;
             const isPlaceholder = editedValue === fullKey;
-            const isEmpty = editedValue.trim() === "";
+            const isEmpty = editedValue.trim() === '';
 
-            if (fullKey.includes("hero.title")) {
+            if (fullKey.includes('hero.title')) {
               console.log(`[ADMIN] 🔍 Decision for ${fullKey}:`, {
                 isModified,
                 isPlaceholder,
@@ -216,11 +219,11 @@ export default function Translations() {
                 value: editedValue,
               });
             }
-          } else if (typeof editedValue === "object" && editedValue !== null) {
+          } else if (typeof editedValue === 'object' && editedValue !== null) {
             // Recursively check nested objects (but skip arrays)
             const originalNested = getNestedObject(
               original,
-              fullKey.split(".")
+              fullKey.split('.')
             );
             // Always recurse, even if originalNested is undefined
             // (this handles cases where new keys were added in edited)
@@ -230,16 +233,16 @@ export default function Translations() {
       };
 
       // Debug: Log the structure before flattening
-      console.log("[ADMIN] 🔍 Before flattening:", {
+      console.log('[ADMIN] 🔍 Before flattening:', {
         editedKeys: Object.keys(editedTranslations),
         originalKeys: Object.keys(translations),
         editedHomeHero:
-          typeof editedTranslations.home === "object" &&
+          typeof editedTranslations.home === 'object' &&
           editedTranslations.home !== null
             ? (editedTranslations.home as TranslationData).hero
             : undefined,
         originalHomeHero:
-          typeof translations.home === "object" && translations.home !== null
+          typeof translations.home === 'object' && translations.home !== null
             ? (translations.home as TranslationData).hero
             : undefined,
       });
@@ -247,12 +250,16 @@ export default function Translations() {
       flatten(editedTranslations, translations);
 
       console.log(
-        `[ADMIN] Sending ${flatTranslations.length} modified translations to backend (out of ${getAllKeys(editedTranslations).length} total)...`
+        `[ADMIN] Sending ${
+          flatTranslations.length
+        } modified translations to backend (out of ${
+          getAllKeys(editedTranslations).length
+        } total)...`
       );
 
       // Log the actual translations being sent (first 5 for debugging)
       if (flatTranslations.length > 0) {
-        console.log("[ADMIN] 📤 Translations being sent:");
+        console.log('[ADMIN] 📤 Translations being sent:');
         flatTranslations.slice(0, 5).forEach((trans, i) => {
           console.log(`[ADMIN]   ${i + 1}. ${trans.key} = "${trans.value}"`);
         });
@@ -262,15 +269,15 @@ export default function Translations() {
       }
 
       if (flatTranslations.length === 0) {
-        console.warn("[ADMIN] ⚠️ No modified translations to save");
-        setSaveStatus("idle");
+        console.warn('[ADMIN] ⚠️ No modified translations to save');
+        setSaveStatus('idle');
         setSaving(false);
         return;
       }
 
       // Phase 1: Persist via backend API
       console.log(
-        "[ADMIN] 📡 Calling updateTranslations with:",
+        '[ADMIN] 📡 Calling updateTranslations with:',
         flatTranslations
       );
       const success = await updateTranslations(flatTranslations);
@@ -286,24 +293,24 @@ export default function Translations() {
         // The saved changes are now the "original" for comparison purposes
         setTranslations(JSON.parse(JSON.stringify(editedTranslations)));
 
-        setSaveStatus("success");
-        console.log("✅ [ADMIN] Translations saved successfully");
+        setSaveStatus('success');
+        console.log('✅ [ADMIN] Translations saved successfully');
         console.log(
           "ℹ️ [ADMIN] Note: Changes are saved but won't persist until Phase 4 (Database Integration)"
         );
         console.log(
-          "ℹ️ [ADMIN] The UI now shows your saved changes. Reloading the page will show the original dictionary values."
+          'ℹ️ [ADMIN] The UI now shows your saved changes. Reloading the page will show the original dictionary values.'
         );
 
         // Don't reload from backend - it will overwrite our saved changes
         // The backend doesn't persist yet, so it will return placeholders and fall back to dictionary
         // Instead, keep the edited state as the new "original" for future comparisons
       } else {
-        throw new Error("Backend API returned failure");
+        throw new Error('Backend API returned failure');
       }
     } catch (error) {
-      console.error("❌ [ADMIN] Error saving translations:", error);
-      setSaveStatus("error");
+      console.error('❌ [ADMIN] Error saving translations:', error);
+      setSaveStatus('error');
     } finally {
       setSaving(false);
     }
@@ -318,13 +325,18 @@ export default function Translations() {
 
     for (const [key, value] of Object.entries(data)) {
       const currentPath = [...path, key];
-      const pathString = currentPath.join(".");
+      const pathString = currentPath.join('.');
       const isExpanded = expandedKeys.has(pathString);
-      const isObject = typeof value === "object" && value !== null;
+      const isObject = typeof value === 'object' && value !== null;
 
       if (isObject) {
         elements.push(
-          <div key={pathString} className={`${level > 0 ? "ml-6" : ""}`}>
+          <div
+            key={pathString}
+            className={`${styles.translationGroup} ${
+              level > 0 ? styles['translationGroup--nested'] : ''
+            }`}
+          >
             <button
               onClick={() => {
                 const newExpanded = new Set(expandedKeys);
@@ -335,17 +347,15 @@ export default function Translations() {
                 }
                 setExpandedKeys(newExpanded);
               }}
-              className="flex items-center gap-2 w-full text-left py-2 px-4 hover:bg-noir-gray-50 rounded-lg transition-colors"
+              className={styles.groupButton}
             >
-              <span className="font-serif font-semibold text-noir-black">
-                {key}
-              </span>
-              <span className="text-xs text-noir-gray-500 font-mono">
+              <span className={styles.groupName}>{key}</span>
+              <span className={styles.groupCount}>
                 ({Object.keys(value).length} keys)
               </span>
             </button>
             {isExpanded && (
-              <div className="ml-4 border-l-2 border-noir-gray-200 pl-4">
+              <div className={styles.groupContent}>
                 {renderTranslationEditor(value, currentPath, level + 1)}
               </div>
             )}
@@ -358,20 +368,14 @@ export default function Translations() {
         elements.push(
           <div
             key={pathString}
-            className={`${
-              level > 0 ? "ml-6" : ""
-            } mb-4 p-4 bg-white rounded-lg border ${
-              hasChanges
-                ? "border-yellow-400 bg-yellow-50"
-                : "border-noir-gray-200"
+            className={`${styles.translationItem} ${
+              hasChanges ? styles['translationItem--modified'] : ''
             }`}
           >
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-mono font-semibold text-noir-black">
-                {pathString}
-              </label>
+            <div className={styles.itemHeader}>
+              <label className={styles.itemKey}>{pathString}</label>
               {hasChanges && (
-                <span className="text-xs text-yellow-600 flex items-center gap-1">
+                <span className={styles.itemBadge}>
                   <AlertCircle size={12} />
                   Modified
                 </span>
@@ -382,7 +386,7 @@ export default function Translations() {
               onChange={(e) =>
                 handleTranslationChange(currentPath, e.target.value)
               }
-              className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans text-sm"
+              className={styles.translationTextarea}
               rows={3}
             />
             {hasChanges && (
@@ -390,7 +394,7 @@ export default function Translations() {
                 onClick={() =>
                   handleTranslationChange(currentPath, String(originalValue))
                 }
-                className="mt-2 text-xs text-noir-gray-600 hover:text-noir-black underline"
+                className={styles.resetButton}
               >
                 Reset to original
               </button>
@@ -409,13 +413,13 @@ export default function Translations() {
   ): string | undefined => {
     let current: any = obj;
     for (const key of path) {
-      if (current && typeof current === "object") {
+      if (current && typeof current === 'object') {
         current = current[key];
       } else {
         return undefined;
       }
     }
-    return typeof current === "string" ? current : undefined;
+    return typeof current === 'string' ? current : undefined;
   };
 
   // Helper to get nested value by path string (for flattening)
@@ -433,13 +437,13 @@ export default function Translations() {
   ): TranslationData | undefined => {
     let current: any = obj;
     for (const key of path) {
-      if (current && typeof current === "object" && !Array.isArray(current)) {
+      if (current && typeof current === 'object' && !Array.isArray(current)) {
         current = current[key];
       } else {
         return undefined;
       }
     }
-    return typeof current === "object" && !Array.isArray(current)
+    return typeof current === 'object' && !Array.isArray(current)
       ? current
       : undefined;
   };
@@ -448,26 +452,26 @@ export default function Translations() {
     JSON.stringify(translations) !== JSON.stringify(editedTranslations);
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className={styles.page}>
+      <div className={styles.header}>
         <div>
-          <h1 className="text-3xl font-serif font-bold text-noir-black mb-2 flex items-center gap-3">
-            <Languages className="text-noir-gold" size={32} />
+          <h1 className={styles.headerContentTitle}>
+            <Languages className={styles.headerContentTitle} size={32} />
             Translation Editor
           </h1>
-          <p className="text-noir-gray-600 font-sans">
+          <p className={styles.headerContentSubtitle}>
             Edit translations for @noir-crafted. Changes are loaded dynamically
             from @jxion-i18n.
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className={styles.headerActions}>
           <select
             value={currentLocale}
             onChange={(e) => {
               setCurrentLocale(e.target.value as Locale);
               console.log(`🔄 [ADMIN] Locale changed to ${e.target.value}`);
             }}
-            className="px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+            className={styles.localeSelect}
           >
             <option value="tr-TR">Turkish (tr-TR)</option>
             <option value="en-US">English (en-US)</option>
@@ -475,19 +479,22 @@ export default function Translations() {
           <button
             onClick={loadTranslations}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-noir-gray-100 hover:bg-noir-gray-200 text-noir-black rounded-lg font-sans font-semibold transition-colors disabled:opacity-50"
+            className={styles.reloadButton}
           >
-            <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
+            <RefreshCw
+              size={18}
+              className={loading ? styles.loadingSpinner : ''}
+            />
             Reload
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !hasChanges}
-            className="flex items-center gap-2 px-6 py-2 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all shadow-lg shadow-noir-gold/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={styles.saveButton}
           >
             {saving ? (
               <>
-                <RefreshCw size={18} className="animate-spin" />
+                <RefreshCw size={18} className={styles.loadingSpinner} />
                 Saving...
               </>
             ) : (
@@ -501,20 +508,28 @@ export default function Translations() {
       </div>
 
       {/* Save Status */}
-      {saveStatus === "success" && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-          <CheckCircle2 className="text-green-600" size={20} />
-          <span className="text-green-800 font-sans font-semibold">
+      {saveStatus === 'success' && (
+        <div
+          className={`${styles.statusMessage} ${styles['statusMessage--success']}`}
+        >
+          <CheckCircle2 size={20} />
+          <span
+            className={`${styles.statusText} ${styles['statusText--success']}`}
+          >
             Translations saved successfully! Changes will be reflected in
             @noir-crafted.
           </span>
         </div>
       )}
 
-      {saveStatus === "error" && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-          <AlertCircle className="text-red-600" size={20} />
-          <span className="text-red-800 font-sans font-semibold">
+      {saveStatus === 'error' && (
+        <div
+          className={`${styles.statusMessage} ${styles['statusMessage--error']}`}
+        >
+          <AlertCircle size={20} />
+          <span
+            className={`${styles.statusText} ${styles['statusText--error']}`}
+          >
             Error saving translations. Please try again.
           </span>
         </div>
@@ -522,69 +537,67 @@ export default function Translations() {
 
       {/* Translation Editor */}
       {loading ? (
-        <div className="flex items-center justify-center py-24">
-          <div className="text-center">
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingContent}>
             <RefreshCw
-              className="animate-spin text-noir-gold mx-auto mb-4"
+              className={`${styles.loadingSpinner} ${styles.loadingSpinner}`}
               size={32}
             />
-            <p className="text-noir-gray-600 font-sans">
+            <p className={styles.loadingText}>
               Loading translations from @jxion-i18n...
             </p>
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-serif font-semibold text-noir-black">
+        <div className={styles.editorCard}>
+          <div className={styles.editorHeader}>
+            <h2 className={styles.editorTitle}>
               Translations ({currentLocale})
             </h2>
             {hasChanges && (
-              <span className="text-sm text-yellow-600 font-sans font-semibold flex items-center gap-2">
+              <span className={styles.editorWarning}>
                 <AlertCircle size={16} />
                 You have unsaved changes
               </span>
             )}
           </div>
-          <div className="space-y-2 max-h-[600px] overflow-y-auto">
+          <div className={styles.editorContent}>
             {renderTranslationEditor(editedTranslations)}
           </div>
         </div>
       )}
 
       {/* Info Panel */}
-      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
-        <h3 className="text-lg font-serif font-semibold text-noir-black mb-3 flex items-center gap-2">
-          <ExternalLink size={20} className="text-blue-600" />
+      <div className={styles.infoPanel}>
+        <h3 className={styles.infoTitle}>
+          <ExternalLink size={20} className={styles.infoIcon} />
           How It Works
         </h3>
-        <ul className="space-y-2 text-sm text-noir-gray-700 font-sans">
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+        <ul className={styles.infoList}>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
-              Translations are loaded dynamically from{" "}
-              <code className="bg-white px-2 py-1 rounded">@jxion-i18n</code>{" "}
-              shared library
+              Translations are loaded dynamically from{' '}
+              <code className={styles.infoCode}>@jxion-i18n</code> shared
+              library
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
-              Changes are cached and reflected immediately in{" "}
-              <code className="bg-white px-2 py-1 rounded">@noir-crafted</code>{" "}
-              demo page
+              Changes are cached and reflected immediately in{' '}
+              <code className={styles.infoCode}>@noir-crafted</code> demo page
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
-              In production, this would save to a database via{" "}
-              <code className="bg-white px-2 py-1 rounded">@jxion-backend</code>{" "}
-              API
+              In production, this would save to a database via{' '}
+              <code className={styles.infoCode}>@jxion-backend</code> API
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-blue-600">•</span>
+          <li className={styles.infoItem}>
+            <span className={styles.infoBullet}>•</span>
             <span>
               Check the browser console for detailed logs of the translation
               loading process

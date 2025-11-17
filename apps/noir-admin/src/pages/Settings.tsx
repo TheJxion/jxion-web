@@ -11,6 +11,7 @@ import {
   Server,
 } from "lucide-react";
 import { content } from "../lib/content";
+import styles from "./Settings.module.scss";
 
 export default function Settings() {
   const [brandName, setBrandName] = useState("Noir Jewellery");
@@ -36,42 +37,42 @@ export default function Settings() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-serif font-bold text-noir-black mb-2">
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.headerTitle}>
           {content.settings.title}
         </h1>
-        <p className="text-noir-gray-600 font-sans">
+        <p className={styles.headerSubtitle}>
           {content.settings.subtitle}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className={styles.settingsGrid}>
         {/* Brand Settings */}
-        <div className="bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <h2 className="text-xl font-serif font-semibold text-noir-black mb-6">
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>
             {content.settings.brand.title}
           </h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
+          <div className={styles.cardContent}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>
                 {content.settings.brand.brandName}
               </label>
               <input
                 type="text"
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
-                className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                className={styles.formInput}
               />
             </div>
-            <div>
-              <label className="block text-sm font-sans font-semibold text-noir-black mb-2">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>
                 {content.settings.brand.currency}
               </label>
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="w-full px-4 py-2 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-sans"
+                className={styles.formSelect}
               >
                 <option value="TRY">TRY (₺)</option>
                 <option value="USD">USD ($)</option>
@@ -82,19 +83,19 @@ export default function Settings() {
         </div>
 
         {/* Contact & Support */}
-        <div className="bg-gradient-to-br from-noir-gold/10 to-noir-gold/5 rounded-lg shadow-md p-6 border border-noir-gold/20">
-          <h2 className="text-xl font-serif font-semibold text-noir-black mb-6 flex items-center gap-2">
-            <MessageCircle className="text-noir-gold" size={24} />
+        <div className={styles.contactCard}>
+          <h2 className={styles.contactTitle}>
+            <MessageCircle className={styles.contactIcon} size={24} />
             {content.settings.contact.title}
           </h2>
-          <div className="space-y-4">
+          <div className={styles.cardContent}>
             <div>
-              <h3 className="text-sm font-sans font-semibold text-noir-black mb-3">
+              <h3 className={styles.formLabel}>
                 {content.settings.contact.developer}
               </h3>
               <button
                 onClick={handleWhatsApp}
-                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-sans font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+                className={`${styles.contactButton} ${styles['contactButton--whatsapp']}`}
               >
                 <Phone size={20} />
                 <span>{content.settings.contact.whatsapp}</span>
@@ -104,7 +105,7 @@ export default function Settings() {
             <div>
               <button
                 onClick={handleEmail}
-                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-noir-black hover:bg-noir-gray-800 text-white rounded-lg font-sans font-semibold transition-all duration-200"
+                className={`${styles.contactButton} ${styles['contactButton--email']}`}
               >
                 <Mail size={20} />
                 <span>{content.settings.contact.email}</span>
@@ -115,33 +116,29 @@ export default function Settings() {
         </div>
 
         {/* System Information */}
-        <div className="bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <h2 className="text-xl font-serif font-semibold text-noir-black mb-6 flex items-center gap-2">
-            <Server className="text-noir-gray-600" size={24} />
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>
+            <Server size={24} />
             {content.settings.system.title}
           </h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between py-2 border-b border-noir-gray-100">
-              <span className="font-sans text-sm text-noir-gray-600">
+          <div className={styles.systemInfo}>
+            <div className={styles.infoRow}>
+              <span className={styles.infoRowLabel}>
                 {content.settings.system.version}
               </span>
-              <span className="font-sans text-sm font-semibold text-noir-black">
-                v0.1.0
-              </span>
+              <span className={styles.infoRowValue}>v0.1.0</span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-noir-gray-100">
-              <span className="font-sans text-sm text-noir-gray-600">
+            <div className={styles.infoRow}>
+              <span className={styles.infoRowLabel}>
                 {content.settings.system.environment}
               </span>
-              <span className="font-sans text-sm font-semibold text-noir-black">
-                Development
-              </span>
+              <span className={styles.infoRowValue}>Development</span>
             </div>
-            <div className="flex items-center justify-between py-2">
-              <span className="font-sans text-sm text-noir-gray-600">
+            <div className={styles.infoRow}>
+              <span className={styles.infoRowLabel}>
                 {content.settings.system.lastUpdated}
               </span>
-              <span className="font-sans text-sm font-semibold text-noir-black">
+              <span className={styles.infoRowValue}>
                 {new Date().toLocaleDateString("tr-TR")}
               </span>
             </div>
@@ -149,79 +146,46 @@ export default function Settings() {
         </div>
 
         {/* Quick Links */}
-        <div className="bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-          <h2 className="text-xl font-serif font-semibold text-noir-black mb-6">
-            Quick Links
-          </h2>
-          <div className="space-y-3">
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 bg-noir-gray-50 hover:bg-noir-gray-100 rounded-lg transition-colors group"
-            >
-              <FileText
-                size={20}
-                className="text-noir-gray-600 group-hover:text-noir-gold transition-colors"
-              />
-              <span className="font-sans text-sm text-noir-black group-hover:text-noir-gold transition-colors">
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Quick Links</h2>
+          <div className={styles.quickLinks}>
+            <a href="#" className={styles.quickLink}>
+              <FileText size={20} className={styles.quickLinkIcon} />
+              <span className={styles.quickLinkText}>
                 {content.settings.contact.documentation}
               </span>
-              <ExternalLink
-                size={16}
-                className="ml-auto text-noir-gray-400 group-hover:text-noir-gold transition-colors"
-              />
+              <ExternalLink size={16} className={styles.quickLinkExternal} />
             </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 bg-noir-gray-50 hover:bg-noir-gray-100 rounded-lg transition-colors group"
-            >
-              <Code
-                size={20}
-                className="text-noir-gray-600 group-hover:text-noir-gold transition-colors"
-              />
-              <span className="font-sans text-sm text-noir-black group-hover:text-noir-gold transition-colors">
-                API Documentation
-              </span>
-              <ExternalLink
-                size={16}
-                className="ml-auto text-noir-gray-400 group-hover:text-noir-gold transition-colors"
-              />
+            <a href="#" className={styles.quickLink}>
+              <Code size={20} className={styles.quickLinkIcon} />
+              <span className={styles.quickLinkText}>API Documentation</span>
+              <ExternalLink size={16} className={styles.quickLinkExternal} />
             </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 bg-noir-gray-50 hover:bg-noir-gray-100 rounded-lg transition-colors group"
-            >
-              <Info
-                size={20}
-                className="text-noir-gray-600 group-hover:text-noir-gold transition-colors"
-              />
-              <span className="font-sans text-sm text-noir-black group-hover:text-noir-gold transition-colors">
-                Help & Support
-              </span>
-              <ExternalLink
-                size={16}
-                className="ml-auto text-noir-gray-400 group-hover:text-noir-gold transition-colors"
-              />
+            <a href="#" className={styles.quickLink}>
+              <Info size={20} className={styles.quickLinkIcon} />
+              <span className={styles.quickLinkText}>Help & Support</span>
+              <ExternalLink size={16} className={styles.quickLinkExternal} />
             </a>
           </div>
         </div>
 
         {/* Danger Zone */}
-        <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-6 border-2 border-red-200">
-          <h2 className="text-xl font-serif font-semibold text-red-600 mb-6 flex items-center gap-2">
+        <div className={styles.dangerZone}>
+          <h2 className={styles.dangerTitle}>
             <RotateCcw size={24} />
             {content.settings.danger.title}
           </h2>
-          <div className="space-y-4">
+          <div className={styles.dangerContent}>
             <div>
-              <h3 className="text-base font-sans font-semibold text-noir-black mb-2">
+              <h3 className={styles.dangerSectionTitle}>
                 {content.settings.danger.resetData}
               </h3>
-              <p className="text-sm text-noir-gray-600 font-sans mb-4">
+              <p className={styles.dangerSectionDescription}>
                 {content.settings.danger.resetDescription}
               </p>
               <button
                 onClick={handleResetData}
-                className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-sans font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+                className={styles.dangerButton}
               >
                 <RotateCcw size={18} />
                 {content.settings.danger.resetButton}
@@ -232,8 +196,8 @@ export default function Settings() {
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-end">
-        <button className="px-8 py-3 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all duration-200 shadow-lg shadow-noir-gold/30">
+      <div className={styles.saveButton}>
+        <button className={styles.saveButtonAction}>
           {content.settings.save}
         </button>
       </div>

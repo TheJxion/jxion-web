@@ -1,0 +1,476 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.page {
+  padding: tokens.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: tokens.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: tokens.$spacing-md;
+  }
+}
+
+.headerContentTitle {
+  font-size: tokens.$font-size-display-3;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.headerContentSubtitle {
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border: 1px solid var(--color-noir-border);
+  border-radius: tokens.$radius-lg;
+  background-color: var(--color-noir-white);
+  max-width: 300px;
+
+  &:focus-within {
+    box-shadow: 0 0 0 2px var(--color-noir-secondary);
+    border-color: transparent;
+  }
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: var(--color-noir-black);
+  background-color: transparent;
+
+  &::placeholder {
+    color: var(--color-noir-text-muted);
+  }
+}
+
+.searchIcon {
+  color: var(--color-noir-text-muted);
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: tokens.$spacing-3xl 0;
+}
+
+.loadingContent {
+  text-align: center;
+}
+
+.loadingSpinner {
+  animation: spin 1s linear infinite;
+  color: var(--color-noir-secondary);
+  margin: 0 auto tokens.$spacing-md;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+}
+
+.templateGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: tokens.$spacing-lg;
+}
+
+.templateList {
+  grid-column: span 3;
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  padding: tokens.$spacing-lg;
+  border: 1px solid var(--color-noir-border);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.templateListTitle {
+  font-size: 1.125rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-md;
+}
+
+.templateButton {
+  width: 100%;
+  text-align: left;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  transition: all tokens.$transition-fast;
+  background-color: var(--color-noir-background-secondary);
+  border: none;
+  cursor: pointer;
+  margin-bottom: tokens.$spacing-sm;
+  color: var(--color-noir-black);
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-xs;
+
+  &--active {
+    background-color: var(--color-noir-secondary);
+    font-weight: tokens.$font-weight-semibold;
+  }
+
+  &:hover:not(&--active) {
+    background-color: var(--color-noir-background-hover);
+  }
+}
+
+.templateButtonContent {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+  font-family: var(--font-family-sans);
+  font-weight: tokens.$font-weight-medium;
+}
+
+.templateButtonMeta {
+  font-size: 0.75rem;
+  color: var(--color-noir-text-muted);
+  margin-left: tokens.$spacing-md;
+  font-family: var(--font-family-sans);
+}
+
+.templateListContent {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+  margin-top: tokens.$spacing-md;
+}
+
+.templateViewer {
+  grid-column: span 9;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.viewerHeader {
+  margin-bottom: tokens.$spacing-lg;
+}
+
+.viewerTitle {
+  font-size: 1.25rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-black);
+  margin-bottom: tokens.$spacing-md;
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.viewerPath {
+  font-size: 0.875rem;
+  font-family: var(--font-family-mono);
+  color: var(--color-noir-text-muted);
+}
+
+.errorMessage {
+  padding: tokens.$spacing-md;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: tokens.$radius-lg;
+  color: #dc2626;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+}
+
+.sectionTree {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-md;
+}
+
+.sectionItem {
+  border: 1px solid var(--color-noir-border);
+  border-radius: tokens.$radius-lg;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  width: 100%;
+  padding: tokens.$spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: none;
+  transition: background-color tokens.$transition-fast;
+  font-family: var(--font-family-sans);
+
+  &:hover {
+    background-color: var(--color-noir-background-hover);
+  }
+}
+
+.sectionTitle {
+  font-family: var(--font-family-sans);
+  font-weight: tokens.$font-weight-medium;
+  color: var(--color-noir-black);
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-md;
+}
+
+.sectionIcon {
+  color: var(--color-noir-text-muted);
+  transition: transform tokens.$transition-fast;
+
+  &--expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.sectionContent {
+  padding: tokens.$spacing-md;
+  padding-top: tokens.$spacing-md;
+  border-top: 1px solid var(--color-noir-border);
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-md;
+}
+
+.sectionMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: tokens.$spacing-sm;
+  margin-top: tokens.$spacing-sm;
+}
+
+.metaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: tokens.$spacing-xs;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-sm;
+  font-size: 0.75rem;
+  font-family: var(--font-family-sans);
+  color: var(--color-noir-text-muted);
+}
+
+.metaIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.infoPanel {
+  background: linear-gradient(
+    to bottom right,
+    rgba(59, 130, 246, 0.1),
+    rgba(59, 130, 246, 0.05)
+  );
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.infoTitle {
+  font-size: 1.125rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.infoIcon {
+  color: #2563eb;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+  font-size: 0.875rem;
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: tokens.$spacing-sm;
+}
+
+.infoBullet {
+  color: #2563eb;
+}
+
+.infoCode {
+  background-color: var(--color-noir-white);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
+  font-family: var(--font-family-mono);
+}
+
+.card {
+  background-color: var(--color-noir-white);
+  border: 1px solid var(--color-noir-border);
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+}
+
+.metadataGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: tokens.$spacing-md;
+  font-size: 0.875rem;
+}
+
+.metadataLabel {
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+}
+
+.sectionLabel {
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+}
+
+.sectionMono {
+  font-size: 0.875rem;
+  font-family: var(--font-family-mono);
+  color: var(--color-noir-black);
+}
+
+.sectionVariant {
+  color: var(--color-noir-text-muted);
+  font-family: var(--font-family-sans);
+}
+
+.sectionProps {
+  margin-top: tokens.$spacing-sm;
+  padding: tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-sm;
+  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  overflow-x: auto;
+  color: var(--color-noir-black);
+}
+
+.keysList {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+}
+
+.keyItem {
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-sm;
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  color: var(--color-noir-black);
+}
+
+.emptyMessage {
+  color: var(--color-noir-text-muted);
+  font-size: 0.875rem;
+  font-family: var(--font-family-sans);
+}
+
+.emptyState {
+  background-color: var(--color-noir-background-secondary);
+  border: 1px solid var(--color-noir-border);
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-3xl;
+  text-align: center;
+}
+
+.componentsList {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+}
+
+.componentItem {
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-sm;
+}
+
+.componentName {
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+}
+
+.componentMeta {
+  font-size: 0.75rem;
+  color: var(--color-noir-text-muted);
+  margin-top: tokens.$spacing-xs;
+  font-family: var(--font-family-sans);
+}
+
+.jsonCode {
+  padding: tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-lg;
+  overflow-x: auto;
+  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  color: var(--color-noir-black);
+}
+
+.errorCard {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+}
+
+.errorTitle {
+  font-size: 1.25rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: #991b1b;
+  margin-bottom: tokens.$spacing-sm;
+}

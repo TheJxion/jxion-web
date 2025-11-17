@@ -1,0 +1,19 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.preview {
+  padding: tokens.$spacing-xl;
+  text-align: center;
+  color: var(--color-noir-text-muted);
+  min-height: 200px;
+}
+
+.previewText {
+  font-family: var(--font-family-sans);
+}
+
+.previewCode {
+  font-size: 0.875rem;
+  margin-top: tokens.$spacing-sm;
+  font-family: var(--font-family-mono);
+}
+

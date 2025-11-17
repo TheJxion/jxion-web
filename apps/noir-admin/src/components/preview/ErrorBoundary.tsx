@@ -7,7 +7,8 @@
  * Error boundary to safely catch rendering errors in component previews
  */
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import styles from './ErrorBoundary.module.scss';
 
 interface Props {
   children: ReactNode;
@@ -47,16 +48,16 @@ export class PreviewErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="p-8 text-center text-noir-gray-600">
-          <p className="font-sans mb-2">
+        <div className={styles.error}>
+          <p className={styles.errorText}>
             Error rendering component &quot;{this.props.componentId}&quot;
           </p>
-          <p className="text-sm mt-2 font-mono text-red-600">
-            {this.state.error?.message || "Unknown error"}
+          <p className={styles.errorMessage}>
+            {this.state.error?.message || 'Unknown error'}
           </p>
-          <p className="text-xs mt-4 text-noir-gray-500">
-            Some components may require additional context (e.g., i18n dictionary, theme provider).
-            Check console for details.
+          <p className={styles.errorNote}>
+            Some components may require additional context (e.g., i18n
+            dictionary, theme provider). Check console for details.
           </p>
         </div>
       );
@@ -65,4 +66,3 @@ export class PreviewErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-

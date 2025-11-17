@@ -39,37 +39,37 @@ const fallbackSite = defaultContent.site ?? { name: 'NOIR' };
 	const fallbackNewsletter = defaultContent.home.newsletter;
 	const fallbackStats = defaultContent.home.whatsourimpact?.stats ?? [];
 
-	$: heroCopy = contentData.home.hero;
+	$: heroCopy = contentData?.home?.hero ?? defaultContent.home.hero;
 	$: featuredProducts =
-		contentData.home.featured?.products ?? fallbackProducts;
+		contentData?.home?.featured?.products ?? fallbackProducts;
 	$: featuredTitle =
-		contentData.home.featured?.title ?? defaultContent.home.featured.title;
+		contentData?.home?.featured?.title ?? defaultContent.home.featured.title;
 	$: featuredSubtitle =
-		contentData.home.featured?.subtitle ??
+		contentData?.home?.featured?.subtitle ??
 		defaultContent.home.featured.subtitle;
 	$: whyNoirSections =
-		contentData.home.whyNoir?.sections ?? fallbackWhy;
-	$: motifs = (contentData.home.motifs?.items ?? fallbackMotifs).filter(
-	(motif) => motif && motif.name
+		contentData?.home?.whyNoir?.sections ?? fallbackWhy;
+	$: motifs = (contentData?.home?.motifs?.items ?? fallbackMotifs).filter(
+	(motif: any) => motif && motif.name
 );
-	$: newsletterCopy = contentData.home.newsletter ?? fallbackNewsletter;
-	$: keyFeatures = contentData.home.keyFeatures;
-	$: integrationSolutions = contentData.home.integrationSolutions;
+	$: newsletterCopy = contentData?.home?.newsletter ?? fallbackNewsletter;
+	$: keyFeatures = contentData?.home?.keyFeatures;
+	$: integrationSolutions = contentData?.home?.integrationSolutions;
 	$: integrationTitle =
-		contentData.home.integrationTitle ?? defaultContent.home.integrationTitle;
+		contentData?.home?.integrationTitle ?? defaultContent.home.integrationTitle;
 	$: integrationSubtitle =
-		contentData.home.integrationSubtitle ??
+		contentData?.home?.integrationSubtitle ??
 		defaultContent.home.integrationSubtitle;
-	$: nextStepsBlock = contentData.home.nextSteps ?? defaultContent.home.nextSteps;
+	$: nextStepsBlock = contentData?.home?.nextSteps ?? defaultContent.home.nextSteps;
 	$: impactStats =
-		contentData.home.whatsourimpact?.stats ?? fallbackStats;
-	$: journeyBlock = contentData.home.journey ?? defaultContent.home.journey;
+		contentData?.home?.whatsourimpact?.stats ?? fallbackStats;
+	$: journeyBlock = contentData?.home?.journey ?? defaultContent.home.journey;
 	$: trafficSignBlock =
-		contentData.home.trafficSign ?? defaultContent.home.trafficSign;
+		contentData?.home?.trafficSign ?? defaultContent.home.trafficSign;
 	$: mobileFeaturesBlock =
-		contentData.home.mobileFeatures ?? defaultContent.home.mobileFeatures;
+		contentData?.home?.mobileFeatures ?? defaultContent.home.mobileFeatures;
 	$: whatCanWeDoBlock =
-		contentData.home.whatCanWeDoForYou ??
+		contentData?.home?.whatCanWeDoForYou ??
 		defaultContent.home.whatCanWeDoForYou;
 	$: nextStepsList = Array.isArray(nextStepsBlock?.list)
 		? nextStepsBlock.list
@@ -80,8 +80,8 @@ const fallbackSite = defaultContent.site ?? { name: 'NOIR' };
 		(nextStepsBlock as any)?.title ?? 'İletişim ve Demo Talebi';
 	$: nextStepsSubtitle =
 		(nextStepsBlock as any)?.subtitle ?? '';
-$: footerCopy = contentData.footer ?? defaultContent.footer;
-$: siteCopy = contentData.site ?? fallbackSite;
+$: footerCopy = contentData?.footer ?? defaultContent.footer;
+$: siteCopy = contentData?.site ?? fallbackSite;
 
 	onMount(async () => {
 		// --- 1. Load GSAP and ScrollTrigger ---
@@ -277,7 +277,7 @@ $: siteCopy = contentData.site ?? fallbackSite;
 	<!-- Why Noir Section -->
 	<div class="container mx-auto px-4 mt-32 text-center">
 		<h2 class="text-4xl font-serif text-yellow-600 mb-12">
-			{contentData.home.whyNoir?.title}
+			{contentData?.home?.whyNoir?.title ?? defaultContent.home.whyNoir.title}
 		</h2>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 			{#each whyNoirSections as section (section.title)}
@@ -297,10 +297,10 @@ $: siteCopy = contentData.site ?? fallbackSite;
 	<!-- Design Motifs Section -->
 	<div class="container mx-auto px-4 mt-32 text-center">
 		<h2 class="text-4xl font-serif text-white mb-12">
-			{contentData.home.motifs?.title}
+			{contentData?.home?.motifs?.title ?? defaultContent.home.motifs.title}
 		</h2>
 		<p class="text-gray-400 mb-16">
-			{contentData.home.motifs?.subtitle}
+			{contentData?.home?.motifs?.subtitle ?? defaultContent.home.motifs.subtitle}
 		</p>
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
 			{#each motifs as motif, index (motif?.name ?? `motif-${index}`)}

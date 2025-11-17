@@ -1,0 +1,329 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.page {
+  padding: tokens.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.header {
+  &Title {
+    font-size: tokens.$font-size-display-3;
+    font-family: var(--font-family-serif);
+    font-weight: tokens.$font-weight-bold;
+    color: var(--color-noir-black);
+    margin-bottom: tokens.$spacing-sm;
+  }
+
+  &Subtitle {
+    color: var(--color-noir-text-muted);
+    font-family: var(--font-family-sans);
+  }
+}
+
+.tableContainer {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid var(--color-noir-border);
+  overflow: hidden;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  background-color: var(--color-noir-background-secondary);
+}
+
+.tableHeaderCell {
+  text-align: left;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-text-muted);
+
+  &--right {
+    text-align: right;
+  }
+
+  &--center {
+    text-align: center;
+  }
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--color-noir-border);
+  transition: background-color tokens.$transition-fast;
+
+  &:hover {
+    background-color: var(--color-noir-background-secondary);
+  }
+}
+
+.tableCell {
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: var(--color-noir-black);
+
+  &--right {
+    text-align: right;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--muted {
+    color: var(--color-noir-text-muted);
+  }
+
+  &--bold {
+    font-weight: tokens.$font-weight-semibold;
+  }
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: tokens.$spacing-xs tokens.$spacing-md;
+  border-radius: tokens.$radius-full;
+  font-size: 0.75rem;
+  font-family: var(--font-family-sans);
+  font-weight: tokens.$font-weight-medium;
+
+  &--paid {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+
+  &--delivered {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+  }
+
+  &--pending {
+    background-color: rgba(234, 179, 8, 0.1);
+    color: #ca8a04;
+  }
+}
+
+.actionButton {
+  padding: tokens.$spacing-sm;
+  color: var(--color-noir-text-muted);
+  background-color: transparent;
+  border: none;
+  border-radius: tokens.$radius-lg;
+  cursor: pointer;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    color: var(--color-noir-secondary);
+    background-color: rgba(255, 215, 0, 0.1);
+  }
+}
+
+// Modal Styles
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: tokens.$spacing-md;
+}
+
+.modal {
+  background-color: var(--color-noir-white);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-lg;
+  max-width: 48rem; // max-w-3xl
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-noir-white);
+  border-bottom: 1px solid var(--color-noir-border);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-family: var(--font-family-serif);
+  font-weight: tokens.$font-weight-bold;
+  color: var(--color-noir-black);
+}
+
+.modalCloseButton {
+  padding: tokens.$spacing-sm;
+  color: var(--color-noir-text-muted);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color tokens.$transition-fast;
+
+  &:hover {
+    color: var(--color-noir-black);
+  }
+}
+
+.modalContent {
+  padding: tokens.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-lg;
+}
+
+.section {
+  &Title {
+    font-size: 1.125rem;
+    font-family: var(--font-family-serif);
+    font-weight: tokens.$font-weight-semibold;
+    color: var(--color-noir-black);
+    margin-bottom: tokens.$spacing-md;
+  }
+}
+
+.infoCard {
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+
+  &Label {
+    font-family: var(--font-family-sans);
+    font-size: 0.875rem;
+    color: var(--color-noir-text-muted);
+  }
+
+  &Value {
+    font-family: var(--font-family-sans);
+    font-size: 0.875rem;
+    font-weight: tokens.$font-weight-semibold;
+    color: var(--color-noir-black);
+  }
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.productItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: tokens.$spacing-md;
+  background-color: var(--color-noir-background-secondary);
+  border-radius: tokens.$radius-lg;
+}
+
+.productInfo {
+  &Name {
+    font-family: var(--font-family-sans);
+    font-size: 0.875rem;
+    font-weight: tokens.$font-weight-semibold;
+    color: var(--color-noir-black);
+  }
+
+  &Meta {
+    font-family: var(--font-family-sans);
+    font-size: 0.75rem;
+    color: var(--color-noir-text-muted);
+  }
+}
+
+.productPrice {
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: tokens.$font-weight-semibold;
+  color: var(--color-noir-black);
+}
+
+.summary {
+  border-top: 1px solid var(--color-noir-border);
+  padding-top: tokens.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: tokens.$spacing-sm;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &Label {
+    font-family: var(--font-family-sans);
+    font-size: 1rem;
+    color: var(--color-noir-text-muted);
+  }
+
+  &Value {
+    font-family: var(--font-family-sans);
+    font-size: 1rem;
+    color: var(--color-noir-black);
+  }
+
+  &--total {
+    padding-top: tokens.$spacing-sm;
+    border-top: 1px solid var(--color-noir-border);
+
+    .summaryRowLabel {
+      font-size: 1.125rem;
+      font-weight: tokens.$font-weight-bold;
+    }
+
+    .summaryRowValue {
+      font-size: 1.25rem;
+      font-family: var(--font-family-serif);
+      font-weight: tokens.$font-weight-bold;
+    }
+  }
+}
+
+.actionButtonFull {
+  width: 100%;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background-color: var(--color-noir-secondary);
+  color: var(--color-noir-black);
+  border: none;
+  border-radius: tokens.$radius-lg;
+  font-family: var(--font-family-sans);
+  font-weight: tokens.$font-weight-semibold;
+  cursor: pointer;
+  transition: all tokens.$transition-normal;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  margin-top: tokens.$spacing-md;
+
+  &:hover {
+    background-color: #ffc700;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+  }
+}

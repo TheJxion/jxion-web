@@ -1,0 +1,26 @@
+@use '@jxion/design/styles/_noir-variables' as tokens;
+
+.error {
+  padding: tokens.$spacing-xl;
+  text-align: center;
+  color: var(--color-noir-text-muted);
+}
+
+.errorText {
+  font-family: var(--font-family-sans);
+  margin-bottom: tokens.$spacing-sm;
+}
+
+.errorMessage {
+  font-size: 0.875rem;
+  margin-top: tokens.$spacing-sm;
+  font-family: var(--font-family-mono);
+  color: #dc2626;
+}
+
+.errorNote {
+  font-size: 0.75rem;
+  margin-top: tokens.$spacing-md;
+  color: var(--color-noir-text-muted);
+}
+

@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Eye, X } from "lucide-react";
-import { customers, orders } from "../data";
-import { formatCurrency, formatDate } from "../utils/format";
-import { content } from "../lib/content";
+import { useState } from 'react';
+import { Eye, X } from 'lucide-react';
+import { customers, orders } from '../data';
+import { formatCurrency, formatDate } from '../utils/format';
+import { content } from '../lib/content';
+import styles from './Customers.module.scss';
 
 export default function Customers() {
   const [selectedCustomer, setSelectedCustomer] = useState<
@@ -22,67 +23,72 @@ export default function Customers() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-serif font-bold text-noir-black mb-2">
-          {content.customers.title}
-        </h1>
-        <p className="text-noir-gray-600 font-sans">
-          {content.customers.subtitle}
-        </p>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.headerTitle}>{content.customers.title}</h1>
+        <p className={styles.headerSubtitle}>{content.customers.subtitle}</p>
       </div>
 
       {/* Customers Table */}
-      <div className="bg-white rounded-lg shadow-md border border-noir-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-noir-gray-50">
+      <div className={styles.tableContainer}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead className={styles.tableHeader}>
               <tr>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Name
-                </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Email
-                </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Name</th>
+                <th className={styles.tableHeaderCell}>Email</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Total Orders
                 </th>
-                <th className="text-right py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--right']}`}
+                >
                   Lifetime Value
                 </th>
-                <th className="text-left py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
-                  Member Since
-                </th>
-                <th className="text-center py-4 px-6 font-sans text-sm font-semibold text-noir-gray-700">
+                <th className={styles.tableHeaderCell}>Member Since</th>
+                <th
+                  className={`${styles.tableHeaderCell} ${styles['tableHeaderCell--center']}`}
+                >
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
               {customers.map((customer) => (
-                <tr
-                  key={customer.id}
-                  className="border-b border-noir-gray-100 hover:bg-noir-gray-50 transition-colors"
-                >
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black">
+                <tr key={customer.id} className={styles.tableRow}>
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--bold']}`}
+                  >
                     {customer.name}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-gray-600">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--muted']}`}
+                  >
                     {customer.email}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-black text-right">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']}`}
+                  >
                     {customer.totalOrders}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm font-semibold text-noir-black text-right">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--right']} ${styles['tableCell--bold']}`}
+                  >
                     {formatCurrency(customer.lifetimeValue)}
                   </td>
-                  <td className="py-4 px-6 font-sans text-sm text-noir-gray-600">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--muted']}`}
+                  >
                     {formatDate(customer.memberSince)}
                   </td>
-                  <td className="py-4 px-6 text-center">
+                  <td
+                    className={`${styles.tableCell} ${styles['tableCell--center']}`}
+                  >
                     <button
                       onClick={() => handleViewDetails(customer)}
-                      className="p-2 text-noir-gray-600 hover:text-noir-gold hover:bg-noir-gold/10 rounded-lg transition-all duration-200"
+                      className={styles.actionButton}
                       aria-label="View customer details"
                     >
                       <Eye size={18} />
@@ -97,65 +103,51 @@ export default function Customers() {
 
       {/* Customer Detail Modal */}
       {selectedCustomer && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-noir-gray-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-2xl font-serif font-bold text-noir-black">
-                Customer Details
-              </h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Customer Details</h2>
               <button
                 onClick={handleCloseModal}
-                className="p-2 text-noir-gray-400 hover:text-noir-black transition-colors"
+                className={styles.modalCloseButton}
                 aria-label="Close modal"
               >
                 <X size={24} />
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className={styles.modalContent}>
               {/* Customer Info */}
               <div>
-                <h3 className="text-lg font-serif font-semibold text-noir-black mb-4">
-                  Customer Information
-                </h3>
-                <div className="bg-noir-gray-50 rounded-lg p-4 space-y-3">
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Name:
-                    </span>
-                    <span className="font-sans text-sm font-semibold text-noir-black">
+                <h3 className={styles.sectionTitle}>Customer Information</h3>
+                <div className={styles.infoCard}>
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Name:</span>
+                    <span className={styles.infoRowValue}>
                       {selectedCustomer.name}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Email:
-                    </span>
-                    <span className="font-sans text-sm text-noir-black">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Email:</span>
+                    <span className={styles.infoRowValue}>
                       {selectedCustomer.email}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Member Since:
-                    </span>
-                    <span className="font-sans text-sm text-noir-black">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Member Since:</span>
+                    <span className={styles.infoRowValue}>
                       {formatDate(selectedCustomer.memberSince)}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Total Orders:
-                    </span>
-                    <span className="font-sans text-sm font-semibold text-noir-black">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Total Orders:</span>
+                    <span className={styles.infoRowValue}>
                       {selectedCustomer.totalOrders}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-sans text-sm text-noir-gray-600">
-                      Lifetime Value:
-                    </span>
-                    <span className="font-sans text-sm font-semibold text-noir-gold">
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoRowLabel}>Lifetime Value:</span>
+                    <span className={styles.infoRowValueGold}>
                       {formatCurrency(selectedCustomer.lifetimeValue)}
                     </span>
                   </div>
@@ -164,34 +156,29 @@ export default function Customers() {
 
               {/* Recent Orders */}
               <div>
-                <h3 className="text-lg font-serif font-semibold text-noir-black mb-4">
-                  Recent Orders
-                </h3>
-                <div className="space-y-3">
+                <h3 className={styles.sectionTitle}>Recent Orders</h3>
+                <div className={styles.orderList}>
                   {getCustomerOrders(selectedCustomer.email).map((order) => (
-                    <div
-                      key={order.id}
-                      className="flex items-center justify-between p-4 bg-noir-gray-50 rounded-lg"
-                    >
+                    <div key={order.id} className={styles.orderItem}>
                       <div>
-                        <p className="font-sans text-sm font-semibold text-noir-black">
+                        <p className={styles.orderInfoTitle}>
                           Order #{order.id}
                         </p>
-                        <p className="font-sans text-xs text-noir-gray-600">
+                        <p className={styles.orderInfoMeta}>
                           {formatDate(order.date)} • {order.items} items
                         </p>
                       </div>
-                      <div className="text-right">
-                        <p className="font-sans text-sm font-semibold text-noir-black">
+                      <div className={styles.orderDetails}>
+                        <p className={styles.orderPrice}>
                           {formatCurrency(order.total)}
                         </p>
                         <span
-                          className={`inline-block mt-1 px-2 py-1 rounded-full text-xs font-sans font-medium ${
-                            order.status === "Paid"
-                              ? "bg-green-100 text-green-700"
-                              : order.status === "Delivered"
-                                ? "bg-blue-100 text-blue-700"
-                                : "bg-yellow-100 text-yellow-700"
+                          className={`${styles.orderStatus} ${
+                            order.status === 'Paid'
+                              ? styles['orderStatus--paid']
+                              : order.status === 'Delivered'
+                              ? styles['orderStatus--delivered']
+                              : styles['orderStatus--pending']
                           }`}
                         >
                           {order.status}

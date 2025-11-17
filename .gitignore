@@ -125,3 +125,4 @@ packages/jxion-angular/node_modules/
 # Build outputs
 .vercel/
 .svelte-kit/
+apps/jxion-angular/.angular/cache/*

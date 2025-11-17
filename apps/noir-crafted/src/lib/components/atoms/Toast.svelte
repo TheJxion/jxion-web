@@ -7,13 +7,17 @@
 
 <div class="toast-container">
 	{#each toasts as toastItem (toastItem.id)}
-		<div
-			class="toast toast-{toastItem.type || 'success'}"
-			role="alert"
-			on:click={() => toast.remove(toastItem.id)}
-		>
+		<div class="toast toast-{toastItem.type || 'success'}" role="alert">
 			<div class="toast-content">
 				<span class="toast-message">{toastItem.message}</span>
+				<button
+					type="button"
+					class="toast-dismiss"
+					on:click={() => toast.remove(toastItem.id)}
+					aria-label="Bildirim kapat"
+				>
+					×
+				</button>
 			</div>
 		</div>
 	{/each}
@@ -69,6 +73,24 @@
 		font-size: 0.875rem;
 		color: #222222;
 		line-height: 1.5;
+	}
+
+	.toast-dismiss {
+		background: transparent;
+		border: none;
+		color: #6b7280;
+		font-size: 1.25rem;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.toast-dismiss:focus-visible {
+		outline: 2px solid #3b82f6;
+		outline-offset: 2px;
 	}
 
 	@keyframes slideIn {

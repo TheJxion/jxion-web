@@ -123,9 +123,9 @@
 								<div class="flex items-center justify-between">
 									<!-- Quantity Selector -->
 									<div class="flex items-center gap-3">
-										<label class="text-sm font-sans text-noir-gray-600">
+										<span class="text-sm font-sans text-noir-gray-600" aria-hidden="true">
 											{content.ui.quantity}:
-										</label>
+										</span>
 										<div class="flex items-center border border-noir-gray-300 rounded">
 											<button
 												type="button"

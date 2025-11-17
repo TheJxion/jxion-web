@@ -156,11 +156,15 @@
 							<div class="space-y-5">
 								<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="shipping-full-name"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											Ad Soyad <span class="text-[#FFD700]">*</span>
 										</label>
 										<input
 											type="text"
+											id="shipping-full-name"
 											bind:value={shippingInfo.fullName}
 											required
 											class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
@@ -168,11 +172,15 @@
 										/>
 									</div>
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="shipping-email"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											E-posta <span class="text-[#FFD700]">*</span>
 										</label>
 										<input
 											type="email"
+											id="shipping-email"
 											bind:value={shippingInfo.email}
 											required
 											class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
@@ -181,11 +189,15 @@
 									</div>
 								</div>
 								<div>
-									<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+									<label
+										for="shipping-phone"
+										class="block text-sm font-sans font-medium text-gray-300 mb-2"
+									>
 										Telefon <span class="text-[#FFD700]">*</span>
 									</label>
 									<input
 										type="tel"
+										id="shipping-phone"
 										bind:value={shippingInfo.phone}
 										required
 										class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
@@ -193,10 +205,14 @@
 									/>
 								</div>
 								<div>
-									<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+									<label
+										for="shipping-address"
+										class="block text-sm font-sans font-medium text-gray-300 mb-2"
+									>
 										Adres <span class="text-[#FFD700]">*</span>
 									</label>
 									<textarea
+										id="shipping-address"
 										bind:value={shippingInfo.address}
 										required
 										rows="3"
@@ -206,11 +222,15 @@
 								</div>
 								<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="shipping-city"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											Şehir <span class="text-[#FFD700]">*</span>
 										</label>
 										<input
 											type="text"
+											id="shipping-city"
 											bind:value={shippingInfo.city}
 											required
 											class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
@@ -218,11 +238,15 @@
 										/>
 									</div>
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="shipping-postal-code"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											Posta Kodu
 										</label>
 										<input
 											type="text"
+											id="shipping-postal-code"
 											bind:value={shippingInfo.postalCode}
 											class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
 											placeholder="34000"
@@ -240,11 +264,15 @@
 							</h2>
 							<div class="space-y-5">
 								<div>
-									<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+									<label
+										for="payment-card-number"
+										class="block text-sm font-sans font-medium text-gray-300 mb-2"
+									>
 										Kart Numarası <span class="text-[#FFD700]">*</span>
 									</label>
 									<input
 										type="text"
+										id="payment-card-number"
 										bind:value={paymentInfo.cardNumber}
 										on:input={(e) => paymentInfo.cardNumber = formatCardNumber(e.currentTarget.value)}
 										maxlength="19"
@@ -254,11 +282,15 @@
 									/>
 								</div>
 								<div>
-									<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+									<label
+										for="payment-card-name"
+										class="block text-sm font-sans font-medium text-gray-300 mb-2"
+									>
 										Kart Üzerindeki İsim <span class="text-[#FFD700]">*</span>
 									</label>
 									<input
 										type="text"
+										id="payment-card-name"
 										bind:value={paymentInfo.cardName}
 										required
 										class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all"
@@ -267,11 +299,15 @@
 								</div>
 								<div class="grid grid-cols-2 gap-5">
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="payment-expiry"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											Son Kullanma <span class="text-[#FFD700]">*</span>
 										</label>
 										<input
 											type="text"
+											id="payment-expiry"
 											bind:value={paymentInfo.expiryDate}
 											on:input={(e) => paymentInfo.expiryDate = formatExpiryDate(e.currentTarget.value)}
 											maxlength="5"
@@ -281,11 +317,15 @@
 										/>
 									</div>
 									<div>
-										<label class="block text-sm font-sans font-medium text-gray-300 mb-2">
+										<label
+											for="payment-cvv"
+											class="block text-sm font-sans font-medium text-gray-300 mb-2"
+										>
 											CVV <span class="text-[#FFD700]">*</span>
 										</label>
 										<input
 											type="text"
+											id="payment-cvv"
 											bind:value={paymentInfo.cvv}
 											maxlength="3"
 											required

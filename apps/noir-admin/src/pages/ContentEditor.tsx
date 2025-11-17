@@ -23,22 +23,69 @@ import {
   Palette,
   Layout,
 } from 'lucide-react';
-import { getContentManager, type ContentUpdate } from '@jxion/core';
 import { useSSE } from '../hooks/useSSE';
 
 interface ContentFile {
   path: string;
+  label: string;
+  mode: EditorMode;
   content: any;
   lastModified: number;
 }
 
 type EditorMode = 'content' | 'style' | 'template';
 
+const env =
+  typeof import.meta !== 'undefined' ? (import.meta as any).env || {} : {};
+
+const DEFAULT_API_HOST = (env.VITE_API_URL || 'http://localhost:8080').replace(
+  /\/$/,
+  ''
+);
+
+const CONTENT_API_BASE =
+  (env.VITE_CONTENT_API_URL || '').replace(/\/$/, '') ||
+  `${DEFAULT_API_HOST}/api/content`;
+
+const contentSources: Array<{
+  path: string;
+  label: string;
+  mode: EditorMode;
+}> = [
+  {
+    path: 'noir-crafted/content.json',
+    label: 'Noir Crafted • content.json',
+    mode: 'content',
+  },
+  {
+    path: 'homepage',
+    label: 'Homepage Template Schema',
+    mode: 'template',
+  },
+];
+
+const cloneContent = (value: any) => JSON.parse(JSON.stringify(value));
+
+const extractApiContent = (payload: any) => {
+  if (
+    payload &&
+    typeof payload === 'object' &&
+    payload.content &&
+    Object.keys(payload.content).length > 0
+  ) {
+    return payload.content;
+  }
+
+  return payload;
+};
+
 export default function ContentEditor() {
   const [currentMode, setCurrentMode] = useState<EditorMode>('content');
   const [contentFiles, setContentFiles] = useState<ContentFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [editedContent, setEditedContent] = useState<any>(null);
+  const [editorText, setEditorText] = useState('');
+  const [jsonError, setJsonError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>(
@@ -46,153 +93,137 @@ export default function ContentEditor() {
   );
   const [liveUpdatesEnabled, setLiveUpdatesEnabled] = useState(true);
 
-  // Available content files - these are loaded from the actual content source
-  // Note: Content files are in TypeScript format, not JSON
-  const contentFilePaths = [
-    'content', // Main content from noir-crafted/src/lib/i18n/content.ts
-    'homepage', // Template schema from libs/jxion-core/src/templates/schemas/homepage.json
-  ];
+  const fetchContentFromApi = async (path: string) => {
+    const url = `${CONTENT_API_BASE}/${path}`;
+    console.log(`[Jxion-ContentEditor] 🌐 Fetching: ${url}`);
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const message = await response.text().catch(() => '');
+      throw new Error(
+        `API returned ${response.status}${message ? `: ${message}` : ''}`
+      );
+    }
+
+    const payload = await response.json();
+    return extractApiContent(payload);
+  };
+
+  const loadNoirContent = async () => {
+    try {
+      return await fetchContentFromApi('noir-crafted/content.json');
+    } catch (apiError) {
+      console.warn(
+        '[Jxion-ContentEditor] ⚠️ Content API unavailable, using noir-crafted fallback',
+        apiError
+      );
+      try {
+        const contentModule = await import(
+          '../../../noir-crafted/src/lib/i18n/content'
+        );
+        return contentModule.content || {};
+      } catch (fallbackError) {
+        console.error(
+          '[Jxion-ContentEditor] ❌ Failed to load fallback noir content:',
+          fallbackError
+        );
+        throw fallbackError;
+      }
+    }
+  };
+
+  const loadHomepageTemplate = async () => {
+    try {
+      return await fetchContentFromApi('homepage');
+    } catch (apiError) {
+      console.warn(
+        '[Jxion-ContentEditor] ⚠️ Homepage schema not in database, falling back to template loader',
+        apiError
+      );
+      try {
+        const coreModule = await import('@jxion/core');
+        if (coreModule.loadTemplateSchema) {
+          const template = await coreModule.loadTemplateSchema('homepage');
+          return template || { note: 'Template schema not found.' };
+        }
+        throw new Error('loadTemplateSchema not available');
+      } catch (error) {
+        console.warn('Failed to load template via loader:', error);
+        return {
+          note: 'Template schema not found. The template loader may not be available in this environment.',
+          error: String(error),
+        };
+      }
+    }
+  };
 
   useEffect(() => {
     console.log('[Jxion-ContentEditor] Initializing content editor...');
-    loadContentFiles();
-
-    // Set up live update listener (disabled since we use SSE for real-time updates)
-    const contentManager = getContentManager({
-      baseUrl: '/api/content',
-      enableLiveUpdates: false, // Disable polling, use SSE instead
-      onUpdate: handleContentUpdate,
-    });
-
-    return () => {
-      contentManager.stopLiveUpdates();
-      console.log('[Jxion-ContentEditor] ⏸️ Live updates stopped');
-    };
-  }, []); // Only run once on mount
+    loadContentFiles(false);
+  }, []);
 
   // Set up SSE for real-time updates
   useSSE({
+    apiUrl: DEFAULT_API_HOST,
+    enabled: liveUpdatesEnabled,
     onContentUpdate: async (path: string) => {
       if (selectedFile === path) {
         console.log(
           `[Jxion-ContentEditor] 🔄 Content updated via SSE: ${path}, reloading...`
         );
-        await loadContentFiles();
+        await loadContentFiles(true);
       }
     },
-    enabled: true,
   });
 
-  const loadContentFiles = async () => {
+  function applySelection(file: ContentFile) {
+    setSelectedFile(file.path);
+    setEditedContent(cloneContent(file.content));
+    try {
+      setEditorText(JSON.stringify(file.content, null, 2));
+    } catch {
+      setEditorText('');
+    }
+    setJsonError(null);
+  }
+
+  const loadContentFiles = async (preserveSelection = true) => {
     console.log('[Jxion-ContentEditor] 📂 Loading content files...');
     setLoading(true);
     try {
+      const existingSelection = selectedFile
+        ? contentFiles.find((file) => file.path === selectedFile)
+        : null;
+      const isDirty =
+        !!existingSelection &&
+        editorText !== JSON.stringify(existingSelection.content, null, 2);
       const files: ContentFile[] = [];
 
-      // Load content from actual sources
-      for (const path of contentFilePaths) {
+      for (const source of contentSources) {
         try {
           let content: any;
 
-          if (path === 'content') {
-            // Load from noir-crafted content.ts
-            try {
-              const contentModule = await import(
-                '../../../noir-crafted/src/lib/i18n/content'
-              );
-              // content.ts exports a named export 'content', not a default export
-              content = contentModule.content || {};
-            } catch {
-              // Fallback: try to load from API if available
-              try {
-                const response = await fetch(
-                  '/api/content/noir-crafted/content.json'
-                );
-                if (response.ok) {
-                  content = await response.json();
-                } else {
-                  throw new Error('Content not available');
-                }
-              } catch {
-                content = {
-                  note: 'Content file not found. Please check the content source.',
-                };
-              }
-            }
-          } else if (path === 'homepage') {
-            // Try to load from API first (database), then fallback to template loader
-            try {
-              const apiUrl =
-                import.meta.env.VITE_API_URL || 'http://localhost:8080';
-              const response = await fetch(`${apiUrl}/api/content/${path}`);
-              if (response.ok) {
-                const apiContent = await response.json();
-                // Check if API returned placeholder (content not found)
-                if (apiContent.note && apiContent.note.includes('not found')) {
-                  console.log(
-                    `[Jxion-ContentEditor] ⚠️ ${path} not in database, falling back to template loader`
-                  );
-                  throw new Error('Not found in database');
-                }
-                // Use content from API
-                // API returns either: { content: {...} } or just the content object
-                if (
-                  apiContent.content &&
-                  Object.keys(apiContent.content).length > 0
-                ) {
-                  content = apiContent.content;
-                } else if (!apiContent.note) {
-                  // If no note, assume it's the content itself
-                  content = apiContent;
-                } else {
-                  // Has note but content is empty, treat as not found
-                  throw new Error('Not found in database');
-                }
-                console.log(
-                  `[Jxion-ContentEditor] ✅ Loaded ${path} from database`
-                );
-              } else {
-                throw new Error('Not found in database');
-              }
-            } catch (apiError) {
-              // Fallback to template loader
-              try {
-                const coreModule = await import('@jxion/core');
-                if (coreModule.loadTemplateSchema) {
-                  const template = await coreModule.loadTemplateSchema(
-                    'homepage'
-                  );
-                  content = template || { note: 'Template schema not found.' };
-                  console.log(
-                    `[Jxion-ContentEditor] ✅ Loaded ${path} from template schema`
-                  );
-                } else {
-                  throw new Error('loadTemplateSchema not available');
-                }
-              } catch (error) {
-                console.warn('Failed to load template via loader:', error);
-                content = {
-                  note: 'Template schema not found. The template loader may not be available in this environment.',
-                  error: String(error),
-                };
-              }
-            }
+          if (source.path === 'noir-crafted/content.json') {
+            content = await loadNoirContent();
+          } else if (source.path === 'homepage') {
+            content = await loadHomepageTemplate();
+          } else {
+            content = await fetchContentFromApi(source.path);
           }
 
           files.push({
-            path,
+            ...source,
             content,
             lastModified: Date.now(),
           });
-          console.log(`[Jxion-ContentEditor] ✅ Loaded: ${path}`);
+          console.log(`[Jxion-ContentEditor] ✅ Loaded: ${source.path}`);
         } catch (error) {
           console.warn(
-            `[Jxion-ContentEditor] ⚠️ Failed to load ${path}:`,
+            `[Jxion-ContentEditor] ⚠️ Failed to load ${source.path}:`,
             error
           );
-          // Add placeholder so user knows the file exists but failed to load
           files.push({
-            path,
+            ...source,
             content: { error: `Failed to load: ${error}` },
             lastModified: Date.now(),
           });
@@ -200,9 +231,33 @@ export default function ContentEditor() {
       }
 
       setContentFiles(files);
-      if (files.length > 0 && !selectedFile) {
-        setSelectedFile(files[0].path);
-        setEditedContent(JSON.parse(JSON.stringify(files[0].content)));
+      if (files.length > 0) {
+        const hasSelection =
+          selectedFile && files.some((file) => file.path === selectedFile);
+
+        if (hasSelection && isDirty === false) {
+          const updatedSelection = files.find(
+            (file) => file.path === selectedFile
+          );
+          if (updatedSelection) {
+            applySelection(updatedSelection);
+          }
+        }
+
+        if (!preserveSelection || !hasSelection) {
+          const nextFile =
+            files.find((file) => file.mode === currentMode) || files[0];
+
+          if (nextFile) {
+            applySelection(nextFile);
+            setCurrentMode(nextFile.mode);
+          }
+        }
+      } else {
+        setSelectedFile(null);
+        setEditedContent(null);
+        setEditorText('');
+        setJsonError(null);
       }
       setLoading(false);
     } catch (error) {
@@ -214,29 +269,17 @@ export default function ContentEditor() {
     }
   };
 
-  const handleContentUpdate = (update: ContentUpdate) => {
-    console.log('[Jxion-ContentEditor] 🔄 Content update received:', update);
+  const handleModeChange = (mode: EditorMode) => {
+    setCurrentMode(mode);
+    const nextFile = contentFiles.find((file) => file.mode === mode) || null;
 
-    // Update the content file in state
-    setContentFiles((prev) =>
-      prev.map((file) =>
-        file.path === update.path
-          ? {
-              ...file,
-              content: update.content,
-              lastModified: update.timestamp,
-            }
-          : file
-      )
-    );
-
-    // If this is the currently selected file, update edited content
-    if (selectedFile === update.path) {
-      setEditedContent(JSON.parse(JSON.stringify(update.content)));
-      console.log(
-        '[Jxion-ContentEditor] ✅ Updated edited content for:',
-        update.path
-      );
+    if (nextFile) {
+      applySelection(nextFile);
+    } else {
+      setSelectedFile(null);
+      setEditedContent(null);
+      setEditorText('');
+      setJsonError(null);
     }
   };
 
@@ -244,18 +287,20 @@ export default function ContentEditor() {
     console.log(`[Jxion-ContentEditor] 📄 Selecting file: ${path}`);
     const file = contentFiles.find((f) => f.path === path);
     if (file) {
-      setSelectedFile(path);
-      setEditedContent(JSON.parse(JSON.stringify(file.content)));
+      applySelection(file);
+      setCurrentMode(file.mode);
     }
   };
 
   const handleContentChange = (value: string) => {
+    setEditorText(value);
     try {
       const parsed = JSON.parse(value);
       setEditedContent(parsed);
+      setJsonError(null);
       console.log('[Jxion-ContentEditor] ✏️ Content edited');
     } catch (error) {
-      // Invalid JSON, but keep the raw value for editing
+      setJsonError('Geçersiz JSON. Kaydetmeden önce düzeltin.');
       console.warn(
         '[Jxion-ContentEditor] ⚠️ Invalid JSON (editing in progress)'
       );
@@ -263,7 +308,7 @@ export default function ContentEditor() {
   };
 
   const handleSave = async () => {
-    if (!selectedFile || !editedContent) return;
+    if (!selectedFile || !editedContent || jsonError) return;
 
     console.log(`[Jxion-ContentEditor] 💾 Saving content: ${selectedFile}`);
     setSaving(true);
@@ -271,8 +316,7 @@ export default function ContentEditor() {
 
     try {
       // Save to API (which persists to database)
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-      const response = await fetch(`${apiUrl}/api/content/${selectedFile}`, {
+      const response = await fetch(`${CONTENT_API_BASE}/${selectedFile}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -317,10 +361,14 @@ export default function ContentEditor() {
     }
   };
 
+  const visibleFiles = contentFiles.filter((file) => file.mode === currentMode);
   const selectedFileData = contentFiles.find((f) => f.path === selectedFile);
-  const hasChanges =
-    selectedFileData &&
-    JSON.stringify(selectedFileData.content) !== JSON.stringify(editedContent);
+  const originalEditorText = selectedFileData
+    ? JSON.stringify(selectedFileData.content, null, 2)
+    : '';
+  const hasChanges = !!selectedFileData && editorText !== originalEditorText;
+  const canSave =
+    !!selectedFileData && !!editedContent && !jsonError && hasChanges;
 
   return (
     <div className="p-6 space-y-6">
@@ -356,7 +404,7 @@ export default function ContentEditor() {
             </span>
           </label>
           <button
-            onClick={loadContentFiles}
+            onClick={() => loadContentFiles(true)}
             disabled={loading}
             className="flex items-center gap-2 px-4 py-2 bg-noir-gray-100 hover:bg-noir-gray-200 text-noir-black rounded-lg font-sans font-semibold transition-colors disabled:opacity-50"
           >
@@ -365,7 +413,7 @@ export default function ContentEditor() {
           </button>
           <button
             onClick={handleSave}
-            disabled={saving || !hasChanges}
+            disabled={saving || !canSave}
             className="flex items-center gap-2 px-6 py-2 bg-noir-gold hover:bg-[#FFC700] text-noir-black rounded-lg font-sans font-semibold transition-all shadow-lg shadow-noir-gold/30 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (
@@ -386,7 +434,7 @@ export default function ContentEditor() {
       {/* Mode Selector */}
       <div className="flex gap-2 border-b border-noir-gray-200">
         <button
-          onClick={() => setCurrentMode('content')}
+          onClick={() => handleModeChange('content')}
           className={`px-4 py-2 font-sans font-semibold transition-colors ${
             currentMode === 'content'
               ? 'text-noir-gold border-b-2 border-noir-gold'
@@ -397,7 +445,7 @@ export default function ContentEditor() {
           Content
         </button>
         <button
-          onClick={() => setCurrentMode('style')}
+          onClick={() => handleModeChange('style')}
           className={`px-4 py-2 font-sans font-semibold transition-colors ${
             currentMode === 'style'
               ? 'text-noir-gold border-b-2 border-noir-gold'
@@ -408,7 +456,7 @@ export default function ContentEditor() {
           Styles
         </button>
         <button
-          onClick={() => setCurrentMode('template')}
+          onClick={() => handleModeChange('template')}
           className={`px-4 py-2 font-sans font-semibold transition-colors ${
             currentMode === 'template'
               ? 'text-noir-gold border-b-2 border-noir-gold'
@@ -467,32 +515,44 @@ export default function ContentEditor() {
               Files
             </h2>
             <div className="space-y-2">
-              {contentFiles.map((file) => (
-                <button
-                  key={file.path}
-                  onClick={() => handleFileSelect(file.path)}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                    selectedFile === file.path
-                      ? 'bg-noir-gold text-noir-black font-semibold'
-                      : 'bg-noir-gray-50 hover:bg-noir-gray-100 text-noir-gray-700'
-                  }`}
-                >
-                  <div className="text-sm font-mono truncate">{file.path}</div>
-                  <div className="text-xs text-noir-gray-500 mt-1">
-                    {new Date(file.lastModified).toLocaleTimeString()}
-                  </div>
-                </button>
-              ))}
+              {visibleFiles.length === 0 ? (
+                <div className="text-sm text-noir-gray-500">
+                  No files available for this mode yet.
+                </div>
+              ) : (
+                visibleFiles.map((file) => (
+                  <button
+                    key={file.path}
+                    onClick={() => handleFileSelect(file.path)}
+                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                      selectedFile === file.path
+                        ? 'bg-noir-gold text-noir-black font-semibold'
+                        : 'bg-noir-gray-50 hover:bg-noir-gray-100 text-noir-gray-700'
+                    }`}
+                  >
+                    <div className="text-sm font-serif">{file.label}</div>
+                    <div className="text-xs text-noir-gray-500 font-mono truncate">
+                      {file.path}
+                    </div>
+                    <div className="text-[11px] text-noir-gray-400 mt-1">
+                      {new Date(file.lastModified).toLocaleTimeString()}
+                    </div>
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
           {/* Editor */}
           <div className="col-span-9 bg-white rounded-lg shadow-md p-6 border border-noir-gray-200">
-            {selectedFile && editedContent ? (
+            {selectedFile && selectedFileData ? (
               <>
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-serif font-semibold text-noir-black">
-                    {selectedFile}
+                    {selectedFileData.label}
+                    <span className="block text-sm font-mono text-noir-gray-500 font-normal">
+                      {selectedFile}
+                    </span>
                   </h2>
                   {hasChanges && (
                     <span className="text-sm text-yellow-600 font-sans font-semibold flex items-center gap-2">
@@ -502,11 +562,16 @@ export default function ContentEditor() {
                   )}
                 </div>
                 <textarea
-                  value={JSON.stringify(editedContent, null, 2)}
+                  value={editorText}
                   onChange={(e) => handleContentChange(e.target.value)}
                   className="w-full h-[600px] px-4 py-3 border border-noir-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-noir-gold focus:border-transparent font-mono text-sm"
                   spellCheck={false}
+                  disabled={!selectedFileData}
+                  aria-invalid={Boolean(jsonError)}
                 />
+                {jsonError && (
+                  <p className="mt-2 text-sm text-red-600">{jsonError}</p>
+                )}
               </>
             ) : (
               <div className="flex items-center justify-center h-[600px] text-noir-gray-500">

@@ -9,8 +9,9 @@ import {
 import { CommonModule } from "@angular/common";
 // Angular doesn't support CSS modules import like React/Vue
 // We'll use the styles directly in the component
-import { heroTemplate, TemplateRenderer } from "@jxion/core";
-import type { HeroProps } from "@jxion/shared";
+// NOTE: Temporarily removed @jxion/core import due to Angular build issue
+// import { heroTemplate, TemplateRenderer } from "@jxion/core";
+// import type { HeroProps } from "@jxion/shared";
 
 /**
  * Hero Component - Angular Implementation

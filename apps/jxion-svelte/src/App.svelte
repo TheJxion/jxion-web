@@ -1,19 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import Layout from './components/Layout.svelte'
   import Header from './components/Header.svelte'
   import Hero from './components/Hero.svelte'
   import Section from './components/Section.svelte'
   import Footer from './components/Footer.svelte'
   import Modal from './components/Modal.svelte'
-  import { messageService, greetingService } from '@jxion/core'
   
-  let messages: Array<{ id: string; user: string; message: string }> = []
-  let greeting: { message: string } | null = null
-  let isLoadingMessages = false
-  let isLoadingGreeting = false
-  let messagesError: string | null = null
-  let greetingError: string | null = null
   let modalOpen = false
   let mobileMenuOpen = false
 
@@ -78,29 +70,24 @@
     </div>
   `
 
-  $: backendIntegrationContent = `
-    <div class="backend-integration">
-      ${isLoading ? '<div class="loading">Loading backend data...</div>' : ''}
-      ${error ? `<div class="error">Error: ${error}</div>` : ''}
-      ${greeting ? `
-        <div class="card">
-          <h3>Greeting</h3>
-          <p>From tRPC Backend</p>
-          <p>${greeting.message}</p>
-          <div class="card-stats">
-            <span class="stats-value">API</span>
-            <span class="stats-label">Connected</span>
-          </div>
+  const templateSystemContent = `
+    <div class="template-system">
+      <div class="card">
+        <h3>Template Rendering</h3>
+        <p>Variable Substitution</p>
+        <p>All components use HTML templates with {{variable}} substitution from @jxion-core.</p>
+        <div class="card-stats">
+          <span class="stats-value">⚡</span>
+          <span class="stats-label">Fast</span>
         </div>
-      ` : ''}
-      <div class="messages-section">
-        <h3>Messages (${messages.length})</h3>
-        <div class="messages">
-          ${messages.map(message => `
-            <div class="message">
-              <strong>${message.user}:</strong> ${message.message}
-            </div>
-          `).join('')}
+      </div>
+      <div class="card">
+        <h3>Framework Adapters</h3>
+        <p>Multi-Framework Support</p>
+        <p>Automatic detection and adaptation for React, Vue, Svelte, and SolidJS.</p>
+        <div class="card-stats">
+          <span class="stats-value">4+</span>
+          <span class="stats-label">Frameworks</span>
         </div>
       </div>
     </div>
@@ -141,38 +128,6 @@
   const handleModalClose = () => {
     modalOpen = false
   }
-
-  async function fetchMessages() {
-    try {
-      isLoadingMessages = true
-      messagesError = null
-      messages = await messageService.getMessages()
-    } catch (err) {
-      messagesError = (err as any)?.message ?? 'Failed to fetch messages'
-    } finally {
-      isLoadingMessages = false
-    }
-  }
-
-  async function fetchGreeting() {
-    try {
-      isLoadingGreeting = true
-      greetingError = null
-      greeting = await greetingService.getGreeting()
-    } catch (err) {
-      greetingError = (err as any)?.message ?? 'Failed to fetch greeting'
-    } finally {
-      isLoadingGreeting = false
-    }
-  }
-
-  onMount(() => {
-    fetchGreeting()
-    fetchMessages()
-  })
-
-  $: isLoading = isLoadingMessages || isLoadingGreeting
-  $: error = messagesError || greetingError
 </script>
 
 <Layout params={{ lang: 'en', theme: 'light' }}>
@@ -188,7 +143,7 @@
   <Hero
     title="Jxion Framework Demo"
     subtitle="Svelte Integration"
-    description="Comprehensive demo showcasing all components, utilities, hooks, and engine from @jxion-core with proper template rendering and styling."
+    description="Comprehensive demo showcasing all components, utilities, and rendering engine from @jxion-core with proper template rendering and styling."
     ctaText="Explore Components"
     statsValue="10+"
     statsLabel="Components"
@@ -205,11 +160,11 @@
   />
 
   <Section
-    title="Backend Integration"
-    subtitle="tRPC & Services"
-    description="Demonstrating backend integration with useMessages and useGreetings hooks"
+    title="Template System"
+    subtitle="HTML Templates & Renderers"
+    description="Showcasing the template rendering system with variable substitution and framework adapters"
     variant="accent"
-    content={backendIntegrationContent}
+    content={templateSystemContent}
   />
 
   <Section
@@ -246,5 +201,4 @@
   .app {
     min-height: 100vh;
   }
-
 </style>

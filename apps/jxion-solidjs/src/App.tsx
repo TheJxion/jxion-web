@@ -1,61 +1,49 @@
-import { createSignal, createEffect, onMount } from "solid-js";
-import { Layout } from "./components/Layout";
-import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
-import { Section } from "./components/Section";
-import { Footer } from "./components/Footer";
-import { Modal } from "./components/Modal";
-import { messageService, greetingService } from "@jxion/core";
+import { createSignal } from 'solid-js';
+import { Layout } from './components/Layout';
+import { Header } from './components/Header';
+import { Hero } from './components/Hero';
+import { Section } from './components/Section';
+import { Footer } from './components/Footer';
+import { Modal } from './components/Modal';
 
 export default function App() {
-  const [messages, setMessages] = createSignal<
-    Array<{ id: string; user: string; message: string }>
-  >([]);
-  const [greeting, setGreeting] = createSignal<{ message: string } | null>(
-    null
-  );
-  const [isLoadingMessages, setIsLoadingMessages] = createSignal(false);
-  const [isLoadingGreeting, setIsLoadingGreeting] = createSignal(false);
-  const [messagesError, setMessagesError] = createSignal<string | null>(null);
-  const [greetingError, setGreetingError] = createSignal<string | null>(null);
   const [modalOpen, setModalOpen] = createSignal(false);
-  const [inputValue, setInputValue] = createSignal("");
   const [mobileMenuOpen, setMobileMenuOpen] = createSignal(false);
 
   const navItems = [
-    { text: "Home", href: "/", active: true },
-    { text: "Components", href: "/components" },
-    { text: "Documentation", href: "/docs" },
+    { text: 'Home', href: '/', active: true },
+    { text: 'Components', href: '/components' },
+    { text: 'Documentation', href: '/docs' },
   ];
 
   const socialLinks = [
-    { href: "#", icon: "🐙" },
-    { href: "#", icon: "📦" },
-    { href: "#", icon: "💬" },
+    { href: '#', icon: '🐙' },
+    { href: '#', icon: '📦' },
+    { href: '#', icon: '💬' },
   ];
 
   const footerSections = [
     {
-      title: "Components",
+      title: 'Components',
       links: [
-        { text: "Hero", href: "#hero" },
-        { text: "Card", href: "#card" },
-        { text: "Button", href: "#button" },
+        { text: 'Hero', href: '#hero' },
+        { text: 'Card', href: '#card' },
+        { text: 'Button', href: '#button' },
       ],
     },
     {
-      title: "Frameworks",
+      title: 'Frameworks',
       links: [
-        { text: "React", href: "#react" },
-        { text: "Vue", href: "#vue" },
-        { text: "Svelte", href: "#svelte" },
+        { text: 'React', href: '#react' },
+        { text: 'Vue', href: '#vue' },
+        { text: 'Svelte', href: '#svelte' },
       ],
     },
   ];
 
   const legalLinks = [
-    { text: "Privacy Policy", href: "#privacy" },
-    { text: "Terms of Service", href: "#terms" },
+    { text: 'Privacy Policy', href: '#privacy' },
+    { text: 'Terms of Service', href: '#terms' },
   ];
 
   const componentCount = 10;
@@ -83,47 +71,24 @@ export default function App() {
     </div>
   `;
 
-  const backendIntegrationContent = () => `
-    <div class="backend-integration">
-      ${
-        isLoadingMessages() || isLoadingGreeting()
-          ? '<div class="loading">Loading backend data...</div>'
-          : ""
-      }
-      ${
-        messagesError() || greetingError()
-          ? `<div class="error">Error: ${
-              messagesError() || greetingError()
-            }</div>`
-          : ""
-      }
-      ${
-        greeting()
-          ? `
-        <div class="card">
-          <h3>Greeting</h3>
-          <p>From tRPC Backend</p>
-          <p>${greeting()!.message}</p>
-          <div class="card-stats">
-            <span class="stats-value">API</span>
-            <span class="stats-label">Connected</span>
-          </div>
+  const templateSystemContent = () => `
+    <div class="template-system">
+      <div class="card">
+        <h3>Template Rendering</h3>
+        <p>Variable Substitution</p>
+        <p>All components use HTML templates with {{variable}} substitution from @jxion-core.</p>
+        <div class="card-stats">
+          <span class="stats-value">⚡</span>
+          <span class="stats-label">Fast</span>
         </div>
-      `
-          : ""
-      }
-      <div class="messages-section">
-        <h3>Messages (${messages().length})</h3>
-        <div class="messages">
-          ${messages()
-            .map(
-              (message) => `
-            <div class="message">
-              <strong>${message.user}:</strong> ${message.message}
-            </div>
-          `
-            )
-            .join("")}
+      </div>
+      <div class="card">
+        <h3>Framework Adapters</h3>
+        <p>Multi-Framework Support</p>
+        <p>Automatic detection and adaptation for React, Vue, Svelte, and SolidJS.</p>
+        <div class="card-stats">
+          <span class="stats-value">4+</span>
+          <span class="stats-label">Frameworks</span>
         </div>
       </div>
     </div>
@@ -134,7 +99,7 @@ export default function App() {
       <div class="card">
         <h3>Template Renderer</h3>
         <p>Dynamic Processing</p>
-        <p>Framework: SolidJS | Version: 1.8.0</p>
+        <p>Framework: SolidJS | Version: 1.0.0</p>
         <div class="card-stats">
           <span class="stats-value">⚡</span>
           <span class="stats-label">Fast</span>
@@ -153,16 +118,8 @@ export default function App() {
   `;
 
   const handleCtaClick = () => {
-    console.log("CTA clicked!");
+    console.log('CTA clicked!');
     setModalOpen(true);
-  };
-
-  const handleButtonClick = () => {
-    console.log("Button clicked!");
-  };
-
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
   };
 
   const handleMobileToggle = () => {
@@ -173,39 +130,8 @@ export default function App() {
     setModalOpen(false);
   };
 
-  const fetchMessages = async () => {
-    try {
-      setIsLoadingMessages(true);
-      setMessagesError(null);
-      const data = await messageService.getMessages();
-      setMessages(data);
-    } catch (err: any) {
-      setMessagesError(err?.message ?? "Failed to fetch messages");
-    } finally {
-      setIsLoadingMessages(false);
-    }
-  };
-
-  const fetchGreeting = async () => {
-    try {
-      setIsLoadingGreeting(true);
-      setGreetingError(null);
-      const data = await greetingService.getGreeting();
-      setGreeting(data);
-    } catch (err: any) {
-      setGreetingError(err?.message ?? "Failed to fetch greeting");
-    } finally {
-      setIsLoadingGreeting(false);
-    }
-  };
-
-  onMount(() => {
-    fetchGreeting();
-    fetchMessages();
-  });
-
   return (
-    <Layout params={{ lang: "en", theme: "light" }}>
+    <Layout params={{ lang: 'en', theme: 'light' }}>
       <Header
         logoText="Jxion Framework"
         logoHref="/"
@@ -218,7 +144,7 @@ export default function App() {
       <Hero
         title="Jxion Framework Demo"
         subtitle="SolidJS Integration"
-        description="Comprehensive demo showcasing all components, utilities, hooks, and engine from @jxion-core with proper template rendering and styling."
+        description="Comprehensive demo showcasing all components, utilities, and rendering engine from @jxion-core with proper template rendering and styling."
         ctaText="Explore Components"
         statsValue="10+"
         statsLabel="Components"
@@ -235,11 +161,11 @@ export default function App() {
       />
 
       <Section
-        title="Backend Integration"
-        subtitle="tRPC & Services"
-        description="Demonstrating backend integration with useMessages and useGreetings hooks"
+        title="Template System"
+        subtitle="HTML Templates & Renderers"
+        description="Showcasing the template rendering system with variable substitution and framework adapters"
         variant="accent"
-        content={backendIntegrationContent()}
+        content={templateSystemContent()}
       />
 
       <Section

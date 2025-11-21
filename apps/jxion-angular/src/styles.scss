@@ -1,5 +1,11 @@
 /* Global styles */
-@import "@jxion/design/src/tokens/design-tokens.scss";
+/* Simplified - using inline CSS variables instead of full design-tokens.scss */
+/* Full import causes Angular build issues with index.html generation */
+
+:root {
+  --color-background-primary: #000000;
+  --color-text-primary: #ffffff;
+}
 
 /* Reset and base styles */
 * {
@@ -9,8 +15,8 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

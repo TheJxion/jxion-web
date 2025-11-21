@@ -12,7 +12,7 @@
     <Hero
       title="Jxion Framework Demo"
       subtitle="Vue Integration"
-      description="Comprehensive demo showcasing all components, utilities, hooks, and engine from @jxion-core with proper template rendering and styling."
+      description="Comprehensive demo showcasing all components, utilities, and rendering engine from @jxion-core with proper template rendering and styling."
       cta-text="Explore Components"
       stats-value="10+"
       stats-label="Components"
@@ -29,11 +29,11 @@
     />
 
     <Section
-      title="Backend Integration"
-      subtitle="tRPC & Services"
-      description="Demonstrating backend integration with useMessages and useGreetings hooks"
+      title="Template System"
+      subtitle="HTML Templates & Renderers"
+      description="Showcasing the template rendering system with variable substitution and framework adapters"
       variant="accent"
-      :content="backendIntegrationContent"
+      :content="templateSystemContent"
     />
 
     <Section
@@ -68,29 +68,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { ref } from "vue";
 import Layout from "./components/Layout.vue";
 import Header from "./components/Header.vue";
 import Hero from "./components/Hero.vue";
-import Card from "./components/Card.vue";
-import Input from "./components/Input.vue";
-import CTA from "./components/CTA.vue";
 import Section from "./components/Section.vue";
 import Footer from "./components/Footer.vue";
 import Modal from "./components/Modal.vue";
-import { messageService, greetingService } from "@jxion/core";
-
-// Global state management
-const messages = ref<Array<{ id: string; user: string; message: string }>>([]);
-const greeting = ref<{ message: string } | null>(null);
-const isLoadingMessages = ref(false);
-const isLoadingGreeting = ref(false);
-const messagesError = ref<string | null>(null);
-const greetingError = ref<string | null>(null);
 
 // Local state
 const modalOpen = ref(false);
-const inputValue = ref("");
 const mobileMenuOpen = ref(false);
 
 // Navigation data
@@ -130,11 +117,9 @@ const legalLinks = ref([
   { text: "Terms of Service", href: "#terms" },
 ]);
 
-const componentCount = ref(10);
+const componentCount = 10;
 
-// HTML content for sections (using templates from @jxion-core)
-const componentShowcaseContent = computed(
-  () => `
+const componentShowcaseContent = `
   <div class="components-grid">
     <div class="card">
       <h3>Card Component</h3>
@@ -155,53 +140,32 @@ const componentShowcaseContent = computed(
       </div>
     </div>
   </div>
-`
-);
+`;
 
-const backendIntegrationContent = computed(
-  () => `
-  <div class="backend-integration">
-    ${
-      isLoading.value
-        ? '<div class="loading">Loading backend data...</div>'
-        : ""
-    }
-    ${error.value ? `<div class="error">Error: ${error.value}</div>` : ""}
-    ${
-      greeting.value
-        ? `
-      <div class="card">
-        <h3>Greeting</h3>
-        <p>From tRPC Backend</p>
-        <p>${greeting.value.message}</p>
-        <div class="card-stats">
-          <span class="stats-value">API</span>
-          <span class="stats-label">Connected</span>
-        </div>
+const templateSystemContent = `
+  <div class="template-system">
+    <div class="card">
+      <h3>Template Rendering</h3>
+      <p>Variable Substitution</p>
+      <p>All components use HTML templates with {{variable}} substitution from @jxion-core.</p>
+      <div class="card-stats">
+        <span class="stats-value">⚡</span>
+        <span class="stats-label">Fast</span>
       </div>
-    `
-        : ""
-    }
-    <div class="messages-section">
-      <h3>Messages (${messages.value.length})</h3>
-      <div class="messages">
-        ${messages.value
-          .map(
-            (message) => `
-          <div class="message">
-            <strong>${message.user}:</strong> ${message.message}
-          </div>
-        `
-          )
-          .join("")}
+    </div>
+    <div class="card">
+      <h3>Framework Adapters</h3>
+      <p>Multi-Framework Support</p>
+      <p>Automatic detection and adaptation for React, Vue, Svelte, and SolidJS.</p>
+      <div class="card-stats">
+        <span class="stats-value">4+</span>
+        <span class="stats-label">Frameworks</span>
       </div>
     </div>
   </div>
-`
-);
+`;
 
-const utilitiesDemoContent = computed(
-  () => `
+const utilitiesDemoContent = `
   <div class="utilities-demo">
     <div class="card">
       <h3>Template Renderer</h3>
@@ -215,55 +179,19 @@ const utilitiesDemoContent = computed(
     <div class="card">
       <h3>Component Registry</h3>
       <p>Available Components</p>
-      <p>Total Components: ${componentCount.value}</p>
+      <p>Total Components: ${componentCount}</p>
       <div class="card-stats">
         <span class="stats-value">10+</span>
         <span class="stats-label">Components</span>
       </div>
     </div>
   </div>
-`
-);
-
-// Backend functions
-const fetchMessages = async () => {
-  try {
-    isLoadingMessages.value = true;
-    messagesError.value = null;
-    const data = await messageService.getMessages();
-    messages.value = data;
-  } catch (err: any) {
-    messagesError.value = err?.message ?? "Failed to fetch messages";
-  } finally {
-    isLoadingMessages.value = false;
-  }
-};
-
-const fetchGreeting = async () => {
-  try {
-    isLoadingGreeting.value = true;
-    greetingError.value = null;
-    const data = await greetingService.getGreeting();
-    greeting.value = data;
-  } catch (err: any) {
-    greetingError.value = err?.message ?? "Failed to fetch greeting";
-  } finally {
-    isLoadingGreeting.value = false;
-  }
-};
+`;
 
 // Event handlers
 const handleCtaClick = () => {
   console.log("CTA clicked!");
   modalOpen.value = true;
-};
-
-const handleButtonClick = () => {
-  console.log("Button clicked!");
-};
-
-const handleInputChange = (value: string) => {
-  inputValue.value = value;
 };
 
 const handleMobileToggle = () => {
@@ -273,19 +201,10 @@ const handleMobileToggle = () => {
 const handleModalClose = () => {
   modalOpen.value = false;
 };
-
-// Computed
-const isLoading = computed(
-  () => isLoadingMessages.value || isLoadingGreeting.value
-);
-const error = computed(() => messagesError.value || greetingError.value);
-
-onMounted(() => {
-  fetchGreeting();
-  fetchMessages();
-});
 </script>
 
 <style scoped>
-/* All styling comes from @jxion-design SCSS modules. */
+.app {
+  min-height: 100vh;
+}
 </style>

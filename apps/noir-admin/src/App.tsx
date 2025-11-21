@@ -19,31 +19,34 @@ import StylesEditor from './pages/StylesEditor';
 import TemplatesEditor from './pages/TemplatesEditor';
 import ComponentGenerator from './pages/ComponentGenerator';
 import styles from './styles/App.module.scss';
+import adminTheme from '@jxion/design/styles/modules/AdminTheme.module.scss';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <Router>
-      <div className={styles.app}>
+      <div className={`${adminTheme.adminTheme} ${styles.app}`}>
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className={styles.mainContent}>
           <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
           <main className={styles.main}>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/finance" element={<Finance />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/translations" element={<Translations />} />
-              <Route path="/content" element={<ContentEditor />} />
-              <Route path="/styles" element={<StylesEditor />} />
-              <Route path="/templates" element={<TemplatesEditor />} />
-              <Route path="/components" element={<ComponentGenerator />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <div className={styles.contentShell}>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/finance" element={<Finance />} />
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/translations" element={<Translations />} />
+                <Route path="/content" element={<ContentEditor />} />
+                <Route path="/styles" element={<StylesEditor />} />
+                <Route path="/templates" element={<TemplatesEditor />} />
+                <Route path="/components" element={<ComponentGenerator />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </div>
           </main>
         </div>
       </div>

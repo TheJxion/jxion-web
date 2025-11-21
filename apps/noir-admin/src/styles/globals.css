@@ -12,8 +12,9 @@ body {
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-noir-background-primary);
-  color: var(--color-noir-text);
+  background-color: var(--color-noir-background-primary, #f7f7f7);
+  color: var(--color-noir-text, #111827);
+  line-height: 1.5;
 }
 
 h1,

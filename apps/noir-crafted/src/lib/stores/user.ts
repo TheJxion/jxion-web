@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store';
-import { browser } from '$app/environment';
+
+// SSR-safe browser check
+const isBrowser = typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 
 export interface User {
 	id: string;
@@ -10,25 +12,29 @@ export interface User {
 function createUserStore() {
 	const { subscribe, set, update } = writable<User | null>(null);
 
-	// Load from localStorage on init
-	if (browser) {
-		const stored = localStorage.getItem('noir-user');
-		if (stored) {
-			try {
+	// Load from localStorage on init (client-side only)
+	if (isBrowser) {
+		try {
+			const stored = localStorage.getItem('noir-user');
+			if (stored) {
 				set(JSON.parse(stored));
-			} catch (e) {
-				console.error('Failed to load user from localStorage', e);
 			}
+		} catch (e) {
+			console.error('Failed to load user from localStorage', e);
 		}
 	}
 
-	// Save to localStorage on changes
-	if (browser) {
+	// Save to localStorage on changes (client-side only)
+	if (isBrowser) {
 		subscribe((user) => {
-			if (user) {
-				localStorage.setItem('noir-user', JSON.stringify(user));
-			} else {
-				localStorage.removeItem('noir-user');
+			try {
+				if (user) {
+					localStorage.setItem('noir-user', JSON.stringify(user));
+				} else {
+					localStorage.removeItem('noir-user');
+				}
+			} catch (e) {
+				console.error('Failed to save user to localStorage', e);
 			}
 		});
 	}

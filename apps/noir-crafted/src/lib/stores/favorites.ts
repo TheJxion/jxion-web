@@ -1,26 +1,33 @@
-import { writable } from "svelte/store";
-import { browser } from "$app/environment";
-import type { Product } from "$types";
+import { writable } from 'svelte/store';
+import type { Product } from '$types';
+
+// SSR-safe browser check
+const isBrowser =
+  typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 
 function createFavoritesStore() {
   const { subscribe, set, update } = writable<Product[]>([]);
 
-  // Load from localStorage on init
-  if (browser) {
-    const stored = localStorage.getItem("noir-favorites");
-    if (stored) {
-      try {
+  // Load from localStorage on init (client-side only)
+  if (isBrowser) {
+    try {
+      const stored = localStorage.getItem('noir-favorites');
+      if (stored) {
         set(JSON.parse(stored));
-      } catch (e) {
-        console.error("Failed to load favorites from localStorage", e);
       }
+    } catch (e) {
+      console.error('Failed to load favorites from localStorage', e);
     }
   }
 
-  // Save to localStorage on changes
-  if (browser) {
+  // Save to localStorage on changes (client-side only)
+  if (isBrowser) {
     subscribe((items) => {
-      localStorage.setItem("noir-favorites", JSON.stringify(items));
+      try {
+        localStorage.setItem('noir-favorites', JSON.stringify(items));
+      } catch (e) {
+        console.error('Failed to save favorites to localStorage', e);
+      }
     });
   }
 

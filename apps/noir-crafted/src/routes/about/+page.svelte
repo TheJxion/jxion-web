@@ -70,7 +70,7 @@
   </div>
 {:else if sectionProps}
   <!-- Use Jxion Layout component -->
-  <Layout params={{ lang, theme: 'light' }}>
+  <Layout lang={lang} theme="light">
     <!-- Use Jxion Section component with dynamic content -->
     <Section
       title={sectionProps.title}

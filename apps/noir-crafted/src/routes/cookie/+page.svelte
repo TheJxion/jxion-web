@@ -62,7 +62,7 @@
     <button on:click={refreshContentStore}>Retry</button>
   </div>
 {:else if sectionProps}
-  <Layout params={{ lang, theme: 'light' }}>
+  <Layout lang={lang} theme="light">
     <Section
       title={sectionProps.title}
       subtitle={sectionProps.subtitle}

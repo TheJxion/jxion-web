@@ -69,7 +69,7 @@
   </div>
 {:else if faqProps}
   <!-- Use Jxion Layout component -->
-  <Layout params={{ lang, theme: 'light' }}>
+  <Layout lang={lang} theme="light">
     <!-- Use Jxion FAQ component with dynamic content -->
     <FAQ
       title={faqProps.title}

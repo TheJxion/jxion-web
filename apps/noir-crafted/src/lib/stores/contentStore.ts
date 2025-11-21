@@ -1,8 +1,17 @@
 import { writable, type Readable } from 'svelte/store';
-import type { ContentUpdate } from '@jxion/core';
-import { content as defaultContent, type Content } from '$lib/i18n/content';
+import { content as defaultContent } from '$lib/i18n/content';
 import { createNoirContentManager } from '$lib/utils/noir-content-manager';
 import { DEFAULT_CONTENT_PATH } from '$lib/config/env';
+
+// Type import deferred to avoid SSR issues
+type ContentUpdate = {
+  path: string;
+  content: unknown;
+  timestamp: number;
+};
+
+// Infer Content type from defaultContent
+type Content = typeof defaultContent;
 
 interface ContentState {
   content: Content;
@@ -86,19 +95,46 @@ export const contentStore: Readable<ContentState> = {
 };
 
 export async function ensureContentStore() {
+  // Only initialize on client side
+  if (typeof window === 'undefined') {
+    // On server, just set default content
+    state.set({
+      content: defaultContent,
+      loading: false,
+      error: null,
+      lastUpdate: Date.now(),
+    });
+    return;
+  }
+
   if (initialized) return;
   initialized = true;
 
-  contentManager = createNoirContentManager({
-    enableLiveUpdates: true,
-    updateInterval: 5000,
-    onUpdate: handleUpdate,
-  });
+  try {
+    contentManager = await createNoirContentManager({
+      enableLiveUpdates: true,
+      updateInterval: 5000,
+      onUpdate: handleUpdate,
+    });
 
-  await loadContent();
-
-  contentManager.startLiveUpdates();
-  unsubscribeManager = contentManager.onUpdate(handleUpdate);
+    if (contentManager) {
+      await loadContent();
+      contentManager.startLiveUpdates();
+      unsubscribeManager = contentManager.onUpdate(handleUpdate);
+    }
+  } catch (error) {
+    console.error(
+      '[contentStore] Failed to initialize content manager:',
+      error,
+    );
+    // Fall back to default content
+    state.set({
+      content: defaultContent,
+      loading: false,
+      error: null,
+      lastUpdate: Date.now(),
+    });
+  }
 }
 
 export async function refreshContentStore() {

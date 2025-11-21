@@ -85,7 +85,7 @@
   </div>
 {:else if heroProps}
   <!-- Use Jxion Layout component (matching jxion-react pattern) -->
-  <Layout params={{ lang, theme: 'light' }}>
+  <Layout lang={lang} theme="light">
     <!-- Use Jxion Hero component with dynamic content -->
     <Hero
       title={heroProps.title}

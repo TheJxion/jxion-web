@@ -5,6 +5,7 @@
 	import { getProductsByCategory } from '$stores/products';
 	import { content } from '$lib/i18n';
 	import type { ProductCategory } from '$types';
+	import styles from '@jxion/design/styles/modules/CollectionNoir.module.scss';
 
 	// Get category from URL
 	$: categoryParam = $page.params.category;
@@ -34,13 +35,13 @@
 </svelte:head>
 
 <!-- Collection Header -->
-<section class="py-12 md:py-16 bg-white border-b border-noir-gray-200">
-	<div class="container-custom">
-		<div class="text-center space-y-4">
-			<h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-noir-black">
+<section class={styles.collectionPage__header}>
+	<div class={styles.collectionPage__container}>
+		<div class={styles.collectionPage__headerContent}>
+			<h1 class={styles.collectionPage__title}>
 				{category}
 			</h1>
-			<p class="text-lg text-noir-gray-600 font-sans max-w-2xl mx-auto">
+			<p class={styles.collectionPage__description}>
 				{pageDescription}
 			</p>
 		</div>
@@ -56,16 +57,13 @@
 		variant="grid"
 	/>
 {:else}
-	<section class="py-16 md:py-24 bg-white">
-		<div class="container-custom">
-			<div class="text-center space-y-4">
-				<p class="text-lg text-noir-gray-600 font-sans">
+	<section class={styles.collectionPage__empty}>
+		<div class={styles.collectionPage__container}>
+			<div class={styles.collectionPage__emptyContent}>
+				<p class={styles.collectionPage__emptyText}>
 					{content.ui.noProductsInCategory}
 				</p>
-				<a
-					href="/"
-					class="inline-block px-6 py-3 bg-noir-black text-white font-semibold rounded-full hover:bg-noir-gray-800 transition-colors"
-				>
+				<a href="/" class={styles.collectionPage__emptyLink}>
 					{content.ui.backToHome}
 				</a>
 			</div>

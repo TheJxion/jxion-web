@@ -20,7 +20,6 @@
 @import '@jxion/design/styles/modules/whyNoir.module.scss';
 @import '@jxion/design/styles/modules/motifs.module.scss';
 @import '@jxion/design/styles/modules/newsletter.module.scss';
-@import './lib/components/organisms/ContentEditor.module.scss';
 @use '@jxion/design/styles/_noir-variables.scss' as *;
 
 /* ImmersiveHero Styles - Canvas-Driven Background */
@@ -159,65 +158,54 @@
   }
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  * {
-    @apply border-noir-gray-200;
-  }
-
-  html {
-    @apply antialiased;
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply text-white font-sans;
-    font-family: 'Inter', system-ui, sans-serif;
-    background: radial-gradient(circle, #434343 0%, #000000 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    color: white; /* Ensure all text is white by default (matching reference) */
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif;
-    font-family: 'Playfair Display', 'Lora', serif;
-  }
+/* Base styles */
+* {
+  box-sizing: border-box;
 }
 
-@layer components {
-  .container-custom {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
-  }
-
-  /* Grid System - 12 columns */
-  .grid-12 {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-12 gap-4;
-  }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
-@layer utilities {
-  /* Text utilities */
-  .text-balance {
-    text-wrap: balance;
-  }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: radial-gradient(circle, #434343 0%, #000000 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
 
-  /* Motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Playfair Display', 'Lora', serif;
+  margin: 0;
+}
+
+/* Button full-width utility */
+.button--full-width {
+  width: 100%;
+}
+
+/* Text utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

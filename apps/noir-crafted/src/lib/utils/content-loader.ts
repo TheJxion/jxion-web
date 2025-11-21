@@ -5,9 +5,16 @@
  * Used across all noir-crafted pages for consistent content loading
  */
 
-import { type ContentUpdate } from '@jxion/core';
 import type { Locale } from '@jxion/i18n';
 import { createNoirContentManager } from '$lib/utils/noir-content-manager';
+
+// Local type definition to avoid importing @jxion/core during SSR
+type ContentUpdate = {
+  path: string;
+  content: unknown;
+  timestamp: number;
+  type?: string;
+};
 
 export interface ContentLoaderOptions {
   contentPath: string;
@@ -119,12 +126,25 @@ export function createContentLoader(
     }
   }
 
-  // Initialize content manager
-  contentManager = createNoirContentManager({
-    enableLiveUpdates,
-    updateInterval,
-    onUpdate: handleContentUpdate,
-  });
+  // Initialize content manager (client-side only, async)
+  // Note: This is async, so contentManager might be null initially
+  // The caller should handle this case
+  if (typeof window !== 'undefined') {
+    createNoirContentManager({
+      enableLiveUpdates,
+      updateInterval,
+      onUpdate: handleContentUpdate,
+    })
+      .then((manager) => {
+        if (manager) {
+          contentManager = manager;
+          loadContent();
+        }
+      })
+      .catch((err) => {
+        console.error('[ContentLoader] Failed to create content manager:', err);
+      });
+  }
 
   return {
     content,

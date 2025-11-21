@@ -1,0 +1,101 @@
+@use '../_noir-variables' as noir;
+
+.footerNoir {
+  background: #030303;
+  color: #f7f5ef;
+  padding: 4rem 0 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: noir.$breakpoint-xl;
+    padding-left: noir.$spacing-sm;
+    padding-right: noir.$spacing-sm;
+
+    @media (min-width: noir.$breakpoint-sm) {
+      padding-left: noir.$spacing-md;
+      padding-right: noir.$spacing-md;
+    }
+
+    @media (min-width: noir.$breakpoint-lg) {
+      padding-left: noir.$spacing-lg;
+      padding-right: noir.$spacing-lg;
+    }
+  }
+
+  &__brand {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h3 {
+      font-size: 1.75rem;
+      letter-spacing: 0.4em;
+      font-family: noir.$font-family-serif;
+      color: noir.$color-noir-white;
+      margin: 0;
+    }
+
+    p {
+      color: rgba(247, 245, 239, 0.7);
+      margin-top: 0.75rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      font-family: noir.$font-family-sans;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__column {
+    h4 {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      color: noir.$color-noir-white;
+      font-family: noir.$font-family-sans;
+      font-weight: noir.$font-weight-semibold;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      a {
+        color: rgba(247, 245, 239, 0.7);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 180ms ease;
+        font-family: noir.$font-family-sans;
+
+        &:hover {
+          color: #f0d58a;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.5rem;
+    text-align: center;
+    color: rgba(247, 245, 239, 0.6);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    font-family: noir.$font-family-sans;
+  }
+}
+

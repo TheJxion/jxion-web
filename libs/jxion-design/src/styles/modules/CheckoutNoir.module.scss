@@ -1,0 +1,340 @@
+@use '../_noir-variables' as noir;
+
+.checkout-page {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    noir.$color-noir-black 0%,
+    #1a1a1a 50%,
+    noir.$color-noir-black 100%
+  );
+  padding: 3rem 1rem;
+
+  &__container {
+    width: 100%;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 noir.$spacing-md;
+
+    @media (min-width: noir.$breakpoint-lg) {
+      padding: 0 noir.$spacing-xl;
+    }
+  }
+
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__title {
+    font-family: noir.$font-family-serif;
+    font-size: clamp(2.25rem, 5vw, 3.125rem);
+    color: noir.$color-noir-white;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__progress-step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__progress-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    font-weight: 700;
+
+    &--active {
+      background: linear-gradient(135deg, noir.$color-noir-gold, #ffa500);
+      color: noir.$color-noir-black;
+    }
+
+    &--inactive {
+      background-color: #374151;
+      color: #9ca3af;
+    }
+  }
+
+  &__progress-label {
+    font-size: 0.875rem;
+    color: #d1d5db;
+    font-family: noir.$font-family-sans;
+  }
+
+  &__progress-line {
+    width: 4rem;
+    height: 0.125rem;
+    transition: all 0.5s ease;
+
+    &--active {
+      background: linear-gradient(90deg, noir.$color-noir-gold, #ffa500);
+    }
+
+    &--inactive {
+      background-color: #374151;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    @media (min-width: noir.$breakpoint-lg) {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  &__form-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.5s ease-out;
+  }
+
+  &__form-title {
+    font-size: 1.5rem;
+    font-family: noir.$font-family-serif;
+    color: noir.$color-noir-white;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__form-title-accent {
+    width: 0.25rem;
+    height: 2rem;
+    background: linear-gradient(180deg, noir.$color-noir-gold, #ffa500);
+    border-radius: 0.125rem;
+  }
+
+  &__form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: noir.$breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__form-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-family: noir.$font-family-sans;
+    font-weight: 500;
+    color: #d1d5db;
+    margin-bottom: 0.5rem;
+  }
+
+  &__form-required {
+    color: noir.$color-noir-gold;
+  }
+
+  &__form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: noir.$radius-lg;
+    color: noir.$color-noir-white;
+    font-size: 1rem;
+    transition: all noir.$transition-fast;
+    font-family: noir.$font-family-sans;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: noir.$color-noir-gold;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    &--mono {
+      font-family: 'Courier New', monospace;
+      font-size: 1.125rem;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  &__form-textarea {
+    @extend .checkout-page__form-input;
+    resize: none;
+    min-height: 4.5rem;
+  }
+
+  &__form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  &__form-button {
+    flex: 1;
+  }
+
+  &__summary {
+    @media (min-width: noir.$breakpoint-lg) {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  &__summary-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  &__summary-title {
+    font-size: 1.25rem;
+    font-family: noir.$font-family-serif;
+    color: noir.$color-noir-white;
+    margin-bottom: 1.5rem;
+  }
+
+  &__summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__summary-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  &__summary-item-image {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: noir.$radius-lg;
+  }
+
+  &__summary-item-info {
+    flex: 1;
+  }
+
+  &__summary-item-name {
+    color: noir.$color-noir-white;
+    font-size: 0.875rem;
+    font-family: noir.$font-family-serif;
+    margin-bottom: 0.25rem;
+  }
+
+  &__summary-item-meta {
+    color: #9ca3af;
+    font-size: 0.75rem;
+  }
+
+  &__summary-item-price {
+    color: noir.$color-noir-gold;
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  &__summary-totals {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__summary-total-row {
+    display: flex;
+    justify-content: space-between;
+    color: #d1d5db;
+  }
+
+  &__summary-total-final {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__summary-total-label {
+    color: noir.$color-noir-white;
+    font-family: noir.$font-family-serif;
+    font-size: 1.125rem;
+  }
+
+  &__summary-total-value {
+    color: noir.$color-noir-gold;
+    font-family: noir.$font-family-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  &__review-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: noir.$radius-lg;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__review-title {
+    font-family: noir.$font-family-serif;
+    color: noir.$color-noir-white;
+    margin-bottom: 0.75rem;
+  }
+
+  &__review-text {
+    color: #d1d5db;
+    font-size: 0.875rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

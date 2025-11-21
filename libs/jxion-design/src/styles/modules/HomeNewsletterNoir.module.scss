@@ -1,0 +1,96 @@
+@use '../_noir-variables' as noir;
+
+.newsletterSection {
+  background: linear-gradient(135deg, rgba(240, 213, 138, 0.15), rgba(5, 5, 5, 0.9));
+  padding: 4rem 0;
+  color: #fefdf8;
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 760px;
+    padding-left: noir.$spacing-sm;
+    padding-right: noir.$spacing-sm;
+    text-align: center;
+
+    @media (min-width: noir.$breakpoint-sm) {
+      padding-left: noir.$spacing-md;
+      padding-right: noir.$spacing-md;
+    }
+
+    @media (min-width: noir.$breakpoint-lg) {
+      padding-left: noir.$spacing-lg;
+      padding-right: noir.$spacing-lg;
+    }
+  }
+
+  h2 {
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    font-family: noir.$font-family-serif;
+    margin-bottom: 1rem;
+    color: noir.$color-noir-white;
+  }
+
+  p {
+    color: rgba(254, 253, 248, 0.8);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-family: noir.$font-family-sans;
+  }
+}
+
+.newsletterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  input {
+    padding: 1rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(5, 5, 5, 0.7);
+    color: white;
+    font-size: 1rem;
+    transition: border-color 180ms ease;
+    font-family: noir.$font-family-sans;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(240, 213, 138, 0.8);
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 2.5rem;
+    background: #f0d58a;
+    color: #050505;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+    font-family: noir.$font-family-sans;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(240, 213, 138, 0.35);
+    }
+  }
+
+  @media (min-width: noir.$breakpoint-sm) {
+    flex-direction: row;
+    input {
+      flex: 1;
+    }
+
+    button {
+      flex-shrink: 0;
+    }
+  }
+}
+

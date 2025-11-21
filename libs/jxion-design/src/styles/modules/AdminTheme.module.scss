@@ -1,0 +1,27 @@
+@use '../_noir-variables' as noir;
+
+:global(:root) {
+  --admin-bg-primary: #f7f7f7;
+  --admin-bg-secondary: #ffffff;
+  --admin-surface: #ffffff;
+  --admin-border: #e5e7eb;
+  --admin-text-primary: #111827;
+  --admin-text-secondary: #475569;
+  --admin-shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --admin-shadow-strong: 0 25px 60px rgba(15, 23, 42, 0.12);
+
+  --color-noir-background-primary: var(--admin-bg-primary);
+  --color-noir-background-secondary: var(--admin-bg-secondary);
+  --color-noir-text: var(--admin-text-primary);
+  --color-noir-text-muted: var(--admin-text-secondary);
+  --color-noir-border: var(--admin-border);
+  --color-noir-white: #ffffff;
+  --color-noir-secondary: #{noir.$color-noir-gold};
+}
+
+.adminTheme {
+  min-height: 100vh;
+  background-color: var(--admin-bg-primary);
+  color: var(--admin-text-primary);
+  font-family: noir.$font-family-sans;
+}

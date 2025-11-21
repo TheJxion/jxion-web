@@ -1,0 +1,75 @@
+@use '../_noir-variables' as noir;
+
+.whySection {
+  background: #050505;
+  padding: 4.5rem 0;
+  color: #f7f5ef;
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: noir.$breakpoint-xl;
+    padding-left: noir.$spacing-sm;
+    padding-right: noir.$spacing-sm;
+
+    @media (min-width: noir.$breakpoint-sm) {
+      padding-left: noir.$spacing-md;
+      padding-right: noir.$spacing-md;
+    }
+
+    @media (min-width: noir.$breakpoint-lg) {
+      padding-left: noir.$spacing-lg;
+      padding-right: noir.$spacing-lg;
+    }
+  }
+
+  h2 {
+    text-align: center;
+    font-family: noir.$font-family-serif;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    margin-bottom: 3rem;
+    color: noir.$color-noir-white;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.whyCard {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(5, 5, 5, 0.5));
+  min-height: 220px;
+  transition: border-color noir.$transition-normal;
+
+  &:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  &__icon {
+    display: inline-flex;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: noir.$color-noir-gold;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.04em;
+    color: noir.$color-noir-white;
+    font-family: noir.$font-family-serif;
+  }
+
+  p {
+    color: rgba(247, 245, 239, 0.75);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    font-family: noir.$font-family-sans;
+  }
+}
+

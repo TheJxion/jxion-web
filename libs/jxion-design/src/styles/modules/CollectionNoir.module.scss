@@ -1,0 +1,79 @@
+@use '../_noir-variables' as noir;
+
+.collection-page {
+  &__container {
+    width: 100%;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 noir.$spacing-md;
+
+    @media (min-width: noir.$breakpoint-lg) {
+      padding: 0 noir.$spacing-xl;
+    }
+  }
+
+  &__header {
+    padding: 3rem 0;
+    background-color: noir.$color-noir-white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    @media (min-width: noir.$breakpoint-md) {
+      padding: 4rem 0;
+    }
+  }
+
+  &__header-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-family: noir.$font-family-serif;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    color: noir.$color-noir-black;
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 1.125rem;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: noir.$font-family-sans;
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  &__empty {
+    padding: 4rem 0;
+    background-color: noir.$color-noir-white;
+    text-align: center;
+  }
+
+  &__empty-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__empty-text {
+    font-size: 1.125rem;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: noir.$font-family-sans;
+  }
+
+  &__empty-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: noir.$color-noir-black;
+    color: noir.$color-noir-white;
+    font-weight: 600;
+    border-radius: noir.$radius-full;
+    text-decoration: none;
+    transition: background-color noir.$transition-fast;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+  }
+}

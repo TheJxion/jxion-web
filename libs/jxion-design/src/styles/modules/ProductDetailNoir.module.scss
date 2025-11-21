@@ -1,0 +1,347 @@
+@use '../_noir-variables' as noir;
+
+.productDetail {
+  padding: noir.$spacing-lg 0;
+  background: #020202;
+  color: #f7f5ef;
+
+  @media (min-width: noir.$breakpoint-md) {
+    padding: noir.$spacing-2xl 0;
+  }
+
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 noir.$spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-2xl;
+
+    @media (min-width: noir.$breakpoint-md) {
+      padding: 0 noir.$spacing-lg;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: noir.$spacing-xl;
+
+    @media (min-width: noir.$breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: noir.$spacing-2xl;
+    }
+  }
+
+  &__gallery {
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-md;
+  }
+
+  &__mainImage {
+    aspect-ratio: 1;
+    background-color: #1a1a1a;
+    border-radius: noir.$radius-lg;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  &__mainImageImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  &__thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: noir.$spacing-sm;
+  }
+
+  &__thumbnailButton {
+    aspect-ratio: 1;
+    background-color: #1a1a1a;
+    border-radius: noir.$radius-md;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color noir.$transition-fast;
+    padding: 0;
+
+    &--active {
+      border-color: rgba(212, 175, 55, 0.6);
+    }
+
+    &:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+  }
+
+  &__thumbnailImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-lg;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-sm;
+  }
+
+  &__category {
+    font-size: 0.875rem;
+    color: rgba(247, 245, 239, 0.6);
+    font-family: noir.$font-family-sans;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  &__title {
+    font-family: noir.$font-family-serif;
+    font-size: clamp(2.25rem, 5vw, 3.125rem);
+    color: noir.$color-noir-white;
+    margin: 0.5rem 0 0;
+  }
+
+  &__priceRow {
+    display: flex;
+    align-items: center;
+    gap: noir.$spacing-sm;
+  }
+
+  &__price {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #f0d58a;
+    font-family: noir.$font-family-serif;
+  }
+
+  &__stockBadge {
+    font-size: 0.875rem;
+    color: rgba(247, 245, 239, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__description {
+    font-size: 1.125rem;
+    color: rgba(247, 245, 239, 0.85);
+    font-family: noir.$font-family-sans;
+    line-height: 1.7;
+  }
+
+  &__actions {
+    padding-top: noir.$spacing-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-sm;
+  }
+
+  &__actionButton {
+    width: 100%;
+  }
+
+  &__favoriteButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: noir.$spacing-xs;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: noir.$radius-full;
+    background: transparent;
+    color: noir.$color-noir-white;
+    font-family: noir.$font-family-sans;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color noir.$transition-fast,
+      border-color noir.$transition-fast;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+  }
+
+  &__favoriteIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+  }
+
+  &__details {
+    padding-top: noir.$spacing-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-md;
+  }
+
+  &__detailSection {
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-xs;
+  }
+
+  &__detailTitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: noir.$color-noir-white;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  &__detailText {
+    color: rgba(247, 245, 239, 0.7);
+    font-family: noir.$font-family-sans;
+  }
+
+  &__related {
+    padding: noir.$spacing-2xl 0;
+    background: linear-gradient(180deg, #050505 0%, #0d0d0d 100%);
+  }
+
+  &__relatedTitle {
+    font-family: noir.$font-family-serif;
+    font-size: clamp(1.875rem, 4vw, 2.25rem);
+    color: noir.$color-noir-white;
+    text-align: center;
+    margin-bottom: noir.$spacing-xl;
+  }
+
+  &__relatedGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: noir.$spacing-lg;
+
+    @media (min-width: noir.$breakpoint-sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: noir.$breakpoint-lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__relatedCard {
+    display: block;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: noir.$radius-lg;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform noir.$transition-normal,
+      border-color noir.$transition-normal;
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212, 175, 55, 0.6);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &__relatedImage {
+    aspect-ratio: 1;
+    background-color: #1a1a1a;
+    overflow: hidden;
+  }
+
+  &__relatedImageImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform noir.$transition-normal;
+    display: block;
+
+    .productDetail__relatedCard:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__relatedInfo {
+    padding: noir.$spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-xs;
+  }
+
+  &__relatedName {
+    font-family: noir.$font-family-serif;
+    font-weight: 600;
+    color: noir.$color-noir-white;
+    transition: color noir.$transition-fast;
+
+    .productDetail__relatedCard:hover & {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  &__relatedPrice {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #f0d58a;
+    font-family: noir.$font-family-serif;
+  }
+
+  &__notFound {
+    padding: noir.$spacing-2xl 0;
+    background: #020202;
+    text-align: center;
+    color: #f7f5ef;
+  }
+
+  &__notFoundContent {
+    display: flex;
+    flex-direction: column;
+    gap: noir.$spacing-md;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  &__notFoundTitle {
+    font-family: noir.$font-family-serif;
+    font-size: clamp(2.25rem, 5vw, 3.125rem);
+    color: noir.$color-noir-white;
+  }
+
+  &__notFoundText {
+    font-size: 1.125rem;
+    color: rgba(247, 245, 239, 0.7);
+    font-family: noir.$font-family-sans;
+  }
+
+  &__notFoundLink {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: noir.$color-noir-black;
+    color: noir.$color-noir-white;
+    font-weight: 600;
+    border-radius: noir.$radius-full;
+    text-decoration: none;
+    transition: background-color noir.$transition-fast;
+    margin-top: noir.$spacing-sm;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+  }
+}

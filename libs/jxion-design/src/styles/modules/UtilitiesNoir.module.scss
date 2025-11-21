@@ -1,0 +1,22 @@
+@use '../_noir-variables' as noir;
+
+// Container utility (replacement for Tailwind's container-custom)
+.container-custom {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1440px;
+
+  @media (min-width: noir.$breakpoint-sm) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: noir.$breakpoint-lg) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+

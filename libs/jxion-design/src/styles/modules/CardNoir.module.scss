@@ -1,0 +1,40 @@
+@use '../_noir-variables' as noir;
+
+.card {
+  display: block;
+  border-radius: noir.$radius-lg;
+  transition: all noir.$transition-normal;
+
+  // Variants
+  &--default {
+    background-color: noir.$color-noir-white;
+  }
+
+  &--elevated {
+    background-color: noir.$color-noir-white;
+    box-shadow: noir.$shadow-lg;
+  }
+
+  &--outlined {
+    background-color: noir.$color-noir-white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  // Padding variants
+  &--padding-none {
+    padding: 0;
+  }
+
+  &--padding-sm {
+    padding: 1rem;
+  }
+
+  &--padding-md {
+    padding: 1.5rem;
+  }
+
+  &--padding-lg {
+    padding: 2rem;
+  }
+}
+

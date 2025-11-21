@@ -19,7 +19,7 @@ export interface ContentFile {
 }
 
 export interface ContentUpdate {
-  type: "content" | "style" | "template";
+  type: 'content' | 'style' | 'template';
   path: string;
   content: any;
   timestamp: number;
@@ -36,12 +36,12 @@ class ContentManager {
   private contentCache: Map<string, ContentFile> = new Map();
   private updateListeners: Set<(update: ContentUpdate) => void> = new Set();
   private updateInterval: number = 5000; // 5 seconds
-  private intervalId: NodeJS.Timeout | null = null;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
   private baseUrl: string;
   private enableLiveUpdates: boolean = true;
 
   constructor(options: ContentManagerOptions = {}) {
-    this.baseUrl = options.baseUrl || "/api/content";
+    this.baseUrl = options.baseUrl || '/api/content';
     this.enableLiveUpdates = options.enableLiveUpdates ?? true;
     this.updateInterval = options.updateInterval || 5000;
 
@@ -49,7 +49,7 @@ class ContentManager {
       this.onUpdate(options.onUpdate);
     }
 
-    console.log("[Jxion-ContentManager] Initialized", {
+    console.log('[Jxion-ContentManager] Initialized', {
       baseUrl: this.baseUrl,
       enableLiveUpdates: this.enableLiveUpdates,
       updateInterval: this.updateInterval,
@@ -110,9 +110,9 @@ class ContentManager {
 
     try {
       const response = await fetch(`${this.baseUrl}/${path}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(content, null, 2),
       });
@@ -131,7 +131,7 @@ class ContentManager {
 
       // Notify listeners
       this.notifyUpdate({
-        type: "content",
+        type: 'content',
         path,
         content,
         timestamp: Date.now(),
@@ -151,12 +151,12 @@ class ContentManager {
    * Check for content updates
    */
   async checkForUpdates(): Promise<void> {
-    console.log("[Jxion-ContentManager] 🔍 Checking for content updates...");
+    console.log('[Jxion-ContentManager] 🔍 Checking for content updates...');
 
     for (const [path, cached] of this.contentCache.entries()) {
       try {
         const response = await fetch(
-          `${this.baseUrl}/${path}?checksum=${cached.checksum || ""}`
+          `${this.baseUrl}/${path}?checksum=${cached.checksum || ''}`
         );
 
         if (response.status === 304) {
@@ -182,7 +182,7 @@ class ContentManager {
           });
 
           this.notifyUpdate({
-            type: "content",
+            type: 'content',
             path,
             content,
             timestamp: Date.now(),
@@ -219,12 +219,12 @@ class ContentManager {
    */
   startLiveUpdates(): void {
     if (!this.enableLiveUpdates) {
-      console.log("[Jxion-ContentManager] ⏸️ Live updates disabled");
+      console.log('[Jxion-ContentManager] ⏸️ Live updates disabled');
       return;
     }
 
     if (this.intervalId) {
-      console.log("[Jxion-ContentManager] ⚠️ Live updates already started");
+      console.log('[Jxion-ContentManager] ⚠️ Live updates already started');
       return;
     }
 
@@ -244,7 +244,7 @@ class ContentManager {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
-      console.log("[Jxion-ContentManager] ⏸️ Stopped live updates");
+      console.log('[Jxion-ContentManager] ⏸️ Stopped live updates');
     }
   }
 
@@ -261,7 +261,7 @@ class ContentManager {
         listener(update);
       } catch (error) {
         console.error(
-          "[Jxion-ContentManager] ❌ Error in update listener:",
+          '[Jxion-ContentManager] ❌ Error in update listener:',
           error
         );
       }
@@ -291,7 +291,7 @@ class ContentManager {
       console.log(`[Jxion-ContentManager] 🗑️ Cleared cache for: ${path}`);
     } else {
       this.contentCache.clear();
-      console.log("[Jxion-ContentManager] 🗑️ Cleared all cache");
+      console.log('[Jxion-ContentManager] 🗑️ Cleared all cache');
     }
   }
 }

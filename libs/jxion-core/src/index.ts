@@ -1,37 +1,19 @@
 /**
  * Jxion Stack — Core Package
- * Cleanup Integration: Consolidated during safe merge pass (2025-11-13)
- * Phase Reference: Phase 2 — Component Registry & Styling Runtime, Phase 3 — Template Composition
- * Description: Component registry + template composer base
  *
- * This package provides:
- * - Component registry linking canonical IDs to framework-specific implementations
- * - Template Composer for JSON-driven page assembly
- * - Framework-agnostic hooks and utilities
- * - tRPC integration for type-safe API contracts
- * - Runtime component loading via component-loader.ts
+ * This package provides the core functionality for the Jxion framework:
+ * - HTML templates with variable substitution
+ * - Framework renderers (Svelte, Vue, SolidJS, JSX)
+ * - Content Manager for JSON content loading and live updates
+ * - Component registry and resolver
+ * - Framework adapters (Link, Image) for React/Svelte/Vue
+ * - Template composition and rendering utilities
  *
- * PRESERVED: All existing runtime logic from packages/jxion-core
- * - Registry system (component.registry.ts)
- * - Template system (templates/*.ts)
- * - Framework renderers (utils/*-renderer.ts)
- * - Component loader (utils/component-loader.ts) - NEW in cleanup
- *
- * TODO (Phase 2): Finalize registry schema with component metadata, prop contracts, versioning
- * TODO (Phase 3): Implement TemplateComposer for JSON-driven page assembly
- * TODO (Phase 3): Add template parser, validation, and SSR/CSR rendering helpers
+ * @packageDocumentation
  */
 
-// Core business logic and tRPC integration
-export * from './trpc/client';
-export { useMessages } from './hooks/useMessages';
-export { useGreetings } from './hooks/useGreetings';
-export { MessageService, messageService } from './services/messageService';
-export { GreetingService, greetingService } from './services/greetingService';
-
 // Type definitions
-export * from './types/api';
-export * from './types/message';
+export * from './types';
 
 // Template system and component registry
 export * from './templates';
@@ -40,7 +22,7 @@ export * from './templates/template-loader';
 export * from './registry/component.registry';
 export * from './registry/component-resolver';
 
-// Framework-agnostic hooks system
+// Framework-agnostic hooks system (useState, useEffect, etc.)
 export * from './hooks';
 
 // Framework configuration and utilities

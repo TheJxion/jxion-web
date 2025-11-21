@@ -34,8 +34,10 @@ export interface DebugContext {
  */
 function getNodeEnv(): string {
   try {
-    if (typeof process !== "undefined" && process.env) {
-      return process.env["NODE_ENV"] || "development";
+    // Type-safe check for process
+    const globalProcess = (globalThis as any).process;
+    if (typeof globalProcess !== "undefined" && globalProcess?.env) {
+      return globalProcess.env["NODE_ENV"] || "development";
     }
   } catch {
     // Ignore errors

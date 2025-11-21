@@ -126,3 +126,12 @@ packages/jxion-angular/node_modules/
 .vercel/
 .svelte-kit/
 apps/jxion-angular/.angular/cache/*
+
+# Package lock files
+package-lock.json
+**/package-lock.json
+
+# Build artifacts
+*.pack
+apps/jxion-api/jxion-api
+apps/jxion-api/jxion-api.exe

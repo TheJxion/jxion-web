@@ -3,17 +3,18 @@
 	import Footer from '$organisms/Footer.svelte';
 	import Toast from '$atoms/Toast.svelte';
 	import type { LayoutProps } from '$types';
+	import styles from '@jxion/design/styles/modules/AppLayoutNoir.module.scss';
 
 	export let showHeader: LayoutProps['showHeader'] = true;
 	export let showFooter: LayoutProps['showFooter'] = true;
 </script>
 
-<div class="min-h-screen flex flex-col">
+<div class={styles.appLayout}>
 	{#if showHeader}
 		<Header />
 	{/if}
 
-	<main class="flex-1">
+	<main class={styles.appLayout__main}>
 		<slot />
 	</main>
 

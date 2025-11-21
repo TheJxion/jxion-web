@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$atoms/Button.svelte';
 	import type { HeroProps } from '$types';
+	import styles from '@jxion/design/styles/modules/HeroNoir.module.scss';
 
 	export let title: HeroProps['title'];
 	export let subtitle: HeroProps['subtitle'] = '';
@@ -10,29 +11,29 @@
 	export let imageUrl: HeroProps['imageUrl'] = '';
 </script>
 
-<section class="min-h-screen flex items-center bg-white">
-	<div class="container-custom w-full">
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<section class={styles.hero}>
+	<div class={styles.hero__container}>
+		<div class={styles.hero__content}>
 			<!-- Content Column -->
-			<div class="space-y-8">
-				<div class="space-y-4">
+			<div class={styles.hero__text}>
+				<div class={styles.hero__meta}>
 					{#if subtitle}
-						<p class="text-sm uppercase tracking-wider text-noir-gray-600 font-sans">
+						<p class={styles.hero__subtitle}>
 							{subtitle}
 						</p>
 					{/if}
-					<h1 class="text-5xl md:text-6xl lg:text-7xl font-serif leading-tight text-noir-black">
+					<h1 class={styles.hero__title}>
 						{@html title.split('\n').map((line) => `${line}<br />`).join('')}
 					</h1>
 					{#if description}
-						<p class="text-lg text-noir-gray-700 font-sans max-w-xl leading-relaxed">
+						<p class={styles.hero__description}>
 							{description}
 						</p>
 					{/if}
 				</div>
 
 				<!-- CTA Buttons -->
-				<div class="flex flex-col sm:flex-row gap-4">
+				<div class={styles.hero__ctas}>
 					{#if primaryCta}
 						<Button href={primaryCta.href} variant="primary" size="lg">
 							{primaryCta.text}
@@ -48,18 +49,18 @@
 
 			<!-- Image Column -->
 			{#if imageUrl}
-				<div class="relative h-[600px] lg:h-[800px] w-full">
+				<div class={styles.hero__imageWrapper}>
 					<img
 						src={imageUrl}
 						alt="Noir Jewelry"
-						class="w-full h-full object-cover object-center"
+						class={styles.hero__image}
 						loading="eager"
 					/>
 				</div>
 			{:else}
 				<!-- Placeholder for hero image -->
-				<div class="relative h-[600px] lg:h-[800px] w-full bg-noir-gray-100 flex items-center justify-center">
-					<span class="text-noir-gray-400 text-sm">Hero Image</span>
+				<div class={styles.hero__placeholder}>
+					<span class={styles.hero__placeholderText}>Hero Image</span>
 				</div>
 			{/if}
 		</div>

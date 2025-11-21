@@ -1,24 +1,68 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { cart } from '$stores/cart';
 	import { favorites } from '$stores/favorites';
-	import { content } from '$lib/i18n';
-	import type { NavItem } from '$types';
+import { content } from '$lib/i18n';
+import type { NavItem } from '$types';
+import styles from '@jxion/design/styles/modules/HeaderNoir.module.scss';
 
-	export let logoText: string = content.site.name;
-	export let logoHref: string = '/';
-	export let navItems: NavItem[] = [
-		{ text: content.nav.kolye, href: '/collections/kolye' },
-		{ text: content.nav.bilezik, href: '/collections/bilezik' },
-		{ text: content.nav.yuzuk, href: '/collections/yuzuk' },
-		{ text: content.nav.kupe, href: '/collections/kupe' },
-		{ text: content.nav.sahmeran, href: '/collections/sahmeran' },
-		{ text: content.nav.tokalar, href: '/collections/tokalar' },
-		{ text: content.nav.fular, href: '/collections/fular' },
-	];
+	// SSR-safe browser check
+	const isBrowser = typeof window !== 'undefined';
+	
+	// Dynamic import for page store to avoid SSR issues
+	let pageStore: any = null;
 
-	$: activeNavItem = $page.url.pathname;
+const defaultLogoText = content.site?.name ?? 'NOIR';
+const defaultLogoHref = '/';
+
+const categoryOrder = [
+	'kolye',
+	'bilezik',
+	'yuzuk',
+	'kupe',
+	'sahmeran',
+	'tokalar',
+	'fular'
+] as const;
+
+const categoryLabels = content.collections?.categories ?? {};
+
+const categoryNavItems: NavItem[] = categoryOrder
+	.map((key) => {
+		const label = categoryLabels[key];
+		if (!label) return null;
+		return {
+			text: label,
+			href: `/collections/${key}`,
+		};
+	})
+	.filter(Boolean) as NavItem[];
+
+const generalNavItems: NavItem[] = [
+	{ text: content.nav?.home ?? 'Ana Sayfa', href: '/' },
+	{
+		text: content.nav?.collections ?? 'Koleksiyonlar',
+		href: categoryNavItems[0]?.href ?? '/collections/kolye',
+	},
+	{ text: content.nav?.about ?? 'Hakkımızda', href: '/about' },
+	{ text: content.nav?.contact ?? 'İletişim', href: '/contact' },
+];
+
+const fallbackNavItems: NavItem[] =
+	categoryNavItems.length > 0 ? [...categoryNavItems, ...generalNavItems] : generalNavItems;
+
+export let logoText: string = defaultLogoText;
+export let logoHref: string = defaultLogoHref;
+export let navItems: NavItem[] = fallbackNavItems;
+
+	// SSR-safe page access
+	// Don't access page store during SSR - only on client
+	let activeNavItem = '/';
+	let currentPathname = '/'; // Store current pathname (updated only on client)
+	
+	// Subscribe to page store on client for reactivity
+	let unsubscribePage: (() => void) | null = null;
+	
 	$: cartItemCount = $cart.reduce((sum, item) => sum + item.quantity, 0);
 	$: favoriteCount = $favorites.length;
 	
@@ -27,35 +71,56 @@
 	let unsubscribeAnimation: (() => void) | null = null;
 	
 	onMount(() => {
+		// Dynamically import page store on client only
+		if (isBrowser) {
+			import('$app/stores').then((pageModule) => {
+				pageStore = pageModule.page;
+				
+				// Subscribe to page store for client-side reactivity
+				if (pageStore) {
+					unsubscribePage = pageStore.subscribe((p: any) => {
+						currentPathname = p?.url?.pathname || '/';
+						activeNavItem = currentPathname;
+					});
+				}
+			}).catch((err) => {
+				console.warn('Failed to load page store:', err);
+			});
+		}
+		
 		unsubscribeAnimation = cart.animationTrigger.subscribe((value) => {
 			cartAnimationActive = value;
 		});
+		
 		return () => {
+			if (unsubscribePage) unsubscribePage();
 			if (unsubscribeAnimation) unsubscribeAnimation();
 		};
 	});
 
 	function isActive(href: string): boolean {
-		return $page.url.pathname.startsWith(href);
+		// SSR-safe: use stored pathname (only updated on client)
+		// During SSR, currentPathname will be '/', so isActive returns false
+		// On client, currentPathname is updated via subscription
+		if (!currentPathname) return false;
+		return currentPathname.startsWith(href);
 	}
 </script>
 
-<header class="sticky top-0 z-50 bg-white border-b border-noir-gray-200">
-	<nav class="container-custom py-4">
-		<div class="flex items-center justify-between">
+<header class={styles.header}>
+	<nav class={styles.header__nav}>
+		<div class={styles.header__content}>
 			<!-- Logo -->
-			<a href={logoHref} class="text-2xl font-bold uppercase tracking-tight text-noir-black hover:opacity-80 transition-opacity">
+			<a href={logoHref} class={styles.header__logo}>
 				{logoText}
 			</a>
 
 			<!-- Desktop Navigation -->
-			<div class="hidden lg:flex items-center space-x-8">
+			<div class={styles.header__navLinks}>
 				{#each navItems as item}
 					<a
 						href={item.href}
-						class="text-sm font-medium text-noir-black hover:text-noir-gray-700 transition-colors {isActive(item.href)
-							? 'border-b-2 border-noir-black pb-1'
-							: ''}"
+						class="{styles.header__navLink} {isActive(item.href) ? styles['header__navLink--active'] : ''}"
 					>
 						{item.text}
 					</a>
@@ -63,13 +128,13 @@
 			</div>
 
 			<!-- Utility Icons -->
-			<div class="flex items-center space-x-4">
+			<div class={styles.header__actions}>
 				<button
 					type="button"
-					class="p-2 rounded-full hover:bg-noir-gray-100 transition-colors"
+					class={styles.header__actionButton}
 					aria-label="Search"
 				>
-					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<svg class={styles.header__actionIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -80,10 +145,15 @@
 				</button>
 				<a
 					href="/favorites"
-					class="relative p-2 rounded-full hover:bg-noir-gray-100 transition-colors {isActive('/favorites') ? 'bg-noir-gray-100' : ''}"
+					class="{styles.header__actionButton} {isActive('/favorites') ? styles['header__actionButton--active'] : ''}"
 					aria-label="Favorites"
 				>
-					<svg class="w-5 h-5" fill={isActive('/favorites') ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+					<svg 
+						class={styles.header__actionIcon} 
+						fill={isActive('/favorites') ? 'currentColor' : 'none'} 
+						stroke="currentColor" 
+						viewBox="0 0 24 24"
+					>
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -92,18 +162,18 @@
 						/>
 					</svg>
 					{#if favoriteCount > 0}
-						<span class="absolute -top-1 -right-1 w-5 h-5 bg-[#FFD700] text-noir-black text-xs font-bold rounded-full flex items-center justify-center">
+						<span class={styles.header__badge}>
 							{favoriteCount}
 						</span>
 					{/if}
 				</a>
 				<a
 					href="/cart"
-					class="relative p-2 rounded-full hover:bg-noir-gray-100 transition-all {cartAnimationActive ? 'scale-110' : ''}"
+					class="{styles.header__actionButton} {cartAnimationActive ? styles['header__actionButton--animated'] : ''}"
 					aria-label="Shopping Cart"
 				>
 					<svg 
-						class="w-5 h-5 transition-all {cartAnimationActive ? 'drop-shadow-[0_0_8px_rgba(255,215,0,0.8)]' : ''}" 
+						class="{styles.header__actionIcon} {cartAnimationActive ? styles['header__actionIcon--glow'] : ''}" 
 						fill="none" 
 						stroke="currentColor" 
 						viewBox="0 0 24 24"
@@ -116,7 +186,7 @@
 						/>
 					</svg>
 					{#if cartItemCount > 0}
-						<span class="absolute -top-1 -right-1 w-5 h-5 bg-[#FFD700] text-noir-black text-xs font-bold rounded-full flex items-center justify-center transition-all {cartAnimationActive ? 'scale-125' : ''}">
+						<span class="{styles.header__badge} {cartAnimationActive ? styles['header__badge--animated'] : ''}">
 							{cartItemCount}
 						</span>
 					{/if}
@@ -125,14 +195,12 @@
 		</div>
 
 		<!-- Mobile Navigation -->
-		<div class="lg:hidden mt-4 pt-4 border-t border-noir-gray-200">
-			<div class="flex flex-wrap gap-4">
+		<div class={styles.header__mobileNav}>
+			<div class={styles.header__mobileLinks}>
 				{#each navItems as item}
 					<a
 						href={item.href}
-						class="text-sm font-medium text-noir-black hover:text-noir-gray-700 transition-colors {isActive(item.href)
-							? 'border-b-2 border-noir-black pb-1'
-							: ''}"
+						class="{styles.header__mobileLink} {isActive(item.href) ? styles['header__mobileLink--active'] : ''}"
 					>
 						{item.text}
 					</a>

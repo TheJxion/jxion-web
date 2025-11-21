@@ -1,10 +1,12 @@
 <script lang="ts">
   import styles from "@jxion/design/styles/modules/Layout.module.scss";
   
-  export let params: { lang?: string; theme?: string } = { lang: 'tr-TR', theme: 'light' };
+  // Component props (optional)
+  export let lang: string = 'tr-TR';
+  export let theme: string = 'light';
 </script>
 
-<div class={styles.layout} data-lang={params?.lang || 'tr-TR'} data-theme={params?.theme || 'light'}>
+<div class={styles.layout} data-lang={lang} data-theme={theme}>
   <slot />
 </div>
 

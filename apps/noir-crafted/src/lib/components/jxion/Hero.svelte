@@ -26,6 +26,7 @@
   export let onCtaClick: (() => void) | undefined = undefined;
 
   // Render the HTML template from @jxion-core
+  // Note: Template uses {{tagline}} but we pass cardSubtitle, so map it
   $: renderedTemplate = SvelteRenderer.render({
     template: heroTemplate.html,
     variables: {
@@ -36,6 +37,7 @@
       statsValue,
       statsLabel,
       cardSubtitle,
+      tagline: cardSubtitle, // Map cardSubtitle to tagline for template compatibility
       testId,
       onCtaClick: onCtaClick ? "onCtaClick" : ""
     },

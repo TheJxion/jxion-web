@@ -7,24 +7,48 @@
 
   let container: HTMLDivElement | null = null;
   let root: any = null;
+  let React: any = null;
+  let ReactDOM: any = null;
+  let Component: any = null;
+
+  async function initReact() {
+    if (React && ReactDOM) return; // Already initialized
+
+    try {
+      React = await import('react');
+      ReactDOM = await import('react-dom/client');
+    } catch (error) {
+      console.error('[LocalReactWrapper] ❌ Failed to load React:', error);
+    }
+  }
 
   async function renderReactComponent() {
     if (!componentModule || !componentName || !container) return;
 
     try {
-      const React = await import('react');
-      const ReactDOM = await import('react-dom/client');
-      const Component = componentModule[componentName];
+      await initReact();
+
+      if (!React || !ReactDOM) return;
+
+      Component = componentModule[componentName];
 
       if (!Component) {
         throw new Error(`Component ${componentName} not found in module.`);
       }
 
-      root = ReactDOM.createRoot(container);
+      if (!root) {
+        root = ReactDOM.createRoot(container);
+      }
+
       root.render(React.createElement(Component, props));
     } catch (error) {
       console.error('[LocalReactWrapper] ❌ Failed to render component:', error);
     }
+  }
+
+  // Re-render when props change
+  $: if (root && Component && React) {
+    root.render(React.createElement(Component, props));
   }
 
   onMount(renderReactComponent);

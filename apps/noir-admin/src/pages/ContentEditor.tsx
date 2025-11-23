@@ -1,16 +1,11 @@
 /**
- * Jxion Stack — Content Editor
- * Phase Reference: Phase 3 — Template Composition & Page Assembly
- * Description: JSON content editor with live preview in noir-crafted
- *
- * This page allows editing:
- * - Content JSON files (from noir-crafted/src/lib/i18n/content.ts)
- * - Style overrides
- * - Template configurations
- *
- * Changes are pushed live to noir-crafted demo app
+ * @title Jxion Stack — Content Editor
+ * @description This page allows editing content JSON files (from noir-crafted/src/lib/i18n/content.ts)
+ * @note Changes are pushed live to @noir-crafted svelte app
+ * @date 2025-11-22
+ * @author Jan Berkuçar
  */
-
+/** Core Imports */
 import { useState, useEffect } from 'react';
 import {
   FileText,
@@ -23,39 +18,39 @@ import {
   Palette,
   Layout,
 } from 'lucide-react';
+/** SSE Hook Import */
 import { useSSE } from '../hooks/useSSE';
+/** Styles Imports */
 import styles from './ContentEditor.module.scss';
-
-interface ContentFile {
+/** Props Interface */
+export interface ContentFile {
   path: string;
   label: string;
   mode: EditorMode;
   content: any;
   lastModified: number;
 }
-
+// Non exported private type for the editor mode
 type EditorMode = 'content' | 'style' | 'template';
-
+/** Environment Variables */
 const env =
   typeof import.meta !== 'undefined' ? (import.meta as any).env || {} : {};
-
-const DEFAULT_API_HOST = (env.VITE_API_URL || 'http://localhost:8080').replace(
-  /\/$/,
-  ''
-);
-
+const DEFAULT_API_HOST = env.JXION_API_URL || 'http://localhost:8080';
 const CONTENT_API_BASE =
-  (env.VITE_CONTENT_API_URL || '').replace(/\/$/, '') ||
-  `${DEFAULT_API_HOST}/api/content`;
-
+  env.JXION_CONTENT_API_URL || `${DEFAULT_API_HOST}/api/content`;
 const contentSources: Array<{
   path: string;
   label: string;
   mode: EditorMode;
 }> = [
   {
+    path: 'noir-crafted/homepage.json',
+    label: 'Homepage Content',
+    mode: 'content',
+  },
+  {
     path: 'noir-crafted/content.json',
-    label: 'Noir Crafted • content.json',
+    label: 'Noir Crafted • Full Content',
     mode: 'content',
   },
   {
@@ -65,8 +60,10 @@ const contentSources: Array<{
   },
 ];
 
+// TODO(noir-admin): Move method to utility file.
 const cloneContent = (value: any) => JSON.parse(JSON.stringify(value));
 
+// TODO(noir-admin): Move method to utility file.
 const extractApiContent = (payload: any) => {
   if (
     payload &&
@@ -76,10 +73,17 @@ const extractApiContent = (payload: any) => {
   ) {
     return payload.content;
   }
-
   return payload;
 };
 
+/** Test Id */
+export const CONTENT_EDITOR_TEST = {
+  PAGE: 'content-editor',
+  HEADER: 'content-editor-header',
+  MODE_SELECTOR: 'content-editor-mode-selector',
+  STATUS_MESSAGE: 'content-editor-status-message',
+  EDITOR_GRID: 'content-editor-editor-grid',
+};
 export default function ContentEditor() {
   const [currentMode, setCurrentMode] = useState<EditorMode>('content');
   const [contentFiles, setContentFiles] = useState<ContentFile[]>([]);
@@ -94,22 +98,67 @@ export default function ContentEditor() {
   );
   const [liveUpdatesEnabled, setLiveUpdatesEnabled] = useState(true);
 
+  // NOTE(@Janberk): Main fetch of content from the API.
   const fetchContentFromApi = async (path: string) => {
     const url = `${CONTENT_API_BASE}/${path}`;
-    console.log(`[Jxion-ContentEditor] 🌐 Fetching: ${url}`);
     const response = await fetch(url);
+    if (!response) {
+      throw new Error('API returned null');
+    }
 
+    // Check if response is OK
     if (!response.ok) {
-      const message = await response.text().catch(() => '');
+      // Try to get error message, but handle HTML responses
+      let errorMessage = '';
+      try {
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || '';
+        } else {
+          // If it's HTML or other non-JSON, just use status text
+          errorMessage = response.statusText;
+        }
+      } catch {
+        errorMessage = response.statusText;
+      }
       throw new Error(
-        `API returned ${response.status}${message ? `: ${message}` : ''}`
+        `API returned ${response.status}${
+          errorMessage ? `: ${errorMessage}` : ''
+        }`
       );
     }
 
-    const payload = await response.json();
+    // Check Content-Type before parsing JSON
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      // If we get HTML or other non-JSON, it's likely an error page
+      const text = await response.text().catch(() => '');
+      throw new Error(
+        `API returned non-JSON response (${contentType}). This usually means the endpoint doesn't exist or returned an error page.`
+      );
+    }
+
+    // Parse JSON response
+    let payload;
+    try {
+      payload = await response.json();
+    } catch (parseError) {
+      // If JSON parsing fails, the response might be HTML or malformed
+      const text = await response.text().catch(() => '');
+      throw new Error(
+        `Failed to parse JSON response. Response may be HTML or malformed. First 100 chars: ${text.substring(
+          0,
+          100
+        )}`
+      );
+    }
+
     return extractApiContent(payload);
   };
 
+  // NOTE(@Janberk): Load function.
+  // TODO(@noir-admin): Refactor this to use the project name (noir-crafted) for the content.
   const loadNoirContent = async () => {
     try {
       return await fetchContentFromApi('noir-crafted/content.json');
@@ -133,51 +182,154 @@ export default function ContentEditor() {
     }
   };
 
-  const loadHomepageTemplate = async () => {
+  // NOTE(@Janberk): Load homepage content specifically (just the home section)
+  const loadHomepageContent = async () => {
     try {
-      return await fetchContentFromApi('homepage');
+      // Try to fetch homepage content from API
+      const apiContent = await fetchContentFromApi(
+        'noir-crafted/homepage.json'
+      );
+
+      // Check if content is actually empty (API might return 200 with empty content)
+      // API returns: {content: {}, note: "Content not found in database.", path: "..."}
+      // extractApiContent returns the full payload when content is empty
+      const isEmpty =
+        !apiContent ||
+        Object.keys(apiContent).length === 0 ||
+        (apiContent.note &&
+          typeof apiContent.note === 'string' &&
+          apiContent.note.includes('not found')) ||
+        (apiContent.content && Object.keys(apiContent.content).length === 0) ||
+        // Check if it's the actual homepage content structure (should have hero, featured, etc.)
+        (!apiContent.hero && !apiContent.featured && !apiContent.whyNoir);
+
+      if (isEmpty) {
+        console.warn(
+          '[Jxion-ContentEditor] ⚠️ Homepage content empty in database, extracting from TypeScript source file'
+        );
+        // Fallback: Directly import from TypeScript source file (bypass API)
+        try {
+          const contentModule = await import(
+            '../../../noir-crafted/src/lib/i18n/content'
+          );
+          const fullContent = contentModule.content || {};
+          const homeContent = fullContent?.home;
+
+          if (homeContent && Object.keys(homeContent).length > 0) {
+            console.log(
+              '[Jxion-ContentEditor] ✅ Extracted homepage content from TypeScript source file'
+            );
+            return homeContent;
+          }
+        } catch (importError) {
+          console.error(
+            '[Jxion-ContentEditor] ❌ Failed to import content from TypeScript file:',
+            importError
+          );
+        }
+
+        // If still empty, return a structured empty object
+        console.warn(
+          '[Jxion-ContentEditor] ⚠️ Homepage content not found in full content either'
+        );
+        return {
+          hero: {},
+          featured: {},
+          whyNoir: {},
+          motifs: {},
+          newsletter: {},
+          whatsourimpact: {},
+          keyFeatures: {},
+        };
+      }
+
+      return apiContent;
     } catch (apiError) {
       console.warn(
-        '[Jxion-ContentEditor] ⚠️ Homepage schema not in database, falling back to template loader',
+        '[Jxion-ContentEditor] ⚠️ Homepage content API error, extracting from full content',
         apiError
       );
       try {
-        const coreModule = await import('@jxion/core');
-        if (coreModule.loadTemplateSchema) {
-          const template = await coreModule.loadTemplateSchema('homepage');
-          return template || { note: 'Template schema not found.' };
+        // Fallback: Directly import from TypeScript source file (bypass API)
+        const contentModule = await import(
+          '../../../noir-crafted/src/lib/i18n/content'
+        );
+        const fullContent = contentModule.content || {};
+        const homeContent = fullContent?.home;
+
+        if (homeContent && Object.keys(homeContent).length > 0) {
+          console.log(
+            '[Jxion-ContentEditor] ✅ Extracted homepage content from TypeScript source file (fallback)'
+          );
+          return homeContent;
         }
-        throw new Error('loadTemplateSchema not available');
-      } catch (error) {
-        console.warn('Failed to load template via loader:', error);
+
+        console.warn(
+          '[Jxion-ContentEditor] ⚠️ Homepage content not found in full content'
+        );
         return {
-          note: 'Template schema not found. The template loader may not be available in this environment.',
-          error: String(error),
+          hero: {},
+          featured: {},
+          whyNoir: {},
+          motifs: {},
+          newsletter: {},
+          whatsourimpact: {},
+          keyFeatures: {},
         };
+      } catch (fallbackError) {
+        console.error(
+          '[Jxion-ContentEditor] ❌ Failed to load homepage content:',
+          fallbackError
+        );
+        throw fallbackError;
       }
     }
   };
 
+  const loadHomepageTemplate = async () => {
+    // Templates are static schema files, not stored in database
+    // Load directly from template loader
+      try {
+        const coreModule = await import('@jxion/core');
+        if (coreModule.loadTemplateSchema) {
+          const template = await coreModule.loadTemplateSchema('homepage');
+        if (template) {
+          console.log(
+            '[Jxion-ContentEditor] ✅ Loaded homepage template schema from template loader'
+          );
+          return template;
+        }
+        }
+        throw new Error('loadTemplateSchema not available');
+      } catch (error) {
+      console.error(
+        '[Jxion-ContentEditor] ❌ Failed to load template schema:',
+        error
+      );
+        return {
+          note: 'Template schema not found. The template loader may not be available in this environment.',
+          error: String(error),
+        };
+    }
+  };
+
   useEffect(() => {
-    console.log('[Jxion-ContentEditor] Initializing content editor...');
+    // NOTE(@Janberk): Load content files on mount.
     loadContentFiles(false);
   }, []);
 
-  // Set up SSE for real-time updates
   useSSE({
     apiUrl: DEFAULT_API_HOST,
     enabled: liveUpdatesEnabled,
     onContentUpdate: async (path: string) => {
       if (selectedFile === path) {
-        console.log(
-          `[Jxion-ContentEditor] 🔄 Content updated via SSE: ${path}, reloading...`
-        );
         await loadContentFiles(true);
       }
     },
   });
 
-  function applySelection(file: ContentFile) {
+  // NOTE(@Janberk): Apply selection to the editor.
+  const applySelection = (file: ContentFile) => {
     setSelectedFile(file.path);
     setEditedContent(cloneContent(file.content));
     try {
@@ -186,10 +338,10 @@ export default function ContentEditor() {
       setEditorText('');
     }
     setJsonError(null);
-  }
+  };
 
   const loadContentFiles = async (preserveSelection = true) => {
-    console.log('[Jxion-ContentEditor] 📂 Loading content files...');
+    // NOTE(@Janberk): Load content files.
     setLoading(true);
     try {
       const existingSelection = selectedFile
@@ -199,30 +351,24 @@ export default function ContentEditor() {
         !!existingSelection &&
         editorText !== JSON.stringify(existingSelection.content, null, 2);
       const files: ContentFile[] = [];
-
       for (const source of contentSources) {
         try {
           let content: any;
-
-          if (source.path === 'noir-crafted/content.json') {
+          if (source.path === 'noir-crafted/homepage.json') {
+            content = await loadHomepageContent();
+          } else if (source.path === 'noir-crafted/content.json') {
             content = await loadNoirContent();
           } else if (source.path === 'homepage') {
             content = await loadHomepageTemplate();
           } else {
             content = await fetchContentFromApi(source.path);
           }
-
           files.push({
             ...source,
             content,
             lastModified: Date.now(),
           });
-          console.log(`[Jxion-ContentEditor] ✅ Loaded: ${source.path}`);
         } catch (error) {
-          console.warn(
-            `[Jxion-ContentEditor] ⚠️ Failed to load ${source.path}:`,
-            error
-          );
           files.push({
             ...source,
             content: { error: `Failed to load: ${error}` },
@@ -230,35 +376,27 @@ export default function ContentEditor() {
           });
         }
       }
-
       setContentFiles(files);
-      if (files.length > 0) {
-        const hasSelection =
-          selectedFile && files.some((file) => file.path === selectedFile);
-
-        if (hasSelection && isDirty === false) {
-          const updatedSelection = files.find(
-            (file) => file.path === selectedFile
-          );
-          if (updatedSelection) {
-            applySelection(updatedSelection);
-          }
+      if (!files || files.length === 0) {
+        return;
+      }
+      const hasSelection =
+        selectedFile && files.some((file) => file.path === selectedFile);
+      if (hasSelection && isDirty === false) {
+        const updatedSelection = files.find(
+          (file) => file.path === selectedFile
+        );
+        if (updatedSelection) {
+          applySelection(updatedSelection);
         }
-
-        if (!preserveSelection || !hasSelection) {
-          const nextFile =
-            files.find((file) => file.mode === currentMode) || files[0];
-
-          if (nextFile) {
-            applySelection(nextFile);
-            setCurrentMode(nextFile.mode);
-          }
+      }
+      if (!preserveSelection || !hasSelection) {
+        const nextFile =
+          files.find((file) => file.mode === currentMode) || files[0];
+        if (nextFile) {
+          applySelection(nextFile);
+          setCurrentMode(nextFile.mode);
         }
-      } else {
-        setSelectedFile(null);
-        setEditedContent(null);
-        setEditorText('');
-        setJsonError(null);
       }
       setLoading(false);
     } catch (error) {
@@ -269,28 +407,23 @@ export default function ContentEditor() {
       setLoading(false);
     }
   };
-
   const handleModeChange = (mode: EditorMode) => {
     setCurrentMode(mode);
     const nextFile = contentFiles.find((file) => file.mode === mode) || null;
-
-    if (nextFile) {
-      applySelection(nextFile);
-    } else {
-      setSelectedFile(null);
-      setEditedContent(null);
-      setEditorText('');
-      setJsonError(null);
+    if (!nextFile) {
+      return;
     }
+    applySelection(nextFile);
   };
 
   const handleFileSelect = (path: string) => {
     console.log(`[Jxion-ContentEditor] 📄 Selecting file: ${path}`);
     const file = contentFiles.find((f) => f.path === path);
-    if (file) {
-      applySelection(file);
-      setCurrentMode(file.mode);
+    if (!file) {
+      return;
     }
+    applySelection(file);
+    setCurrentMode(file.mode);
   };
 
   const handleContentChange = (value: string) => {
@@ -299,24 +432,28 @@ export default function ContentEditor() {
       const parsed = JSON.parse(value);
       setEditedContent(parsed);
       setJsonError(null);
-      console.log('[Jxion-ContentEditor] ✏️ Content edited');
     } catch (error) {
-      setJsonError('Geçersiz JSON. Kaydetmeden önce düzeltin.');
-      console.warn(
-        '[Jxion-ContentEditor] ⚠️ Invalid JSON (editing in progress)'
-      );
+      setJsonError('Invalid JSON. Please fix it before saving.');
     }
   };
 
   const handleSave = async () => {
     if (!selectedFile || !editedContent || jsonError) return;
 
-    console.log(`[Jxion-ContentEditor] 💾 Saving content: ${selectedFile}`);
+    // Templates are static schema files and cannot be saved via API
+    const selectedFileData = contentFiles.find((f) => f.path === selectedFile);
+    if (selectedFileData?.mode === 'template') {
+      setSaveStatus('error');
+      console.warn(
+        '[Jxion-ContentEditor] ⚠️ Templates are static schema files and cannot be modified via API. Changes are stored locally only.'
+      );
+      return;
+    }
+
     setSaving(true);
     setSaveStatus('idle');
-
     try {
-      // Save to API (which persists to database)
+      // Save to the selected path
       const response = await fetch(`${CONTENT_API_BASE}/${selectedFile}`, {
         method: 'PUT',
         headers: {
@@ -324,20 +461,132 @@ export default function ContentEditor() {
         },
         body: JSON.stringify(editedContent),
       });
-
       if (!response.ok) {
+        // Handle error responses - check if it's JSON or HTML
+        let errorMessage = '';
+        try {
+          const contentType = response.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorData.error || '';
+          } else {
+            // If it's HTML or other non-JSON, read as text
+            errorMessage = await response.text();
+          }
+        } catch {
+          errorMessage = response.statusText;
+        }
         throw new Error(
-          `API returned ${response.status}: ${await response.text()}`
+          `API returned ${response.status}${
+            errorMessage ? `: ${errorMessage}` : ''
+          }`
         );
       }
 
-      const result = await response.json();
-      console.log(
-        `[Jxion-ContentEditor] ✅ Content saved to database: ${selectedFile}`,
-        result
-      );
+      // Check Content-Type before parsing JSON
+      const contentType = response.headers.get('content-type') || '';
+      let result;
+      if (contentType.includes('application/json')) {
+        try {
+          result = await response.json();
+        } catch (parseError) {
+          throw new Error('Failed to parse JSON response from server');
+        }
+      } else {
+        // If response is not JSON, it might be empty or HTML
+        const text = await response.text();
+        // If empty, assume success; otherwise throw error
+        if (text.trim()) {
+          throw new Error(
+            `Server returned non-JSON response: ${text.substring(0, 100)}`
+          );
+        }
+        result = { success: true };
+      }
 
-      // Update local state
+      // If saving noir-crafted/homepage.json, also update noir-crafted/content.json
+      if (selectedFile === 'noir-crafted/homepage.json') {
+        console.log(
+          '[Jxion-ContentEditor] 🔄 Updating full content.json with homepage changes...'
+        );
+        try {
+          // Fetch current full content
+          const fullContentResponse = await fetch(
+            `${CONTENT_API_BASE}/noir-crafted/content.json`
+          );
+          if (fullContentResponse.ok) {
+            const contentType = fullContentResponse.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+              const fullContentData = await fullContentResponse.json();
+              // Extract actual content (might be wrapped in 'content' key)
+              const fullContent =
+                fullContentData.content || fullContentData || {};
+              
+              // Merge homepage content into full content
+              const updatedFullContent = {
+                ...fullContent,
+                home: editedContent,
+              };
+
+              // Save updated full content
+              const updateResponse = await fetch(
+                `${CONTENT_API_BASE}/noir-crafted/content.json`,
+                {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(updatedFullContent),
+                }
+              );
+
+              if (updateResponse.ok) {
+                console.log(
+                  '[Jxion-ContentEditor] ✅ Updated full content.json with homepage changes'
+                );
+              } else {
+                console.warn(
+                  '[Jxion-ContentEditor] ⚠️ Failed to update full content.json, but homepage.json was saved'
+                );
+              }
+            }
+          } else {
+            // If full content doesn't exist, create it with the homepage content
+            console.log(
+              '[Jxion-ContentEditor] 📝 Creating full content.json with homepage content...'
+            );
+            const newFullContent = {
+              site: { name: 'NOIR' },
+              nav: {},
+              home: editedContent,
+            };
+
+            const createResponse = await fetch(
+              `${CONTENT_API_BASE}/noir-crafted/content.json`,
+              {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newFullContent),
+              }
+            );
+
+            if (createResponse.ok) {
+              console.log(
+                '[Jxion-ContentEditor] ✅ Created full content.json with homepage content'
+              );
+            }
+          }
+        } catch (mergeError) {
+          console.warn(
+            '[Jxion-ContentEditor] ⚠️ Failed to merge homepage into full content:',
+            mergeError
+          );
+          // Don't fail the save if merge fails - homepage was already saved
+        }
+      }
+
       setContentFiles((prev) =>
         prev.map((file) =>
           file.path === selectedFile
@@ -349,10 +598,10 @@ export default function ContentEditor() {
             : file
         )
       );
-
       setSaveStatus('success');
-
-      // Clear success message after 5 seconds
+      console.log(
+        `[Jxion-ContentEditor] ✅ Content saved to database: ${selectedFile}`
+      );
       setTimeout(() => setSaveStatus('idle'), 5000);
     } catch (error) {
       console.error('[Jxion-ContentEditor] ❌ Error saving content:', error);
@@ -361,7 +610,6 @@ export default function ContentEditor() {
       setSaving(false);
     }
   };
-
   const visibleFiles = contentFiles.filter((file) => file.mode === currentMode);
   const selectedFileData = contentFiles.find((f) => f.path === selectedFile);
   const originalEditorText = selectedFileData
@@ -370,10 +618,8 @@ export default function ContentEditor() {
   const hasChanges = !!selectedFileData && editorText !== originalEditorText;
   const canSave =
     !!selectedFileData && !!editedContent && !jsonError && hasChanges;
-
   return (
     <div className={styles.page}>
-      {/* Header */}
       <div className={styles.header}>
         <div>
           <h1 className={styles.headerContentTitle}>
@@ -400,16 +646,17 @@ export default function ContentEditor() {
               }}
               className={styles.checkbox}
             />
-            <span className={styles.checkboxText}>
-              Live Updates
-            </span>
+            <span className={styles.checkboxText}>Live Updates</span>
           </label>
           <button
             onClick={() => loadContentFiles(true)}
             disabled={loading}
             className={styles.reloadButton}
           >
-            <RefreshCw size={18} className={loading ? styles.loadingSpinner : ''} />
+            <RefreshCw
+              size={18}
+              className={loading ? styles.loadingSpinner : ''}
+            />
             Reload
           </button>
           <button
@@ -436,21 +683,27 @@ export default function ContentEditor() {
       <div className={styles.modeSelector}>
         <button
           onClick={() => handleModeChange('content')}
-          className={`${styles.modeButton} ${currentMode === 'content' ? styles['modeButton--active'] : ''}`}
+          className={`${styles.modeButton} ${
+            currentMode === 'content' ? styles['modeButton--active'] : ''
+          }`}
         >
           <Code size={18} className={styles.modeIcon} />
           Content
         </button>
         <button
           onClick={() => handleModeChange('style')}
-          className={`${styles.modeButton} ${currentMode === 'style' ? styles['modeButton--active'] : ''}`}
+          className={`${styles.modeButton} ${
+            currentMode === 'style' ? styles['modeButton--active'] : ''
+          }`}
         >
           <Palette size={18} className={styles.modeIcon} />
           Styles
         </button>
         <button
           onClick={() => handleModeChange('template')}
-          className={`${styles.modeButton} ${currentMode === 'template' ? styles['modeButton--active'] : ''}`}
+          className={`${styles.modeButton} ${
+            currentMode === 'template' ? styles['modeButton--active'] : ''
+          }`}
         >
           <Layout size={18} className={styles.modeIcon} />
           Templates
@@ -459,23 +712,37 @@ export default function ContentEditor() {
 
       {/* Save Status */}
       {saveStatus === 'success' && (
-        <div className={`${styles.statusMessage} ${styles['statusMessage--success']}`}>
+        <div
+          className={`${styles.statusMessage} ${styles['statusMessage--success']}`}
+        >
           <div className={styles.statusContent}>
             <CheckCircle2 size={20} />
             <span className={styles.statusTitle}>
-              Content updated locally
+              {selectedFileData?.mode === 'template'
+                ? 'Template loaded'
+                : 'Content saved to database'}
             </span>
           </div>
+          {selectedFileData?.mode === 'template' ? (
+            <p className={styles.statusText}>
+              Note: Templates are static schema files and cannot be modified via
+              API. Changes are stored locally in the editor only. To persist
+              changes, you'll need to manually update the source files in the
+              codebase.
+            </p>
+          ) : (
           <p className={styles.statusText}>
-            Note: Source files (TypeScript/JSON) cannot be modified via API.
-            Changes are stored locally in the editor only. To persist changes,
-            you'll need to manually update the source files in the codebase.
+              Content has been successfully saved to the database and will be
+              available via the API.
           </p>
+          )}
         </div>
       )}
 
       {saveStatus === 'error' && (
-        <div className={`${styles.statusMessage} ${styles['statusMessage--error']}`}>
+        <div
+          className={`${styles.statusMessage} ${styles['statusMessage--error']}`}
+        >
           <AlertCircle size={20} />
           <span className={styles.statusErrorText}>
             Error updating content. Please try again.
@@ -491,18 +758,14 @@ export default function ContentEditor() {
               className={`${styles.loadingSpinner} ${styles.loadingSpinner}`}
               size={32}
             />
-            <p className={styles.loadingText}>
-              Loading content files...
-            </p>
+            <p className={styles.loadingText}>Loading content files...</p>
           </div>
         </div>
       ) : (
         <div className={styles.editorGrid}>
           {/* File List */}
           <div className={styles.fileList}>
-            <h2 className={styles.fileListTitle}>
-              Files
-            </h2>
+            <h2 className={styles.fileListTitle}>Files</h2>
             <div className={styles.fileListContent}>
               {visibleFiles.length === 0 ? (
                 <div className={styles.emptyMessage}>
@@ -513,12 +776,14 @@ export default function ContentEditor() {
                   <button
                     key={file.path}
                     onClick={() => handleFileSelect(file.path)}
-                    className={`${styles.fileButton} ${selectedFile === file.path ? styles['fileButton--active'] : ''}`}
+                    className={`${styles.fileButton} ${
+                      selectedFile === file.path
+                        ? styles['fileButton--active']
+                        : ''
+                    }`}
                   >
                     <div className={styles.fileLabel}>{file.label}</div>
-                    <div className={styles.filePath}>
-                      {file.path}
-                    </div>
+                    <div className={styles.filePath}>{file.path}</div>
                     <div className={styles.fileTime}>
                       {new Date(file.lastModified).toLocaleTimeString()}
                     </div>
@@ -537,9 +802,7 @@ export default function ContentEditor() {
                     <h2 className={styles.editorTitle}>
                       {selectedFileData.label}
                     </h2>
-                    <span className={styles.editorPath}>
-                      {selectedFile}
-                    </span>
+                    <span className={styles.editorPath}>{selectedFile}</span>
                   </div>
                   {hasChanges && (
                     <span className={styles.editorWarning}>
@@ -556,9 +819,7 @@ export default function ContentEditor() {
                   disabled={!selectedFileData}
                   aria-invalid={Boolean(jsonError)}
                 />
-                {jsonError && (
-                  <p className={styles.editorError}>{jsonError}</p>
-                )}
+                {jsonError && <p className={styles.editorError}>{jsonError}</p>}
               </>
             ) : (
               <div className={styles.emptyEditor}>
@@ -580,8 +841,8 @@ export default function ContentEditor() {
             <span className={styles.infoBullet}>•</span>
             <span>
               Content files are loaded from{' '}
-              <code className={styles.infoCode}>@noir-crafted</code>{' '}
-              and can be edited here
+              <code className={styles.infoCode}>@noir-crafted</code> and can be
+              edited here
             </span>
           </li>
           <li className={styles.infoItem}>
@@ -596,8 +857,7 @@ export default function ContentEditor() {
             <span className={styles.infoBullet}>•</span>
             <span>
               Live updates automatically sync changes to{' '}
-              <code className={styles.infoCode}>@noir-crafted</code>{' '}
-              demo app
+              <code className={styles.infoCode}>@noir-crafted</code> demo app
             </span>
           </li>
           <li className={styles.infoItem}>

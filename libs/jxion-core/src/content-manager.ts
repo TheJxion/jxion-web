@@ -58,17 +58,26 @@ class ContentManager {
 
   /**
    * Load content from JSON file
+   * @param path - Content path to load
+   * @param forceRefresh - If true, bypass cache and fetch fresh content
    */
-  async loadContent(path: string): Promise<any> {
+  async loadContent(path: string, forceRefresh: boolean = false): Promise<any> {
     const cacheKey = path;
     const cached = this.contentCache.get(cacheKey);
 
-    if (cached) {
+    if (cached && !forceRefresh) {
       console.log(`[Jxion-ContentManager] Cache HIT: ${path}`);
       return cached.content;
     }
 
-    console.log(`[Jxion-ContentManager] Cache MISS: ${path} - loading...`);
+    if (forceRefresh) {
+      console.log(
+        `[Jxion-ContentManager] 🔄 Force refresh requested for: ${path}`
+      );
+      this.contentCache.delete(cacheKey);
+    } else {
+      console.log(`[Jxion-ContentManager] Cache MISS: ${path} - loading...`);
+    }
 
     try {
       const response = await fetch(`${this.baseUrl}/${path}`);
@@ -78,12 +87,13 @@ class ContentManager {
 
       const content = await response.json();
       const lastModified = Date.now();
+      const checksum = this.calculateChecksum(content);
 
       this.contentCache.set(cacheKey, {
         path,
         content,
         lastModified,
-        checksum: this.calculateChecksum(content),
+        checksum,
       });
 
       console.log(
@@ -91,6 +101,14 @@ class ContentManager {
           JSON.stringify(content).length
         } bytes)`
       );
+
+      // Notify listeners of the update
+      this.notifyUpdate({
+        type: 'content',
+        path,
+        content,
+        timestamp: lastModified,
+      });
 
       return content;
     } catch (error) {
@@ -155,24 +173,29 @@ class ContentManager {
 
     for (const [path, cached] of this.contentCache.entries()) {
       try {
-        const response = await fetch(
-          `${this.baseUrl}/${path}?checksum=${cached.checksum || ''}`
-        );
-
-        if (response.status === 304) {
-          // Not modified
-          continue;
-        }
+        // Always fetch fresh content (don't rely on 304 Not Modified)
+        // This ensures we get the latest content even if cache is stale
+        const response = await fetch(`${this.baseUrl}/${path}`);
 
         if (!response.ok) {
+          console.warn(
+            `[Jxion-ContentManager] ⚠️ Failed to check updates for ${path}: ${response.status}`
+          );
           continue;
         }
 
         const content = await response.json();
         const newChecksum = this.calculateChecksum(content);
 
-        if (newChecksum !== cached.checksum) {
-          console.log(`[Jxion-ContentManager] 🔄 Content updated: ${path}`);
+        // Always update if checksum differs, or if cache is older than 1 minute
+        const cacheAge = Date.now() - cached.lastModified;
+        const shouldUpdate =
+          newChecksum !== cached.checksum || cacheAge > 60000; // 1 minute
+
+        if (shouldUpdate) {
+          console.log(
+            `[Jxion-ContentManager] 🔄 Content updated: ${path} (checksum changed or cache stale)`
+          );
 
           this.contentCache.set(path, {
             path,

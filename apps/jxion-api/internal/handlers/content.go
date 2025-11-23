@@ -24,6 +24,60 @@ import (
 	"github.com/jxion/jxion-api/internal/db"
 )
 
+// validateContentStructure validates content matches expected structure for a given path
+// Returns true if content is valid, false if it doesn't match expected structure
+func validateContentStructure(path string, content map[string]interface{}) bool {
+	// For noir-crafted/homepage.json, expect home section structure (hero, featured, etc.)
+	// Content can be either:
+	// 1. Direct home section: {hero: {...}, featured: {...}, ...}
+	// 2. Wrapped in home key: {home: {hero: {...}, featured: {...}, ...}}
+	if path == "noir-crafted/homepage.json" {
+		// Check if content has 'home' wrapper key
+		if home, ok := content["home"].(map[string]interface{}); ok {
+			// Content is wrapped in 'home' key, validate the inner structure
+			expectedKeys := []string{"hero", "featured", "whyNoir", "motifs", "newsletter"}
+			for _, key := range expectedKeys {
+				if _, exists := home[key]; exists {
+					return true
+				}
+			}
+			return false
+		}
+		// Content is direct home section structure (no wrapper)
+		// Check if it has any of the expected homepage keys
+		expectedKeys := []string{"hero", "featured", "whyNoir", "motifs", "newsletter"}
+		for _, key := range expectedKeys {
+			if _, exists := content[key]; exists {
+				return true
+			}
+		}
+		// If no expected keys found, it's invalid
+		return false
+	}
+
+	// For noir-crafted/content.json, expect top-level structure with site, nav, home, etc.
+	if path == "noir-crafted/content.json" {
+		// Content can be wrapped in 'content' key or be direct structure
+		var actualContent map[string]interface{}
+		if wrapped, ok := content["content"].(map[string]interface{}); ok {
+			actualContent = wrapped
+		} else {
+			actualContent = content
+		}
+		
+		expectedKeys := []string{"site", "nav", "home"}
+		for _, key := range expectedKeys {
+			if _, exists := actualContent[key]; exists {
+				return true
+			}
+		}
+		return false
+	}
+
+	// For other paths, accept any valid JSON structure
+	return true
+}
+
 // HandleContent handles content file operations
 func HandleContent(w http.ResponseWriter, r *http.Request) {
 	// Extract path from URL (e.g., /api/content/homepage -> homepage)
@@ -76,6 +130,17 @@ func GetContent(w http.ResponseWriter, r *http.Request, path string) {
 			"content": map[string]interface{}{},
 			"note":    "Content not found in database.",
 		}
+	} else {
+		// Validate content structure matches expected format for this path
+		if !validateContentStructure(path, content) {
+			log.Printf("[Jxion-API] ⚠️ Content structure validation failed for path: %s, returning empty", path)
+			// Return empty content instead of invalid content
+			content = map[string]interface{}{
+				"path":    path,
+				"content": map[string]interface{}{},
+				"note":    "Content not found in database. (Previous content was invalid and has been removed)",
+			}
+		}
 	}
 
 	jsonData, _ := json.Marshal(content)
@@ -95,6 +160,13 @@ func CreateOrUpdateContent(w http.ResponseWriter, r *http.Request, path string) 
 	var content map[string]interface{}
 	if err := json.NewDecoder(r.Body).Decode(&content); err != nil {
 		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		return
+	}
+
+	// Validate content structure matches expected format for this path
+	if !validateContentStructure(path, content) {
+		log.Printf("[Jxion-API] ❌ Content structure validation failed for path: %s", path)
+		http.Error(w, fmt.Sprintf("Invalid content structure for path: %s. Content does not match expected format.", path), http.StatusBadRequest)
 		return
 	}
 

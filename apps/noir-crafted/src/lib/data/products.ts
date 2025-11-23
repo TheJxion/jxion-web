@@ -1,3 +1,19 @@
+/**
+ * Product Interface and Fallback Data
+ * 
+ * NOTE: This file is now a FALLBACK ONLY.
+ * Production products should come from database via contentStore.
+ * 
+ * To update products:
+ * 1. Edit in noir-admin ContentEditor (noir-crafted/content.json → home.featured.products)
+ * 2. Or update content.ts and seed to database
+ * 3. Products will load automatically via contentStore
+ * 
+ * Access products in components:
+ * import { contentStore } from '$lib/stores/contentStore';
+ * $: products = $contentStore.content?.home?.featured?.products ?? [];
+ */
+
 export interface Product {
   id: string;
   name: string;
@@ -17,6 +33,7 @@ export interface Product {
   featured?: boolean;
 }
 
+// FALLBACK ONLY - Use contentStore in production
 export const products: Product[] = [
   {
     id: 'virgo-kolye-001',

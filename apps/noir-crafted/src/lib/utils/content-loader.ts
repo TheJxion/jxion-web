@@ -77,21 +77,22 @@ export function createContentLoader(
       });
     } catch (err) {
       console.warn(
-        `[ContentLoader] ⚠️ ContentManager API not available, using fallback content`,
+        `[ContentLoader] ⚠️ ContentManager API not available, using minimal fallback`,
       );
 
-      // Fallback: Import local content file
+      // Fallback: Import minimal local content file
       try {
         const { content: localContent } = await import('$lib/i18n/content');
         content = localContent;
         lastUpdate = Date.now();
         loading = false;
+        error =
+          'Content API unavailable. Please configure content through the admin panel.';
 
-        console.log(
-          `[ContentLoader] ✅ Using fallback content from $lib/i18n/content.ts:`,
+        console.warn(
+          `[ContentLoader] ⚠️ Using minimal fallback content. Content should be configured through admin panel.`,
           {
             path: contentPath,
-            size: JSON.stringify(content).length,
           },
         );
       } catch (fallbackErr) {
@@ -99,7 +100,8 @@ export function createContentLoader(
           `[ContentLoader] ❌ Error loading fallback content:`,
           fallbackErr,
         );
-        error = 'Failed to load content from both ContentManager and fallback';
+        error =
+          'Failed to load content. Please configure content through the admin panel.';
         loading = false;
       }
     }

@@ -3,10 +3,9 @@
 	import '../app.css';
 	import AppLayout from '$layouts/AppLayout.svelte';
 	
-	// SvelteKit automatically provides these props, but we don't use them
-	// Declaring them to suppress warnings
-	export const data: any = undefined;
-	export const params: any = undefined;
+	// SvelteKit automatically provides params via $page.params
+	// Declare it here to suppress the unknown prop warning
+	export const params: Record<string, string> = {};
 
 	// Preload Three.js early to ensure it's available before React Three Fiber loads
 	onMount(async () => {

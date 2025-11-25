@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { user } from '$stores/user';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { content } from '$lib/i18n';
 	import Button from '$atoms/Button.svelte';
 	import { toast } from '$stores/toast';
@@ -11,7 +10,8 @@
 	let loading = false;
 	let error = '';
 
-	$: redirectUrl = $page.url.searchParams.get('redirect') || '/';
+	export let data: { redirectUrl: string };
+	$: redirectUrl = data.redirectUrl;
 
 	async function handleSubmit() {
 		error = '';

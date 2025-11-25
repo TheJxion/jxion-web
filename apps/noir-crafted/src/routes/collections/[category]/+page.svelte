@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import ProductSection from '$organisms/ProductSection.svelte';
 	import { products } from '$stores/products';
 	import { getProductsByCategory } from '$stores/products';
@@ -7,8 +6,10 @@
 	import type { ProductCategory } from '$types';
 	import styles from '@jxion/design/styles/modules/CollectionNoir.module.scss';
 
+	export let data: { categoryParam: string };
+
 	// Get category from URL
-	$: categoryParam = $page.params.category;
+	$: categoryParam = data.categoryParam;
 	$: category = getCategoryName(categoryParam);
 	$: filteredProducts = getProductsByCategory(category);
 

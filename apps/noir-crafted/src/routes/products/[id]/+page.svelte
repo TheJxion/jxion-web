@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Button from '$atoms/Button.svelte';
 	import { products, getProductById } from '$stores/products';
 	import { cart } from '$stores/cart';
@@ -10,7 +9,8 @@
 	import type { Product } from '$types';
 	import styles from '@jxion/design/styles/modules/ProductDetailNoir.module.scss';
 
-	$: productId = $page.params.id;
+	export let data: { productId: string };
+	$: productId = data.productId;
 	$: product = getProductById(productId);
 	$: formattedPrice = product ? formatCurrency(product.price) : '';
 	$: mainImage = product?.image || '';
